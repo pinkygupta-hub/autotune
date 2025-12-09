@@ -60,6 +60,8 @@ import java.util.stream.Collectors;
 
 import static com.autotune.analyzer.utils.AnalyzerConstants.ServiceConstants.CHARACTER_ENCODING;
 import static com.autotune.analyzer.utils.AnalyzerConstants.ServiceConstants.JSON_CONTENT_TYPE;
+import static com.autotune.operator.KruizeDeploymentInfo.local;
+import static com.autotune.operator.KruizeDeploymentInfo.runtimes_recommendations;
 
 /**
  * REST API to create experiments to Analyser for monitoring metrics.
@@ -121,11 +123,11 @@ public class CreateExperiment extends HttpServlet {
                     if (null != validAPIObj)
                         validAPIObj.setValidationData(ko.getValidation_data());
 
-                    // Detect layers only if it's local monitoring container experiment.
-                    if (null != validAPIObj && ko.getTarget_cluster().equalsIgnoreCase(AnalyzerConstants.LOCAL) && validAPIObj.isContainerExperiment()) {
-                        ServiceHelpers.detectLayers(validAPIObj);
-                    }
                     addedToDB = new ExperimentDBService().addExperimentToDB(validAPIObj);
+                    // check if runtimes flag is enabled, detect the layers and tag it to container data
+                    if (local && runtimes_recommendations) {
+                        //TODO: detect the layers and tag it to container data
+                    }
                 }
                 if (addedToDB.isSuccess()) {
                     sendSuccessResponse(response, "Experiment registered successfully with Kruize.");
