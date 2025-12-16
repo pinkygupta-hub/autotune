@@ -15,7 +15,7 @@ public class MappedRecommendationForModel {
         this.podsCount = 0;
         this.confidence_level = 0.0;
         this.config = new Config();
-        this.variation = new Config();
+        this.variation = new HashMap<>();
         this.notificationHashMap = new HashMap<>();
     }
 

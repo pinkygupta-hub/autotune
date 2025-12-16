@@ -1,8 +1,6 @@
 package com.autotune.analyzer.recommendations.model;
 
-import com.autotune.analyzer.kruizeLayer.impl.TunableSpec;
-import com.autotune.analyzer.recommendations.LayerRecommendationHandler;
-import com.autotune.analyzer.recommendations.LayerRecommendationHandlerRegistry;
+import com.autotune.analyzer.recommendations.RecommendationConfigEnv;
 import com.autotune.analyzer.recommendations.RecommendationConfigItem;
 import com.autotune.analyzer.recommendations.RecommendationConstants;
 import com.autotune.analyzer.recommendations.RecommendationNotification;
@@ -697,21 +695,15 @@ public class GenericRecommendationModel implements RecommendationModel{
     }
 
     /**
-     * @param metricName
-     * @param layerName
      * @param filteredResultsMap
-     * @param tunableSpecObjectMap
      * @param notifications
      * @return
      */
     @Override
-    public Object getRuntimeRecommendations(String metricName, String layerName, Map<Timestamp, IntervalResults> filteredResultsMap, Map<TunableSpec, Object> tunableSpecObjectMap,
-                                            ArrayList<RecommendationNotification> notifications) {
-        LayerRecommendationHandler handler = LayerRecommendationHandlerRegistry.getInstance().getHandler(layerName);
-        return handler != null ? handler.generateRecommendations(metricName, tunableSpecObjectMap, filteredResultsMap) : null;
+    public RecommendationConfigEnv getRuntimeRecommendation(Map<Timestamp, IntervalResults> filteredResultsMap, ArrayList<RecommendationNotification> notifications) {
+        //TODO: Need to update this
+        return null;
     }
-
-
 
 
     @Override
