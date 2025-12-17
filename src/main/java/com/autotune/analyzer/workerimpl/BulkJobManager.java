@@ -15,39 +15,6 @@
  *******************************************************************************/
 package com.autotune.analyzer.workerimpl;
 
-import com.autotune.analyzer.adapters.DeviceDetailsAdapter;
-import com.autotune.analyzer.adapters.RecommendationItemAdapter;
-import com.autotune.analyzer.exceptions.KruizeResponse;
-import com.autotune.analyzer.kruizeObject.RecommendationSettings;
-import com.autotune.analyzer.metadataProfiles.MetadataProfile;
-import com.autotune.analyzer.metadataProfiles.MetadataProfileCollection;
-import com.autotune.analyzer.serviceObjects.*;
-import com.autotune.analyzer.utils.AnalyzerConstants;
-import com.autotune.analyzer.utils.GsonUTCDateAdapter;
-import com.autotune.common.data.dataSourceMetadata.*;
-import com.autotune.common.data.result.ContainerData;
-import com.autotune.common.data.system.info.device.DeviceDetails;
-import com.autotune.common.datasource.DataSourceInfo;
-import com.autotune.common.datasource.DataSourceManager;
-import com.autotune.common.k8sObjects.TrialSettings;
-import com.autotune.common.utils.CommonUtils;
-import com.autotune.database.dao.ExperimentDAOImpl;
-import com.autotune.operator.KruizeDeploymentInfo;
-import com.autotune.utils.GenericRestApiClient;
-import com.autotune.utils.KruizeConstants;
-import com.autotune.utils.MetricsConfig;
-import com.autotune.utils.Utils;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.google.gson.ExclusionStrategy;
-import com.google.gson.FieldAttributes;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import io.micrometer.core.instrument.Timer;
-import org.apache.http.conn.ConnectTimeoutException;
-import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.SocketTimeoutException;
@@ -58,7 +25,16 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -66,11 +42,69 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import org.apache.http.conn.ConnectTimeoutException;
+import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.autotune.analyzer.adapters.DeviceDetailsAdapter;
+import com.autotune.analyzer.adapters.RecommendationItemAdapter;
+import com.autotune.analyzer.exceptions.KruizeResponse;
+import com.autotune.analyzer.kruizeObject.RecommendationSettings;
+import com.autotune.analyzer.metadataProfiles.MetadataProfile;
+import com.autotune.analyzer.metadataProfiles.MetadataProfileCollection;
+import com.autotune.analyzer.serviceObjects.BulkInput;
+import com.autotune.analyzer.serviceObjects.BulkJobStatus;
+import com.autotune.analyzer.serviceObjects.ContainerAPIObject;
+import com.autotune.analyzer.serviceObjects.CreateExperimentAPIObject;
+import com.autotune.analyzer.serviceObjects.KubernetesAPIObject;
 import static com.autotune.analyzer.services.BulkService.filterJson;
+import com.autotune.analyzer.utils.AnalyzerConstants;
+import com.autotune.analyzer.utils.GsonUTCDateAdapter;
+import com.autotune.common.data.dataSourceMetadata.DataSource;
+import com.autotune.common.data.dataSourceMetadata.DataSourceCluster;
+import com.autotune.common.data.dataSourceMetadata.DataSourceContainer;
+import com.autotune.common.data.dataSourceMetadata.DataSourceMetadataInfo;
+import com.autotune.common.data.dataSourceMetadata.DataSourceNamespace;
+import com.autotune.common.data.dataSourceMetadata.DataSourceWorkload;
+import com.autotune.common.data.result.ContainerData;
+import com.autotune.common.data.system.info.device.DeviceDetails;
+import com.autotune.common.datasource.DataSourceInfo;
+import com.autotune.common.datasource.DataSourceManager;
+import com.autotune.common.k8sObjects.TrialSettings;
+import com.autotune.common.utils.CommonUtils;
+import com.autotune.database.dao.ExperimentDAOImpl;
+import com.autotune.operator.KruizeDeploymentInfo;
 import static com.autotune.operator.KruizeDeploymentInfo.bulk_thread_pool_size;
 import static com.autotune.operator.KruizeDeploymentInfo.job_filter_to_db;
-import static com.autotune.utils.KruizeConstants.KRUIZE_BULK_API.*;
-import static com.autotune.utils.KruizeConstants.KRUIZE_BULK_API.NotificationConstants.*;
+import com.autotune.utils.GenericRestApiClient;
+import com.autotune.utils.KruizeConstants;
+import static com.autotune.utils.KruizeConstants.KRUIZE_BULK_API.COMPLETED;
+import static com.autotune.utils.KruizeConstants.KRUIZE_BULK_API.CREATE_EXPERIMENT_CONFIG_BEAN;
+import static com.autotune.utils.KruizeConstants.KRUIZE_BULK_API.END_TIME;
+import static com.autotune.utils.KruizeConstants.KRUIZE_BULK_API.FAILED;
+import static com.autotune.utils.KruizeConstants.KRUIZE_BULK_API.JOB_ID;
+import com.autotune.utils.KruizeConstants.KRUIZE_BULK_API.NotificationConstants;
+import static com.autotune.utils.KruizeConstants.KRUIZE_BULK_API.NotificationConstants.DATASOURCE_CONNECT_TIMEOUT_INFO;
+import static com.autotune.utils.KruizeConstants.KRUIZE_BULK_API.NotificationConstants.DATASOURCE_DOWN_INFO;
+import static com.autotune.utils.KruizeConstants.KRUIZE_BULK_API.NotificationConstants.DATASOURCE_GATEWAY_TIMEOUT_INFO;
+import static com.autotune.utils.KruizeConstants.KRUIZE_BULK_API.NotificationConstants.DATASOURCE_NOT_REG_INFO;
+import static com.autotune.utils.KruizeConstants.KRUIZE_BULK_API.NotificationConstants.EXPERIMENT_FAILED;
+import static com.autotune.utils.KruizeConstants.KRUIZE_BULK_API.NotificationConstants.LIMIT_INFO;
+import static com.autotune.utils.KruizeConstants.KRUIZE_BULK_API.NotificationConstants.METADATA_PROFILE_NOT_FOUND;
+import static com.autotune.utils.KruizeConstants.KRUIZE_BULK_API.NotificationConstants.NOTHING_INFO;
+import com.autotune.utils.KruizeConstants.KRUIZE_BULK_API.NotificationConstants.WebHookStatus;
+import static com.autotune.utils.KruizeConstants.KRUIZE_BULK_API.START_TIME;
+import static com.autotune.utils.KruizeConstants.KRUIZE_BULK_API.STEPS;
+import com.autotune.utils.MetricsConfig;
+import com.autotune.utils.Utils;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import io.micrometer.core.instrument.Timer;
 
 
 /**
@@ -145,6 +179,7 @@ public class BulkJobManager implements Runnable {
         try {
             String statusValue = "failure";
             MetricsConfig.activeJobs.incrementAndGet();
+            LOGGER.info("Starting bulk job execution for job_id: {} - pinky", jobID);
             io.micrometer.core.instrument.Timer.Sample timerRunJob = Timer.start(MetricsConfig.meterRegistry());
             DataSourceMetadataInfo metadataInfo = null;
             DataSourceManager dataSourceManager = new DataSourceManager();
@@ -153,16 +188,23 @@ public class BulkJobManager implements Runnable {
             Map<String, String> includeResourcesMap = new HashMap<>();
             Map<String, String> excludeResourcesMap = new HashMap<>();
             try {
+                LOGGER.info("Processing filters for job_id: {} - pinky", jobID);
                 if (this.bulkInput.getFilter() != null) {
                     labelString = getLabels(this.bulkInput.getFilter());
                     includeResourcesMap = buildRegexFilters(this.bulkInput.getFilter().getInclude());
                     excludeResourcesMap = buildRegexFilters(this.bulkInput.getFilter().getExclude());
+                    LOGGER.info("Filters processed successfully for job_id: {} - pinky", jobID);
                 }
+                
+                LOGGER.info("Validating datasource for job_id: {} - pinky", jobID);
                 if (null == this.bulkInput.getDatasource()) {
                     this.bulkInput.setDatasource(CREATE_EXPERIMENT_CONFIG_BEAN.getDatasourceName());
+                    LOGGER.info("Datasource set to default: {} for job_id: {} - pinky", this.bulkInput.getDatasource(), jobID);
                 }
                 try {
+                    LOGGER.info("Retrieving datasource info for job_id: {} - pinky", jobID);
                     datasource = CommonUtils.getDataSourceInfo(this.bulkInput.getDatasource());
+                    LOGGER.info("Datasource info retrieved successfully for job_id: {} - pinky", jobID);
                 } catch (Exception e) {
                     LOGGER.error("Error in bulk job manager for job_id {} due to {}", jobID, e.getMessage());
                     e.printStackTrace();
@@ -171,36 +213,57 @@ public class BulkJobManager implements Runnable {
                     setFinalJobStatus(FAILED, String.valueOf(HttpURLConnection.HTTP_BAD_REQUEST), notification, datasource);
                 }
 
+                LOGGER.info("Handling metadata profile for job_id: {} - pinky", jobID);
                 String metadataProfileName = handleMetadataProfile(datasource);
+                LOGGER.info("Metadata profile set to: {} for job_id: {} - pinky", metadataProfileName, jobID);
 
+                LOGGER.info("Handling measurement duration for job_id: {} - pinky", jobID);
                 int measurementDuration = handleMeasurementDuration(datasource);
+                LOGGER.info("Measurement duration set to: {} for job_id: {} - pinky", measurementDuration, jobID);
 
                 if (null != datasource) {
+                    LOGGER.info("Processing date range for job_id: {} - pinky", jobID);
                     JSONObject daterange = processDateRange(this.bulkInput.getTime_range());
+                    LOGGER.info("Date range processed for job_id: {} - pinky", jobID);
+                    
                     if (null != daterange) {
+                        LOGGER.info("Importing metadata from datasource for job_id: {} - pinky", jobID);
                         metadataInfo = dataSourceManager.importMetadataFromDataSource(metadataProfileName, datasource, labelString, (Long) daterange.get(START_TIME),
                                 (Long) daterange.get(END_TIME), (Integer) daterange.get(STEPS), measurementDuration, includeResourcesMap, excludeResourcesMap);
                     } else {
+                        LOGGER.info("Importing metadata from datasource without date range for job_id: {} - pinky", jobID);
                         metadataInfo = dataSourceManager.importMetadataFromDataSource(metadataProfileName, datasource, labelString, 0, 0,
                                 0, measurementDuration, includeResourcesMap, excludeResourcesMap);
                     }
+                    LOGGER.info("Metadata import completed for job_id: {} - pinky", jobID);
+                    
                     if (null == metadataInfo) {
+                        LOGGER.info("No metadata info found for job_id: {} - pinky", jobID);
                         setFinalJobStatus(COMPLETED, String.valueOf(HttpURLConnection.HTTP_OK), NOTHING_INFO, datasource);
                     } else {
+                        LOGGER.info("Storing metadata in job data for job_id: {} - pinky", jobID);
                         jobData.setMetadata(metadataInfo);
-                        Map<String, CreateExperimentAPIObject> createExperimentAPIObjectMap = getExperimentMap(labelString, jobData, metadataInfo, datasource); //Todo Store this map in buffer and use it if BulkAPI pods restarts and support experiment_type
-                        //  TODO: Remove getExperimentMap and instead collect all metadata, process it, and create experiments dynamically during metadata iteration.
+                        
+                        LOGGER.info("Building experiment map for job_id: {} - pinky", jobID);
+                        Map<String, CreateExperimentAPIObject> createExperimentAPIObjectMap = getExperimentMap(labelString, jobData, metadataInfo, datasource);
+                        LOGGER.info("Experiment map built with {} experiments for job_id: {} - pinky", createExperimentAPIObjectMap.size(), jobID);
+                        
                         jobData.getSummary().setTotal_experiments(createExperimentAPIObjectMap.size());
                         jobData.getSummary().setProcessed_experiments(0);
+                        
                         if (jobData.getSummary().getTotal_experiments() > KruizeDeploymentInfo.bulk_api_limit) {
+                            LOGGER.warn("Total experiments {} exceeds limit {} for job_id: {} - pinky", jobData.getSummary().getTotal_experiments(), KruizeDeploymentInfo.bulk_api_limit, jobID);
                             setFinalJobStatus(FAILED, String.valueOf(HttpURLConnection.HTTP_BAD_REQUEST), LIMIT_INFO, datasource);
                         } else {
-                            if (!KruizeDeploymentInfo.test_use_only_cache_job_in_mem) {                       // Todo Try to avoid this check in multiple places
+                            if (!KruizeDeploymentInfo.test_use_only_cache_job_in_mem) {
+                                LOGGER.info("Saving job to database for job_id: {} - pinky", jobID);
                                 new ExperimentDAOImpl().bulkJobSave(jobData.getBulkJobForDB("{}"));
                             }
                             try {
+                                LOGGER.info("Starting experiment processing for job_id: {} - pinky", jobID);
                                 processExperiments(datasource, createExperimentAPIObjectMap);
                             } finally {
+                                LOGGER.info("Shutting down create executor for job_id: {} - pinky", jobID);
                                 // Shutdown createExecutor and wait for it to finish
                                 createExecutor.shutdown();
                                 while (!createExecutor.isTerminated()) {
@@ -211,6 +274,9 @@ public class BulkJobManager implements Runnable {
                                         break;
                                     }
                                 }
+                                LOGGER.info("Create executor shutdown completed for job_id: {} - pinky", jobID);
+                                
+                                LOGGER.info("Shutting down generate executor for job_id: {} - pinky", jobID);
                                 // Shutdown generateExecutor and wait for it to finish
                                 generateExecutor.shutdown();
                                 while (!generateExecutor.isTerminated()) {
@@ -221,13 +287,18 @@ public class BulkJobManager implements Runnable {
                                         break;
                                     }
                                 }
+                                LOGGER.info("Generate executor shutdown completed for job_id: {} - pinky", jobID);
+                                
+                                LOGGER.info("Shutting down Kafka manager for job_id: {} - pinky", jobID);
                                 // Shutdown kafkaExecutor
                                 if (kruizeKafkaManager != null) {
                                     kruizeKafkaManager.shutdownKafkaManager();
                                 }
+                                LOGGER.info("Kafka manager shutdown completed for job_id: {} - pinky", jobID);
 
                                 if (jobData.getSummary().getTotal_experiments() == jobData.getSummary().getProcessed_experiments().get()) {
                                     statusValue = "success";
+                                    LOGGER.info("Job completed successfully for job_id: {} - pinky", jobID);
                                 }
                             }
                         }
@@ -255,6 +326,7 @@ public class BulkJobManager implements Runnable {
                     timerRunJob.stop(MetricsConfig.timerRunJob);
                 }
                 MetricsConfig.activeJobs.decrementAndGet();
+                LOGGER.info("Bulk job execution completed for job_id: {} with status: {} - pinky", jobID, statusValue);
             }
         } catch (Exception e) {
             LOGGER.error("Error in bulk job manager for job_id {} due to {}", jobID, e.getMessage());
@@ -528,6 +600,7 @@ public class BulkJobManager implements Runnable {
                                         CreateExperimentAPIObject apiObject = prepareCreateExperimentJSONInput(dc, dsc, dsw, namespace,
                                                 experiment_name, createExperimentAPIObjectList);
                                         createExperimentAPIObjectMap.put(experiment_name, apiObject);
+                                        LOGGER.info("Added experiment to map - experiment_name: {} for job_id: {} - pinky", experiment_name, jobID);
                                     }
                                 }
                             }
@@ -535,6 +608,8 @@ public class BulkJobManager implements Runnable {
                     }
                 }
             }
+            
+            LOGGER.info("Experiment map created with {} total experiments for job_id: {} - pinky", createExperimentAPIObjectMap.size(), jobID);
             return createExperimentAPIObjectMap;
         } finally {
             if (null != timerGetExpMap) {

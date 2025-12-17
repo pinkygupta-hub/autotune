@@ -15,19 +15,6 @@
  *******************************************************************************/
 package com.autotune.common.datasource;
 
-import com.autotune.analyzer.metadataProfiles.MetadataProfile;
-import com.autotune.analyzer.metadataProfiles.MetadataProfileCollection;
-import com.autotune.analyzer.utils.AnalyzerConstants;
-import com.autotune.common.data.dataSourceMetadata.*;
-import com.autotune.utils.GenericRestApiClient;
-import com.autotune.utils.KruizeConstants;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.security.KeyManagementException;
@@ -38,7 +25,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.autotune.analyzer.metadataProfiles.MetadataProfile;
+import com.autotune.analyzer.metadataProfiles.MetadataProfileCollection;
+import com.autotune.analyzer.utils.AnalyzerConstants;
 import static com.autotune.analyzer.utils.AnalyzerConstants.ServiceConstants.CHARACTER_ENCODING;
+import com.autotune.common.data.dataSourceMetadata.DataSource;
+import com.autotune.common.data.dataSourceMetadata.DataSourceContainer;
+import com.autotune.common.data.dataSourceMetadata.DataSourceMetadataHelper;
+import com.autotune.common.data.dataSourceMetadata.DataSourceMetadataInfo;
+import com.autotune.common.data.dataSourceMetadata.DataSourceNamespace;
+import com.autotune.common.data.dataSourceMetadata.DataSourceWorkload;
+import com.autotune.utils.GenericRestApiClient;
+import com.autotune.utils.KruizeConstants;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 /**
  * DataSourceMetadataOperator is an abstraction with CRUD operations to manage DataSourceMetadataInfo Object
@@ -197,9 +202,18 @@ public class DataSourceMetadataOperator {
         fields.forEach(field -> {
             String includeRegex = includeResources.getOrDefault(field + "Regex", "");
             String excludeRegex = excludeResources.getOrDefault(field + "Regex", "");
+            LOGGER.info("Including {}: {}", field, includeRegex);
+            LOGGER.info("Excluding {}: {}", field, excludeRegex);
             String filter = constructDynamicFilter(field, includeRegex, excludeRegex);
             String queryTemplate = getQueryTemplate(field, metadataProfile); // Helper to map fields to PromQL queries
-            queries.put(field, String.format(queryTemplate, filter));
+            String finalQuery = queryTemplate.replace(
+                        field + "!=\"\"",
+                        filter.isEmpty() ? field + "!=\"\"" : filter
+                    );
+            LOGGER.info("Final query template for field {}: {}", field, finalQuery);         
+            queries.put(field, finalQuery);
+          //  queries.put(field, String.format(queryTemplate, filter));
+            LOGGER.info("Query for {}: {}", field, queries.get(field));
         });
 
         // Construct queries
@@ -228,7 +242,7 @@ public class DataSourceMetadataOperator {
         LOGGER.info("containerQuery: {}", containerQuery);
 
         JsonArray namespacesDataResultArray = fetchQueryResults(dataSourceInfo, namespaceQuery, startTime, endTime, steps);
-        LOGGER.debug("namespacesDataResultArray: {}", namespacesDataResultArray);
+        LOGGER.info("namespacesDataResultArray: {}", namespacesDataResultArray);
         if (!op.validateResultArray(namespacesDataResultArray)) {
             dataSourceMetadataInfo = dataSourceDetailsHelper.createDataSourceMetadataInfoObject(dataSourceName, null);
         } else {
@@ -237,7 +251,7 @@ public class DataSourceMetadataOperator {
              * Value: DataSourceNamespace object corresponding to a namespace
              */
             HashMap<String, DataSourceNamespace> datasourceNamespaces = dataSourceDetailsHelper.getActiveNamespaces(namespacesDataResultArray);
-            LOGGER.debug("datasourceNamespaces: {}", datasourceNamespaces.keySet());
+            LOGGER.info("datasourceNamespaces: {}", datasourceNamespaces.keySet());
             dataSourceMetadataInfo = dataSourceDetailsHelper.createDataSourceMetadataInfoObject(dataSourceName, datasourceNamespaces);
 
             /**
@@ -251,7 +265,7 @@ public class DataSourceMetadataOperator {
              */
             HashMap<String, HashMap<String, DataSourceWorkload>> datasourceWorkloads = new HashMap<>();
             JsonArray workloadDataResultArray = fetchQueryResults(dataSourceInfo, workloadQuery, startTime, endTime, steps);
-            LOGGER.debug("workloadDataResultArray: {}", workloadDataResultArray);
+            LOGGER.info("workloadDataResultArray: {}", workloadDataResultArray);
 
             if (op.validateResultArray(workloadDataResultArray)) {
                 datasourceWorkloads = dataSourceDetailsHelper.getWorkloadInfo(workloadDataResultArray);
@@ -271,7 +285,7 @@ public class DataSourceMetadataOperator {
             HashMap<String, HashMap<String, DataSourceContainer>> datasourceContainers = new HashMap<>();
             JsonArray containerDataResultArray = fetchQueryResults(dataSourceInfo, containerQuery, startTime, endTime, steps);
 
-            LOGGER.debug("containerDataResultArray: {}", containerDataResultArray);
+            LOGGER.info("containerDataResultArray: {}", containerDataResultArray);
 
             if (op.validateResultArray(containerDataResultArray)) {
                 datasourceContainers = dataSourceDetailsHelper.getContainerInfo(containerDataResultArray);
@@ -285,33 +299,56 @@ public class DataSourceMetadataOperator {
 
     }
 
-    // Helper function to map fields to query templates
-    private String getQueryTemplate(String field, MetadataProfile metadataProfile) {
-        DataSourceMetadataHelper dataSourceDetailsHelper = new DataSourceMetadataHelper();
 
-        return switch (field) {
-            case "namespace" -> dataSourceDetailsHelper.getQueryFromProfile(metadataProfile, AnalyzerConstants.NAMESPACE);
-            case "workload" -> dataSourceDetailsHelper.getQueryFromProfile(metadataProfile, AnalyzerConstants.WORKLOAD);
-            case "container" -> dataSourceDetailsHelper.getQueryFromProfile(metadataProfile, AnalyzerConstants.CONTAINER);
-            default -> throw new IllegalArgumentException("Unknown field: " + field);
-        };
+    // Helper function to map fields to query templates
+    // private String getQueryTemplate(String field, MetadataProfile metadataProfile) {
+    //     DataSourceMetadataHelper dataSourceDetailsHelper = new DataSourceMetadataHelper();
+
+    //     return switch (field) {
+    //         case "namespace" -> dataSourceDetailsHelper.getQueryFromProfile(metadataProfile, AnalyzerConstants.NAMESPACE);
+    //         case "workload" -> dataSourceDetailsHelper.getQueryFromProfile(metadataProfile, AnalyzerConstants.WORKLOAD);
+    //         case "container" -> dataSourceDetailsHelper.getQueryFromProfile(metadataProfile, AnalyzerConstants.CONTAINER);
+    //         default -> throw new IllegalArgumentException("Unknown field: " + field);
+    //     };
+    // }
+
+    private String getQueryTemplate(String field, MetadataProfile metadataProfile) {
+    DataSourceMetadataHelper dataSourceDetailsHelper = new DataSourceMetadataHelper();
+    String baseQuery;
+
+    switch (field) {
+        case "namespace" -> baseQuery = dataSourceDetailsHelper.getQueryFromProfile(metadataProfile, AnalyzerConstants.NAMESPACE);
+        case "workload" -> baseQuery = dataSourceDetailsHelper.getQueryFromProfile(metadataProfile, AnalyzerConstants.WORKLOAD);
+        case "container" -> baseQuery = dataSourceDetailsHelper.getQueryFromProfile(metadataProfile, AnalyzerConstants.CONTAINER);
+        default -> throw new IllegalArgumentException("Unknown field: " + field);
     }
+    
+    LOGGER.info("Final query template for field {}: {}", field, baseQuery);
+    return baseQuery;
+}
 
     String constructDynamicFilter(String field, String includeRegex, String excludeRegex) {
         StringBuilder filterBuilder = new StringBuilder();
+        LOGGER.info("constructDynamicFilter called for field: {}, includeRegex: {}, excludeRegex: {}", field, includeRegex, excludeRegex);
+        
         if (includeRegex.isEmpty() && excludeRegex.isEmpty()) {
             filterBuilder.append(String.format("%s!=''", field));
+            LOGGER.info("No regex provided, adding default filter for field: {}", field);
         }
         if (!includeRegex.isEmpty()) {
+            LOGGER.info("before regex filterBuilder for field {}: filterbuilder {}", field, filterBuilder.toString());
             filterBuilder.append(String.format("%s=~\"%s\"", field, includeRegex));
+            LOGGER.info("after regex filterBuilder for field {}: filterbuilder {}", field, filterBuilder.toString());
+            LOGGER.info("Added include filter for field: {} with regex: {}", field, includeRegex);
         }
         if (!excludeRegex.isEmpty()) {
             if (!filterBuilder.isEmpty()) {
                 filterBuilder.append(",");
             }
             filterBuilder.append(String.format("%s!~\"%s\"", field, excludeRegex));
+            LOGGER.info("Added exclude filter for field: {} with regex: {}", field, excludeRegex);
         }
-        LOGGER.info("filterBuilder: {}", filterBuilder);
+        LOGGER.info("Final filterBuilder for field {}: filterbuilder {}", field, filterBuilder.toString());
         return filterBuilder.toString();
     }
 

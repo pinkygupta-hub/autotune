@@ -1,5 +1,11 @@
 package com.autotune.common.data.dataSourceMetadata;
 
+import java.util.HashMap;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.autotune.analyzer.metadataProfiles.MetadataProfile;
 import com.autotune.common.data.metrics.Metric;
 import com.autotune.utils.KruizeConstants;
@@ -7,11 +13,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * Utility class for handling DataSourceMetadataInfo and related metadata.
@@ -449,14 +450,32 @@ public class DataSourceMetadataHelper {
             LOGGER.error(KruizeConstants.DataSourceConstants.DataSourceMetadataErrorMsgs.CONTAINER_METADATA_UPDATE_ERROR + e.getMessage());
         }
     }
+    // public String getQueryFromProfile(MetadataProfile metadataProfile, String metricName) {
+    //     List<Metric> metrics = metadataProfile.getQueryVariables();
+    //     for (Metric metric : metrics) {
+    //         String name = metric.getName();
+
+    //         if (name.contains(metricName)) {
+    //             return metric.getAggregationFunctionsMap().get(KruizeConstants.JSONKeys.SUM).getQuery();
+    //         }
+    //     }
+    //     return null;
+    // }
+
     public String getQueryFromProfile(MetadataProfile metadataProfile, String metricName) {
-        List<Metric> metrics = metadataProfile.getQueryVariables();
-        for (Metric metric : metrics) {
-            String name = metric.getName();
-            if (name.contains(metricName)) {
-                return metric.getAggregationFunctionsMap().get(KruizeConstants.JSONKeys.SUM).getQuery();
-            }
+    List<Metric> metrics = metadataProfile.getQueryVariables();
+    for (Metric metric : metrics) {
+        String name = metric.getName();
+        LOGGER.info("Checking metric: {}", name);
+         // log each metric being checked
+        
+        if (name.contains(metricName)) {
+            String query = metric.getAggregationFunctionsMap().get(KruizeConstants.JSONKeys.SUM).getQuery();
+            LOGGER.info("Match found for metric '{}', returning query: {}", metricName, query);
+            return query;
         }
-        return null;
     }
+    LOGGER.warn("No query found for metric '{}'", metricName); // log if no match is found
+    return null;
+}
 }
