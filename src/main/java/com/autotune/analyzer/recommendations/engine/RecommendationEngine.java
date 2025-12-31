@@ -23,6 +23,7 @@ import com.autotune.common.data.result.IntervalResults;
 import com.autotune.common.data.result.NamespaceData;
 import com.autotune.common.data.system.info.device.DeviceDetails;
 import com.autotune.common.data.system.info.device.accelerator.NvidiaAcceleratorDeviceData;
+import com.autotune.common.datasource.DataSourceCollection;
 import com.autotune.common.datasource.DataSourceInfo;
 import com.autotune.common.exceptions.DataSourceNotExist;
 import com.autotune.common.k8sObjects.K8sObject;
@@ -654,7 +655,7 @@ public class RecommendationEngine implements RecommendationEngineService {
                             model,
                             containerData,
                             monitoringEndTime,
-                            kruizeObject.getRecommendation_settings(),
+                            kruizeObject,
                             currentConfig,
                             termsEntry);
 
@@ -731,7 +732,7 @@ public class RecommendationEngine implements RecommendationEngineService {
 
     private MappedRecommendationForModel generateRecommendationBasedOnModel(Timestamp monitoringStartTime, RecommendationModel model, ContainerData containerData,
                                                                             Timestamp monitoringEndTime,
-                                                                            RecommendationSettings recommendationSettings,
+                                                                            KruizeObject kruizeObject,
                                                                             HashMap<AnalyzerConstants.ResourceSetting,
                                                                                     HashMap<AnalyzerConstants.RecommendationItem,
                                                                                             RecommendationConfigItem>> currentConfigMap,
@@ -742,6 +743,7 @@ public class RecommendationEngine implements RecommendationEngineService {
         double cpuThreshold = DEFAULT_CPU_THRESHOLD;
         // Set Memory threshold to default
         double memoryThreshold = DEFAULT_MEMORY_THRESHOLD;
+        RecommendationSettings recommendationSettings = kruizeObject.getRecommendation_settings();
         if (null != recommendationSettings) {
             Double threshold = recommendationSettings.getThreshold();
             if (null == threshold) {
@@ -822,7 +824,12 @@ public class RecommendationEngine implements RecommendationEngineService {
             internalMapToPopulate.put(RecommendationConstants.RecommendationEngine.InternalConstants.RECOMMENDED_MEMORY_REQUEST, recommendationMemRequest);
             internalMapToPopulate.put(RecommendationConstants.RecommendationEngine.InternalConstants.RECOMMENDED_MEMORY_LIMIT, recommendationMemLimits);
 
-            List<RecommendationConfigEnv> runtimeRecommList = new ArrayList<>(); //TODO: need to update this list
+            DataSourceInfo dataSourceInfo = DataSourceCollection.getInstance().getDataSourcesCollection().get(kruizeObject.getDataSource());
+            List<RecommendationConfigEnv> runtimeRecommList = new ArrayList<>();
+            if (KruizeSupportedTypes.RUNTIMES_SUPPORTED_DATASOURCES.contains(dataSourceInfo.getServiceName())) {
+                //TODO: add logic to handle runtimes env
+            }
+
             // Call the populate method to validate and populate the recommendation object
             boolean isSuccess = populateRecommendation(
                     termEntry,
@@ -2718,5 +2725,10 @@ public class RecommendationEngine implements RecommendationEngineService {
                 .toList();
     }
 
+    private void addIfNotEmpty(List<RecommendationConfigEnv> list, String name, StringBuilder valueBuilder) {
+        if (valueBuilder != null && !valueBuilder.toString().isEmpty()) {
+            list.add(new RecommendationConfigEnv(name, valueBuilder.toString()));
+        }
+    }
 }
 
