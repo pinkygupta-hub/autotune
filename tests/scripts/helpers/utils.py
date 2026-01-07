@@ -119,13 +119,10 @@ UPDATE_PERF_PROFILE_MISSING_PROFILE_ERROR_MSG = "Validation failed: Performance 
 UPDATE_PERF_PROFILE_ALREADY_UPDATED_MSG = "Validation failed: Performance profile '%s' already updated with the version %.1f"
 UPDATE_PERF_PROFILE_SLO_ALREADY_UPDATED_MSG = "Validation failed: Performance profile '%s' already updated with the provided SLO data"
 UPDATE_PERF_PROFILE_SUPERSET_ERROR = "Validation failed: Updated profile must be a superset of existing data"
-<<<<<<< HEAD
-=======
 DELETE_PERF_PROFILE_SUCCESS_MSG = "Performance profile %s deleted successfully. View Performance Profiles at /listPerformanceProfiles"
 DELETE_PERF_PROFILE_MISSING_NAME_ERROR = "Performance profile name is required."
 DELETE_PERF_PROFILE_NON_EXISTENT_NAME_ERROR = "Not Found: performance_profile does not exist: %s"
 DELETE_PERF_PROFILE_EXPERIMENT_ASSOCIATION_ERROR = "Performance Profile '%s' cannot be deleted as it is currently associated with %d experiment."
->>>>>>> b5be5246 (add test for invalid datasource)
 DATASOURCE_NOT_SERVICEABLE = "Datasource is not serviceable."
 
 
@@ -1272,6 +1269,31 @@ def get_kruize_pod(namespace):
     print(f"pod name = {pod_name}")
     return pod_name.rstrip()
 
+def get_kruize_logs(cluster_type):
+    """
+    Fetches logs (stdout) from the Kruize pod.
+    Tail defaults to last 500 lines for speed.
+    """
+    tail = 500
+    # get the namespace based on cluster
+    if cluster_type == "minikube":
+        namespace = "monitoring"
+    else:
+        namespace = "openshift-tuning"
+
+    pod = get_kruize_pod(namespace)
+
+    try:
+        cmd = [
+            "kubectl", "logs",
+            pod,
+            "-n", namespace,
+            f"--tail={tail}"
+        ]
+        logs = subprocess.check_output(cmd, text=True)
+        return logs
+    except Exception as e:
+        raise RuntimeError(f"Failed to fetch logs from pod {pod}: {e}")
 
 def delete_kruize_pod(namespace):
     pod_name = get_kruize_pod(namespace)
