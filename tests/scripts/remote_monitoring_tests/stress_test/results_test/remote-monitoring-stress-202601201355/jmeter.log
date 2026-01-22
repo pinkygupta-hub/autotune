@@ -1,0 +1,27 @@
+Creating summariser <summary>
+Created the tree successfully using jmx/kruize_remote_monitoring_stress.jmx
+Starting standalone test @ 2026 Jan 20 13:59:08 IST (1768897748194)
+Waiting for possible Shutdown/StopTestNow/HeapDump/ThreadDump message on port 4445
+summary +      3 in 00:00:24 =    0.1/s Avg:    87 Min:    35 Max:   187 Err:     0 (0.00%) Active: 1 Started: 3 Finished: 2
+summary +      5 in 00:01:00 =    0.1/s Avg:    28 Min:    23 Max:    35 Err:     0 (0.00%) Active: 1 Started: 8 Finished: 7
+summary =      8 in 00:01:24 =    0.1/s Avg:    50 Min:    23 Max:   187 Err:     0 (0.00%)
+summary +     12 in 00:01:00 =    0.2/s Avg:   410 Min:    31 Max:  1868 Err:     0 (0.00%) Active: 1 Started: 14 Finished: 13
+summary =     20 in 00:02:24 =    0.1/s Avg:   266 Min:    23 Max:  1868 Err:     0 (0.00%)
+summary +     15 in 00:01:00 =    0.3/s Avg:   206 Min:    62 Max:   677 Err:     0 (0.00%) Active: 1 Started: 19 Finished: 18
+summary =     35 in 00:03:24 =    0.2/s Avg:   240 Min:    23 Max:  1868 Err:     0 (0.00%)
+summary +     95 in 00:02:27 =    0.6/s Avg:   145 Min:     9 Max:   554 Err:     0 (0.00%) Active: 1 Started: 32 Finished: 31
+summary =    130 in 00:05:52 =    0.4/s Avg:   170 Min:     9 Max:  1868 Err:     0 (0.00%)
+summary +    164 in 00:00:30 =    5.5/s Avg:   164 Min:     6 Max:   592 Err:     0 (0.00%) Active: 1 Started: 34 Finished: 33
+summary =    294 in 00:06:22 =    0.8/s Avg:   167 Min:     6 Max:  1868 Err:     0 (0.00%)
+summary +    144 in 00:00:30 =    4.8/s Avg:    98 Min:     3 Max:   339 Err:     0 (0.00%) Active: 1 Started: 37 Finished: 36
+summary =    438 in 00:06:52 =    1.1/s Avg:   144 Min:     3 Max:  1868 Err:     0 (0.00%)
+summary +    163 in 00:00:35 =    4.7/s Avg:   102 Min:     4 Max:   361 Err:     0 (0.00%) Active: 1 Started: 40 Finished: 39
+summary =    601 in 00:07:26 =    1.3/s Avg:   133 Min:     3 Max:  1868 Err:     0 (0.00%)
+summary +     62 in 00:00:30 =    2.1/s Avg:    96 Min:     3 Max:   318 Err:     0 (0.00%) Active: 1 Started: 43 Finished: 42
+summary =    663 in 00:07:56 =    1.4/s Avg:   129 Min:     3 Max:  1868 Err:     0 (0.00%)
+summary +      5 in 00:01:00 =    0.1/s Avg:    16 Min:     9 Max:    19 Err:     0 (0.00%) Active: 1 Started: 48 Finished: 47
+summary =    668 in 00:08:56 =    1.2/s Avg:   129 Min:     3 Max:  1868 Err:     0 (0.00%)
+summary +      2 in 00:00:24 =    0.1/s Avg:    17 Min:    15 Max:    19 Err:     0 (0.00%) Active: 0 Started: 50 Finished: 50
+summary =    670 in 00:09:20 =    1.2/s Avg:   128 Min:     3 Max:  1868 Err:     0 (0.00%)
+Tidying up ...    @ 2026 Jan 20 14:08:28 IST (1768898308777)
+... end of run

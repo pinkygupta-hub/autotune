@@ -1,0 +1,8 @@
+Invoking jmeter setup
+Invoking jmeter setup...done
+Setting up kruize...
+Setting up kruize...Done
+Port forward prometheus...
+Port forward prometheus...done
+./monitor-metrics-promql.sh 1 1800 /home/pg/Documents/workspace/autotune-fork-project/autotune/tests/scripts/remote_monitoring_tests/stress_test/results_test/remote-monitoring-stress-202601201332/resource_usage localhost kruize minikube kruize kruize monitoring &
+

@@ -1,0 +1,675 @@
+2026-01-20 13:50:43,803 INFO o.a.j.u.JMeterUtils: Setting Locale to en_EN
+2026-01-20 13:50:43,816 INFO o.a.j.JMeter: Loading user properties from: /home/pg/Documents/workspace/autotune-fork-project/autotune/tests/scripts/remote_monitoring_tests/stress_test/apache-jmeter-5.5/bin/user.properties
+2026-01-20 13:50:43,817 INFO o.a.j.JMeter: Loading system properties from: /home/pg/Documents/workspace/autotune-fork-project/autotune/tests/scripts/remote_monitoring_tests/stress_test/apache-jmeter-5.5/bin/system.properties
+2026-01-20 13:50:43,817 INFO o.a.j.JMeter: Setting JMeter property: host=192.168.49.2
+2026-01-20 13:50:43,817 INFO o.a.j.JMeter: Setting JMeter property: port=31760
+2026-01-20 13:50:43,817 INFO o.a.j.JMeter: Setting JMeter property: users=10
+2026-01-20 13:50:43,817 INFO o.a.j.JMeter: Setting JMeter property: num_res=15
+2026-01-20 13:50:43,818 INFO o.a.j.JMeter: Setting JMeter property: logdir=/home/pg/Documents/workspace/autotune-fork-project/autotune/tests/scripts/remote_monitoring_tests/stress_test/results_test/remote-monitoring-stress-202601201345/jmeter_logs
+2026-01-20 13:50:43,818 INFO o.a.j.JMeter: Setting JMeter property: rampup=120
+2026-01-20 13:50:43,818 INFO o.a.j.JMeter: Setting JMeter property: loop=1
+2026-01-20 13:50:43,823 INFO o.a.j.JMeter: Copyright (c) 1998-2022 The Apache Software Foundation
+2026-01-20 13:50:43,824 INFO o.a.j.JMeter: Version 5.5
+2026-01-20 13:50:43,824 INFO o.a.j.JMeter: java.version=25.0.1
+2026-01-20 13:50:43,824 INFO o.a.j.JMeter: java.vm.name=Java HotSpot(TM) 64-Bit Server VM
+2026-01-20 13:50:43,824 INFO o.a.j.JMeter: os.name=Linux
+2026-01-20 13:50:43,824 INFO o.a.j.JMeter: os.arch=amd64
+2026-01-20 13:50:43,824 INFO o.a.j.JMeter: os.version=6.17.9-300.fc43.x86_64
+2026-01-20 13:50:43,824 INFO o.a.j.JMeter: file.encoding=UTF-8
+2026-01-20 13:50:43,824 INFO o.a.j.JMeter: java.awt.headless=true
+2026-01-20 13:50:43,824 INFO o.a.j.JMeter: Max memory     =1073741824
+2026-01-20 13:50:43,824 INFO o.a.j.JMeter: Available Processors =20
+2026-01-20 13:50:43,837 INFO o.a.j.JMeter: Default Locale=English (EN)
+2026-01-20 13:50:43,837 INFO o.a.j.JMeter: JMeter  Locale=English (EN)
+2026-01-20 13:50:43,837 INFO o.a.j.JMeter: JMeterHome=/home/pg/Documents/workspace/autotune-fork-project/autotune/tests/scripts/remote_monitoring_tests/stress_test/apache-jmeter-5.5
+2026-01-20 13:50:43,837 INFO o.a.j.JMeter: user.dir  =/home/pg/Documents/workspace/autotune-fork-project/autotune/tests/scripts/remote_monitoring_tests/stress_test
+2026-01-20 13:50:43,838 INFO o.a.j.JMeter: PWD       =/home/pg/Documents/workspace/autotune-fork-project/autotune/tests/scripts/remote_monitoring_tests/stress_test
+2026-01-20 13:50:43,838 INFO o.a.j.JMeter: IP: 127.0.0.1 Name: li-d9def94c-28e3-11b2-a85c-c63c2bb3149f.ibm.com FullName: localhost
+2026-01-20 13:50:43,846 INFO o.a.j.s.FileServer: Default base='/home/pg/Documents/workspace/autotune-fork-project/autotune/tests/scripts/remote_monitoring_tests/stress_test'
+2026-01-20 13:50:43,847 INFO o.a.j.s.FileServer: Set new base='/home/pg/Documents/workspace/autotune-fork-project/autotune/tests/scripts/remote_monitoring_tests/stress_test/jmx'
+2026-01-20 13:50:44,072 INFO o.a.j.s.SaveService: Testplan (JMX) version: 2.2. Testlog (JTL) version: 2.2
+2026-01-20 13:50:44,091 INFO o.a.j.s.SaveService: Using SaveService properties version 5.0
+2026-01-20 13:50:44,094 INFO o.a.j.s.SaveService: Using SaveService properties file encoding UTF-8
+2026-01-20 13:50:44,097 INFO o.a.j.s.SaveService: Loading file: jmx/kruize_remote_monitoring_stress.jmx
+2026-01-20 13:50:44,134 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/html is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2026-01-20 13:50:44,134 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for application/xhtml+xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2026-01-20 13:50:44,134 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for application/xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2026-01-20 13:50:44,134 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2026-01-20 13:50:44,134 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/vnd.wap.wml is org.apache.jmeter.protocol.http.parser.RegexpHTMLParser
+2026-01-20 13:50:44,134 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/css is org.apache.jmeter.protocol.http.parser.CssParser
+2026-01-20 13:50:44,174 INFO o.a.j.JMeter: Creating summariser <summary>
+2026-01-20 13:50:44,183 INFO o.a.j.e.StandardJMeterEngine: Running the test!
+2026-01-20 13:50:44,184 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2026-01-20 13:50:44,184 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2026-01-20 13:50:44,189 INFO o.a.j.e.u.CompoundVariable: Note: Function class names must contain the string: '.functions.'
+2026-01-20 13:50:44,190 INFO o.a.j.e.u.CompoundVariable: Note: Function class names must not contain the string: '.gui.'
+2026-01-20 13:50:44,436 INFO o.a.j.JMeter: Running test (1768897244436)
+2026-01-20 13:50:44,462 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 1 : Create Experiments
+2026-01-20 13:50:44,463 INFO o.a.j.e.StandardJMeterEngine: Starting 10 threads for group Create Experiments.
+2026-01-20 13:50:44,463 INFO o.a.j.e.StandardJMeterEngine: Thread will continue on error
+2026-01-20 13:50:44,463 INFO o.a.j.t.ThreadGroup: Starting thread group... number=1 threads=10 ramp-up=120 delayedStart=false
+2026-01-20 13:50:44,470 INFO o.a.j.t.JMeterThread: Thread started: Create Experiments 1-1
+2026-01-20 13:50:44,472 INFO o.a.j.t.ThreadGroup: Started thread group number 1
+2026-01-20 13:50:44,472 INFO o.a.j.e.StandardJMeterEngine: Waiting for thread group: Create Experiments to finish before starting next group
+2026-01-20 13:50:44,493 INFO o.a.j.p.h.s.HTTPHCAbstractImpl: Local host = li-d9def94c-28e3-11b2-a85c-c63c2bb3149f.ibm.com
+2026-01-20 13:50:44,501 INFO o.a.j.p.h.s.HTTPHC4Impl: HTTP request retry count = 0
+2026-01-20 13:50:44,502 INFO o.a.j.s.SampleResult: Note: Sample TimeStamps are START times
+2026-01-20 13:50:44,503 INFO o.a.j.s.SampleResult: sampleresult.default.encoding is set to ISO-8859-1
+2026-01-20 13:50:44,503 INFO o.a.j.s.SampleResult: sampleresult.useNanoTime=true
+2026-01-20 13:50:44,503 INFO o.a.j.s.SampleResult: sampleresult.nanoThreadSleep=5000
+2026-01-20 13:50:44,771 INFO o.a.j.t.JMeterThread: Thread is done: Create Experiments 1-1
+2026-01-20 13:50:44,771 INFO o.a.j.t.JMeterThread: Thread finished: Create Experiments 1-1
+2026-01-20 13:50:56,467 INFO o.a.j.t.JMeterThread: Thread started: Create Experiments 1-2
+2026-01-20 13:50:56,494 INFO o.a.j.t.JMeterThread: Thread is done: Create Experiments 1-2
+2026-01-20 13:50:56,494 INFO o.a.j.t.JMeterThread: Thread finished: Create Experiments 1-2
+2026-01-20 13:51:08,466 INFO o.a.j.t.JMeterThread: Thread started: Create Experiments 1-3
+2026-01-20 13:51:08,498 INFO o.a.j.t.JMeterThread: Thread is done: Create Experiments 1-3
+2026-01-20 13:51:08,498 INFO o.a.j.t.JMeterThread: Thread finished: Create Experiments 1-3
+2026-01-20 13:51:20,465 INFO o.a.j.t.JMeterThread: Thread started: Create Experiments 1-4
+2026-01-20 13:51:20,496 INFO o.a.j.t.JMeterThread: Thread is done: Create Experiments 1-4
+2026-01-20 13:51:20,496 INFO o.a.j.t.JMeterThread: Thread finished: Create Experiments 1-4
+2026-01-20 13:51:32,465 INFO o.a.j.t.JMeterThread: Thread started: Create Experiments 1-5
+2026-01-20 13:51:32,498 INFO o.a.j.r.Summariser: summary +      5 in 00:00:48 =    0.1/s Avg:    61 Min:    25 Max:   196 Err:     0 (0.00%) Active: 1 Started: 5 Finished: 4
+2026-01-20 13:51:32,499 INFO o.a.j.t.JMeterThread: Thread is done: Create Experiments 1-5
+2026-01-20 13:51:32,499 INFO o.a.j.t.JMeterThread: Thread finished: Create Experiments 1-5
+2026-01-20 13:51:44,465 INFO o.a.j.t.JMeterThread: Thread started: Create Experiments 1-6
+2026-01-20 13:51:44,492 INFO o.a.j.t.JMeterThread: Thread is done: Create Experiments 1-6
+2026-01-20 13:51:44,492 INFO o.a.j.t.JMeterThread: Thread finished: Create Experiments 1-6
+2026-01-20 13:51:56,465 INFO o.a.j.t.JMeterThread: Thread started: Create Experiments 1-7
+2026-01-20 13:51:56,512 INFO o.a.j.t.JMeterThread: Thread is done: Create Experiments 1-7
+2026-01-20 13:51:56,512 INFO o.a.j.t.JMeterThread: Thread finished: Create Experiments 1-7
+2026-01-20 13:52:08,464 INFO o.a.j.t.JMeterThread: Thread started: Create Experiments 1-8
+2026-01-20 13:52:08,490 INFO o.a.j.t.JMeterThread: Thread is done: Create Experiments 1-8
+2026-01-20 13:52:08,491 INFO o.a.j.t.JMeterThread: Thread finished: Create Experiments 1-8
+2026-01-20 13:52:20,465 INFO o.a.j.t.JMeterThread: Thread started: Create Experiments 1-9
+2026-01-20 13:52:20,493 INFO o.a.j.t.JMeterThread: Thread is done: Create Experiments 1-9
+2026-01-20 13:52:20,494 INFO o.a.j.t.JMeterThread: Thread finished: Create Experiments 1-9
+2026-01-20 13:52:32,464 INFO o.a.j.t.JMeterThread: Thread started: Create Experiments 1-10
+2026-01-20 13:52:32,495 INFO o.a.j.r.Summariser: summary +      5 in 00:01:00 =    0.1/s Avg:    29 Min:    24 Max:    43 Err:     0 (0.00%) Active: 1 Started: 10 Finished: 9
+2026-01-20 13:52:32,496 INFO o.a.j.r.Summariser: summary =     10 in 00:01:48 =    0.1/s Avg:    45 Min:    24 Max:   196 Err:     0 (0.00%)
+2026-01-20 13:52:32,496 INFO o.a.j.t.JMeterThread: Thread is done: Create Experiments 1-10
+2026-01-20 13:52:32,496 INFO o.a.j.t.JMeterThread: Thread finished: Create Experiments 1-10
+2026-01-20 13:52:32,497 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 2 : Update Results
+2026-01-20 13:52:32,497 INFO o.a.j.e.StandardJMeterEngine: Starting 10 threads for group Update Results.
+2026-01-20 13:52:32,497 INFO o.a.j.e.StandardJMeterEngine: Thread will continue on error
+2026-01-20 13:52:32,497 INFO o.a.j.t.ThreadGroup: Starting thread group... number=2 threads=10 ramp-up=120 delayedStart=false
+2026-01-20 13:52:32,499 INFO o.a.j.t.JMeterThread: Thread started: Update Results 2-1
+2026-01-20 13:52:32,505 INFO o.a.j.t.ThreadGroup: Started thread group number 2
+2026-01-20 13:52:32,506 INFO o.a.j.e.StandardJMeterEngine: Waiting for thread group: Update Results to finish before starting next group
+2026-01-20 13:52:33,062 INFO o.a.j.t.JMeterThread: Thread finished: Update Results 2-1
+2026-01-20 13:52:33,063 ERROR o.a.j.JMeter: Uncaught exception in thread Thread[#70,Update Results 2-1,5,main]
+org.codehaus.groovy.GroovyBugError: BUG! exception in phase 'semantic analysis' in source unit 'Script1.groovy' Unsupported class file major version 69
+	at org.codehaus.groovy.control.CompilationUnit$ISourceUnitOperation.doPhaseOperation(CompilationUnit.java:905) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.CompilationUnit.compile(CompilationUnit.java:627) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.doParseClass(GroovyClassLoader.java:389) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.lambda$parseClass$3(GroovyClassLoader.java:332) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.runtime.memoize.StampedCommonCache.compute(StampedCommonCache.java:163) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.runtime.memoize.StampedCommonCache.getAndPut(StampedCommonCache.java:154) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.parseClass(GroovyClassLoader.java:330) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.parseClass(GroovyClassLoader.java:314) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.parseClass(GroovyClassLoader.java:257) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.jsr223.GroovyScriptEngineImpl.getScriptClass(GroovyScriptEngineImpl.java:336) ~[groovy-jsr223-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.jsr223.GroovyScriptEngineImpl.compile(GroovyScriptEngineImpl.java:181) ~[groovy-jsr223-3.0.11.jar:3.0.11]
+	at org.apache.jmeter.util.JSR223TestElement.processFileOrScript(JSR223TestElement.java:211) ~[ApacheJMeter_core.jar:5.5]
+	at org.apache.jmeter.protocol.java.sampler.JSR223Sampler.sample(JSR223Sampler.java:72) ~[ApacheJMeter_java.jar:5.5]
+	at org.apache.jmeter.threads.JMeterThread.doSampling(JMeterThread.java:651) ~[ApacheJMeter_core.jar:5.5]
+	at org.apache.jmeter.threads.JMeterThread.executeSamplePackage(JMeterThread.java:570) ~[ApacheJMeter_core.jar:5.5]
+	at org.apache.jmeter.threads.JMeterThread.processSampler(JMeterThread.java:501) ~[ApacheJMeter_core.jar:5.5]
+	at org.apache.jmeter.threads.JMeterThread.run(JMeterThread.java:268) ~[ApacheJMeter_core.jar:5.5]
+	at java.lang.Thread.run(Thread.java:1474) ~[?:?]
+Caused by: java.lang.IllegalArgumentException: Unsupported class file major version 69
+	at groovyjarjarasm.asm.ClassReader.<init>(ClassReader.java:199) ~[groovy-3.0.11.jar:3.0.11]
+	at groovyjarjarasm.asm.ClassReader.<init>(ClassReader.java:180) ~[groovy-3.0.11.jar:3.0.11]
+	at groovyjarjarasm.asm.ClassReader.<init>(ClassReader.java:166) ~[groovy-3.0.11.jar:3.0.11]
+	at groovyjarjarasm.asm.ClassReader.<init>(ClassReader.java:287) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.decompiled.AsmDecompiler.parseClass(AsmDecompiler.java:81) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ClassNodeResolver.findDecompiled(ClassNodeResolver.java:251) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ClassNodeResolver.tryAsLoaderClassOrScript(ClassNodeResolver.java:189) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ClassNodeResolver.findClassNode(ClassNodeResolver.java:169) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ClassNodeResolver.resolveName(ClassNodeResolver.java:125) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveToOuter(ResolveVisitor.java:869) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolve(ResolveVisitor.java:506) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveFromDefaultImports(ResolveVisitor.java:661) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveFromDefaultImports(ResolveVisitor.java:625) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolve(ResolveVisitor.java:505) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolve(ResolveVisitor.java:468) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveOrFail(ResolveVisitor.java:338) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveOrFail(ResolveVisitor.java:330) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveOrFail(ResolveVisitor.java:326) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.transformConstructorCallExpression(ResolveVisitor.java:1236) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.transform(ResolveVisitor.java:900) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.transformDeclarationExpression(ResolveVisitor.java:1298) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.transform(ResolveVisitor.java:892) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeExpressionTransformer.visitExpressionStatement(ClassCodeExpressionTransformer.java:108) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.stmt.ExpressionStatement.visit(ExpressionStatement.java:40) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.CodeVisitorSupport.visitBlockStatement(CodeVisitorSupport.java:86) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitBlockStatement(ClassCodeVisitorSupport.java:164) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.visitBlockStatement(ResolveVisitor.java:1566) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.stmt.BlockStatement.visit(BlockStatement.java:69) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitClassCodeContainer(ClassCodeVisitorSupport.java:138) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitConstructorOrMethod(ClassCodeVisitorSupport.java:111) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeExpressionTransformer.visitConstructorOrMethod(ClassCodeExpressionTransformer.java:66) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.visitConstructorOrMethod(ResolveVisitor.java:294) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitMethod(ClassCodeVisitorSupport.java:106) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassNode.visitMethods(ClassNode.java:1100) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassNode.visitContents(ClassNode.java:1093) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitClass(ClassCodeVisitorSupport.java:52) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.visitClass(ResolveVisitor.java:1483) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.startResolving(ResolveVisitor.java:262) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.CompilationUnit.lambda$new$16(CompilationUnit.java:738) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.CompilationUnit$ISourceUnitOperation.doPhaseOperation(CompilationUnit.java:901) ~[groovy-3.0.11.jar:3.0.11]
+	... 17 more
+2026-01-20 13:52:44,499 INFO o.a.j.t.JMeterThread: Thread started: Update Results 2-2
+2026-01-20 13:52:44,521 INFO o.a.j.t.JMeterThread: Thread finished: Update Results 2-2
+2026-01-20 13:52:44,521 ERROR o.a.j.JMeter: Uncaught exception in thread Thread[#71,Update Results 2-2,5,main]
+org.codehaus.groovy.GroovyBugError: BUG! exception in phase 'semantic analysis' in source unit 'Script2.groovy' Unsupported class file major version 69
+	at org.codehaus.groovy.control.CompilationUnit$ISourceUnitOperation.doPhaseOperation(CompilationUnit.java:905) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.CompilationUnit.compile(CompilationUnit.java:627) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.doParseClass(GroovyClassLoader.java:389) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.lambda$parseClass$3(GroovyClassLoader.java:332) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.runtime.memoize.StampedCommonCache.compute(StampedCommonCache.java:163) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.runtime.memoize.StampedCommonCache.getAndPut(StampedCommonCache.java:154) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.parseClass(GroovyClassLoader.java:330) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.parseClass(GroovyClassLoader.java:314) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.parseClass(GroovyClassLoader.java:257) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.jsr223.GroovyScriptEngineImpl.getScriptClass(GroovyScriptEngineImpl.java:336) ~[groovy-jsr223-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.jsr223.GroovyScriptEngineImpl.compile(GroovyScriptEngineImpl.java:181) ~[groovy-jsr223-3.0.11.jar:3.0.11]
+	at org.apache.jmeter.util.JSR223TestElement.processFileOrScript(JSR223TestElement.java:211) ~[ApacheJMeter_core.jar:5.5]
+	at org.apache.jmeter.protocol.java.sampler.JSR223Sampler.sample(JSR223Sampler.java:72) ~[ApacheJMeter_java.jar:5.5]
+	at org.apache.jmeter.threads.JMeterThread.doSampling(JMeterThread.java:651) ~[ApacheJMeter_core.jar:5.5]
+	at org.apache.jmeter.threads.JMeterThread.executeSamplePackage(JMeterThread.java:570) ~[ApacheJMeter_core.jar:5.5]
+	at org.apache.jmeter.threads.JMeterThread.processSampler(JMeterThread.java:501) ~[ApacheJMeter_core.jar:5.5]
+	at org.apache.jmeter.threads.JMeterThread.run(JMeterThread.java:268) ~[ApacheJMeter_core.jar:5.5]
+	at java.lang.Thread.run(Thread.java:1474) ~[?:?]
+Caused by: java.lang.IllegalArgumentException: Unsupported class file major version 69
+	at groovyjarjarasm.asm.ClassReader.<init>(ClassReader.java:199) ~[groovy-3.0.11.jar:3.0.11]
+	at groovyjarjarasm.asm.ClassReader.<init>(ClassReader.java:180) ~[groovy-3.0.11.jar:3.0.11]
+	at groovyjarjarasm.asm.ClassReader.<init>(ClassReader.java:166) ~[groovy-3.0.11.jar:3.0.11]
+	at groovyjarjarasm.asm.ClassReader.<init>(ClassReader.java:287) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.decompiled.AsmDecompiler.parseClass(AsmDecompiler.java:81) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ClassNodeResolver.findDecompiled(ClassNodeResolver.java:251) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ClassNodeResolver.tryAsLoaderClassOrScript(ClassNodeResolver.java:189) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ClassNodeResolver.findClassNode(ClassNodeResolver.java:169) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ClassNodeResolver.resolveName(ClassNodeResolver.java:125) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveToOuter(ResolveVisitor.java:869) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolve(ResolveVisitor.java:506) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveFromDefaultImports(ResolveVisitor.java:661) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveFromDefaultImports(ResolveVisitor.java:625) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolve(ResolveVisitor.java:505) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolve(ResolveVisitor.java:468) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveOrFail(ResolveVisitor.java:338) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveOrFail(ResolveVisitor.java:330) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveOrFail(ResolveVisitor.java:326) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.transformConstructorCallExpression(ResolveVisitor.java:1236) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.transform(ResolveVisitor.java:900) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.transformDeclarationExpression(ResolveVisitor.java:1298) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.transform(ResolveVisitor.java:892) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeExpressionTransformer.visitExpressionStatement(ClassCodeExpressionTransformer.java:108) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.stmt.ExpressionStatement.visit(ExpressionStatement.java:40) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.CodeVisitorSupport.visitBlockStatement(CodeVisitorSupport.java:86) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitBlockStatement(ClassCodeVisitorSupport.java:164) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.visitBlockStatement(ResolveVisitor.java:1566) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.stmt.BlockStatement.visit(BlockStatement.java:69) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitClassCodeContainer(ClassCodeVisitorSupport.java:138) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitConstructorOrMethod(ClassCodeVisitorSupport.java:111) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeExpressionTransformer.visitConstructorOrMethod(ClassCodeExpressionTransformer.java:66) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.visitConstructorOrMethod(ResolveVisitor.java:294) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitMethod(ClassCodeVisitorSupport.java:106) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassNode.visitMethods(ClassNode.java:1100) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassNode.visitContents(ClassNode.java:1093) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitClass(ClassCodeVisitorSupport.java:52) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.visitClass(ResolveVisitor.java:1483) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.startResolving(ResolveVisitor.java:262) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.CompilationUnit.lambda$new$16(CompilationUnit.java:738) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.CompilationUnit$ISourceUnitOperation.doPhaseOperation(CompilationUnit.java:901) ~[groovy-3.0.11.jar:3.0.11]
+	... 17 more
+2026-01-20 13:52:56,499 INFO o.a.j.t.JMeterThread: Thread started: Update Results 2-3
+2026-01-20 13:52:56,514 INFO o.a.j.t.JMeterThread: Thread finished: Update Results 2-3
+2026-01-20 13:52:56,514 ERROR o.a.j.JMeter: Uncaught exception in thread Thread[#72,Update Results 2-3,5,main]
+org.codehaus.groovy.GroovyBugError: BUG! exception in phase 'semantic analysis' in source unit 'Script3.groovy' Unsupported class file major version 69
+	at org.codehaus.groovy.control.CompilationUnit$ISourceUnitOperation.doPhaseOperation(CompilationUnit.java:905) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.CompilationUnit.compile(CompilationUnit.java:627) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.doParseClass(GroovyClassLoader.java:389) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.lambda$parseClass$3(GroovyClassLoader.java:332) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.runtime.memoize.StampedCommonCache.compute(StampedCommonCache.java:163) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.runtime.memoize.StampedCommonCache.getAndPut(StampedCommonCache.java:154) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.parseClass(GroovyClassLoader.java:330) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.parseClass(GroovyClassLoader.java:314) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.parseClass(GroovyClassLoader.java:257) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.jsr223.GroovyScriptEngineImpl.getScriptClass(GroovyScriptEngineImpl.java:336) ~[groovy-jsr223-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.jsr223.GroovyScriptEngineImpl.compile(GroovyScriptEngineImpl.java:181) ~[groovy-jsr223-3.0.11.jar:3.0.11]
+	at org.apache.jmeter.util.JSR223TestElement.processFileOrScript(JSR223TestElement.java:211) ~[ApacheJMeter_core.jar:5.5]
+	at org.apache.jmeter.protocol.java.sampler.JSR223Sampler.sample(JSR223Sampler.java:72) ~[ApacheJMeter_java.jar:5.5]
+	at org.apache.jmeter.threads.JMeterThread.doSampling(JMeterThread.java:651) ~[ApacheJMeter_core.jar:5.5]
+	at org.apache.jmeter.threads.JMeterThread.executeSamplePackage(JMeterThread.java:570) ~[ApacheJMeter_core.jar:5.5]
+	at org.apache.jmeter.threads.JMeterThread.processSampler(JMeterThread.java:501) ~[ApacheJMeter_core.jar:5.5]
+	at org.apache.jmeter.threads.JMeterThread.run(JMeterThread.java:268) ~[ApacheJMeter_core.jar:5.5]
+	at java.lang.Thread.run(Thread.java:1474) ~[?:?]
+Caused by: java.lang.IllegalArgumentException: Unsupported class file major version 69
+	at groovyjarjarasm.asm.ClassReader.<init>(ClassReader.java:199) ~[groovy-3.0.11.jar:3.0.11]
+	at groovyjarjarasm.asm.ClassReader.<init>(ClassReader.java:180) ~[groovy-3.0.11.jar:3.0.11]
+	at groovyjarjarasm.asm.ClassReader.<init>(ClassReader.java:166) ~[groovy-3.0.11.jar:3.0.11]
+	at groovyjarjarasm.asm.ClassReader.<init>(ClassReader.java:287) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.decompiled.AsmDecompiler.parseClass(AsmDecompiler.java:81) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ClassNodeResolver.findDecompiled(ClassNodeResolver.java:251) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ClassNodeResolver.tryAsLoaderClassOrScript(ClassNodeResolver.java:189) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ClassNodeResolver.findClassNode(ClassNodeResolver.java:169) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ClassNodeResolver.resolveName(ClassNodeResolver.java:125) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveToOuter(ResolveVisitor.java:869) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolve(ResolveVisitor.java:506) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveFromDefaultImports(ResolveVisitor.java:661) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveFromDefaultImports(ResolveVisitor.java:625) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolve(ResolveVisitor.java:505) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolve(ResolveVisitor.java:468) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveOrFail(ResolveVisitor.java:338) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveOrFail(ResolveVisitor.java:330) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveOrFail(ResolveVisitor.java:326) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.transformConstructorCallExpression(ResolveVisitor.java:1236) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.transform(ResolveVisitor.java:900) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.transformDeclarationExpression(ResolveVisitor.java:1298) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.transform(ResolveVisitor.java:892) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeExpressionTransformer.visitExpressionStatement(ClassCodeExpressionTransformer.java:108) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.stmt.ExpressionStatement.visit(ExpressionStatement.java:40) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.CodeVisitorSupport.visitBlockStatement(CodeVisitorSupport.java:86) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitBlockStatement(ClassCodeVisitorSupport.java:164) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.visitBlockStatement(ResolveVisitor.java:1566) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.stmt.BlockStatement.visit(BlockStatement.java:69) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitClassCodeContainer(ClassCodeVisitorSupport.java:138) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitConstructorOrMethod(ClassCodeVisitorSupport.java:111) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeExpressionTransformer.visitConstructorOrMethod(ClassCodeExpressionTransformer.java:66) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.visitConstructorOrMethod(ResolveVisitor.java:294) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitMethod(ClassCodeVisitorSupport.java:106) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassNode.visitMethods(ClassNode.java:1100) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassNode.visitContents(ClassNode.java:1093) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitClass(ClassCodeVisitorSupport.java:52) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.visitClass(ResolveVisitor.java:1483) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.startResolving(ResolveVisitor.java:262) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.CompilationUnit.lambda$new$16(CompilationUnit.java:738) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.CompilationUnit$ISourceUnitOperation.doPhaseOperation(CompilationUnit.java:901) ~[groovy-3.0.11.jar:3.0.11]
+	... 17 more
+2026-01-20 13:53:08,499 INFO o.a.j.t.JMeterThread: Thread started: Update Results 2-4
+2026-01-20 13:53:08,512 INFO o.a.j.t.JMeterThread: Thread finished: Update Results 2-4
+2026-01-20 13:53:08,513 ERROR o.a.j.JMeter: Uncaught exception in thread Thread[#73,Update Results 2-4,5,main]
+org.codehaus.groovy.GroovyBugError: BUG! exception in phase 'semantic analysis' in source unit 'Script4.groovy' Unsupported class file major version 69
+	at org.codehaus.groovy.control.CompilationUnit$ISourceUnitOperation.doPhaseOperation(CompilationUnit.java:905) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.CompilationUnit.compile(CompilationUnit.java:627) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.doParseClass(GroovyClassLoader.java:389) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.lambda$parseClass$3(GroovyClassLoader.java:332) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.runtime.memoize.StampedCommonCache.compute(StampedCommonCache.java:163) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.runtime.memoize.StampedCommonCache.getAndPut(StampedCommonCache.java:154) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.parseClass(GroovyClassLoader.java:330) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.parseClass(GroovyClassLoader.java:314) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.parseClass(GroovyClassLoader.java:257) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.jsr223.GroovyScriptEngineImpl.getScriptClass(GroovyScriptEngineImpl.java:336) ~[groovy-jsr223-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.jsr223.GroovyScriptEngineImpl.compile(GroovyScriptEngineImpl.java:181) ~[groovy-jsr223-3.0.11.jar:3.0.11]
+	at org.apache.jmeter.util.JSR223TestElement.processFileOrScript(JSR223TestElement.java:211) ~[ApacheJMeter_core.jar:5.5]
+	at org.apache.jmeter.protocol.java.sampler.JSR223Sampler.sample(JSR223Sampler.java:72) ~[ApacheJMeter_java.jar:5.5]
+	at org.apache.jmeter.threads.JMeterThread.doSampling(JMeterThread.java:651) ~[ApacheJMeter_core.jar:5.5]
+	at org.apache.jmeter.threads.JMeterThread.executeSamplePackage(JMeterThread.java:570) ~[ApacheJMeter_core.jar:5.5]
+	at org.apache.jmeter.threads.JMeterThread.processSampler(JMeterThread.java:501) ~[ApacheJMeter_core.jar:5.5]
+	at org.apache.jmeter.threads.JMeterThread.run(JMeterThread.java:268) ~[ApacheJMeter_core.jar:5.5]
+	at java.lang.Thread.run(Thread.java:1474) ~[?:?]
+Caused by: java.lang.IllegalArgumentException: Unsupported class file major version 69
+	at groovyjarjarasm.asm.ClassReader.<init>(ClassReader.java:199) ~[groovy-3.0.11.jar:3.0.11]
+	at groovyjarjarasm.asm.ClassReader.<init>(ClassReader.java:180) ~[groovy-3.0.11.jar:3.0.11]
+	at groovyjarjarasm.asm.ClassReader.<init>(ClassReader.java:166) ~[groovy-3.0.11.jar:3.0.11]
+	at groovyjarjarasm.asm.ClassReader.<init>(ClassReader.java:287) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.decompiled.AsmDecompiler.parseClass(AsmDecompiler.java:81) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ClassNodeResolver.findDecompiled(ClassNodeResolver.java:251) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ClassNodeResolver.tryAsLoaderClassOrScript(ClassNodeResolver.java:189) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ClassNodeResolver.findClassNode(ClassNodeResolver.java:169) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ClassNodeResolver.resolveName(ClassNodeResolver.java:125) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveToOuter(ResolveVisitor.java:869) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolve(ResolveVisitor.java:506) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveFromDefaultImports(ResolveVisitor.java:661) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveFromDefaultImports(ResolveVisitor.java:625) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolve(ResolveVisitor.java:505) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolve(ResolveVisitor.java:468) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveOrFail(ResolveVisitor.java:338) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveOrFail(ResolveVisitor.java:330) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveOrFail(ResolveVisitor.java:326) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.transformConstructorCallExpression(ResolveVisitor.java:1236) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.transform(ResolveVisitor.java:900) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.transformDeclarationExpression(ResolveVisitor.java:1298) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.transform(ResolveVisitor.java:892) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeExpressionTransformer.visitExpressionStatement(ClassCodeExpressionTransformer.java:108) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.stmt.ExpressionStatement.visit(ExpressionStatement.java:40) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.CodeVisitorSupport.visitBlockStatement(CodeVisitorSupport.java:86) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitBlockStatement(ClassCodeVisitorSupport.java:164) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.visitBlockStatement(ResolveVisitor.java:1566) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.stmt.BlockStatement.visit(BlockStatement.java:69) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitClassCodeContainer(ClassCodeVisitorSupport.java:138) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitConstructorOrMethod(ClassCodeVisitorSupport.java:111) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeExpressionTransformer.visitConstructorOrMethod(ClassCodeExpressionTransformer.java:66) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.visitConstructorOrMethod(ResolveVisitor.java:294) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitMethod(ClassCodeVisitorSupport.java:106) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassNode.visitMethods(ClassNode.java:1100) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassNode.visitContents(ClassNode.java:1093) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitClass(ClassCodeVisitorSupport.java:52) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.visitClass(ResolveVisitor.java:1483) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.startResolving(ResolveVisitor.java:262) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.CompilationUnit.lambda$new$16(CompilationUnit.java:738) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.CompilationUnit$ISourceUnitOperation.doPhaseOperation(CompilationUnit.java:901) ~[groovy-3.0.11.jar:3.0.11]
+	... 17 more
+2026-01-20 13:53:20,498 INFO o.a.j.t.JMeterThread: Thread started: Update Results 2-5
+2026-01-20 13:53:20,516 INFO o.a.j.t.JMeterThread: Thread finished: Update Results 2-5
+2026-01-20 13:53:20,517 ERROR o.a.j.JMeter: Uncaught exception in thread Thread[#74,Update Results 2-5,5,main]
+org.codehaus.groovy.GroovyBugError: BUG! exception in phase 'semantic analysis' in source unit 'Script5.groovy' Unsupported class file major version 69
+	at org.codehaus.groovy.control.CompilationUnit$ISourceUnitOperation.doPhaseOperation(CompilationUnit.java:905) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.CompilationUnit.compile(CompilationUnit.java:627) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.doParseClass(GroovyClassLoader.java:389) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.lambda$parseClass$3(GroovyClassLoader.java:332) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.runtime.memoize.StampedCommonCache.compute(StampedCommonCache.java:163) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.runtime.memoize.StampedCommonCache.getAndPut(StampedCommonCache.java:154) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.parseClass(GroovyClassLoader.java:330) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.parseClass(GroovyClassLoader.java:314) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.parseClass(GroovyClassLoader.java:257) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.jsr223.GroovyScriptEngineImpl.getScriptClass(GroovyScriptEngineImpl.java:336) ~[groovy-jsr223-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.jsr223.GroovyScriptEngineImpl.compile(GroovyScriptEngineImpl.java:181) ~[groovy-jsr223-3.0.11.jar:3.0.11]
+	at org.apache.jmeter.util.JSR223TestElement.processFileOrScript(JSR223TestElement.java:211) ~[ApacheJMeter_core.jar:5.5]
+	at org.apache.jmeter.protocol.java.sampler.JSR223Sampler.sample(JSR223Sampler.java:72) ~[ApacheJMeter_java.jar:5.5]
+	at org.apache.jmeter.threads.JMeterThread.doSampling(JMeterThread.java:651) ~[ApacheJMeter_core.jar:5.5]
+	at org.apache.jmeter.threads.JMeterThread.executeSamplePackage(JMeterThread.java:570) ~[ApacheJMeter_core.jar:5.5]
+	at org.apache.jmeter.threads.JMeterThread.processSampler(JMeterThread.java:501) ~[ApacheJMeter_core.jar:5.5]
+	at org.apache.jmeter.threads.JMeterThread.run(JMeterThread.java:268) ~[ApacheJMeter_core.jar:5.5]
+	at java.lang.Thread.run(Thread.java:1474) ~[?:?]
+Caused by: java.lang.IllegalArgumentException: Unsupported class file major version 69
+	at groovyjarjarasm.asm.ClassReader.<init>(ClassReader.java:199) ~[groovy-3.0.11.jar:3.0.11]
+	at groovyjarjarasm.asm.ClassReader.<init>(ClassReader.java:180) ~[groovy-3.0.11.jar:3.0.11]
+	at groovyjarjarasm.asm.ClassReader.<init>(ClassReader.java:166) ~[groovy-3.0.11.jar:3.0.11]
+	at groovyjarjarasm.asm.ClassReader.<init>(ClassReader.java:287) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.decompiled.AsmDecompiler.parseClass(AsmDecompiler.java:81) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ClassNodeResolver.findDecompiled(ClassNodeResolver.java:251) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ClassNodeResolver.tryAsLoaderClassOrScript(ClassNodeResolver.java:189) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ClassNodeResolver.findClassNode(ClassNodeResolver.java:169) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ClassNodeResolver.resolveName(ClassNodeResolver.java:125) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveToOuter(ResolveVisitor.java:869) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolve(ResolveVisitor.java:506) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveFromDefaultImports(ResolveVisitor.java:661) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveFromDefaultImports(ResolveVisitor.java:625) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolve(ResolveVisitor.java:505) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolve(ResolveVisitor.java:468) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveOrFail(ResolveVisitor.java:338) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveOrFail(ResolveVisitor.java:330) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveOrFail(ResolveVisitor.java:326) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.transformConstructorCallExpression(ResolveVisitor.java:1236) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.transform(ResolveVisitor.java:900) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.transformDeclarationExpression(ResolveVisitor.java:1298) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.transform(ResolveVisitor.java:892) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeExpressionTransformer.visitExpressionStatement(ClassCodeExpressionTransformer.java:108) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.stmt.ExpressionStatement.visit(ExpressionStatement.java:40) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.CodeVisitorSupport.visitBlockStatement(CodeVisitorSupport.java:86) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitBlockStatement(ClassCodeVisitorSupport.java:164) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.visitBlockStatement(ResolveVisitor.java:1566) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.stmt.BlockStatement.visit(BlockStatement.java:69) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitClassCodeContainer(ClassCodeVisitorSupport.java:138) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitConstructorOrMethod(ClassCodeVisitorSupport.java:111) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeExpressionTransformer.visitConstructorOrMethod(ClassCodeExpressionTransformer.java:66) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.visitConstructorOrMethod(ResolveVisitor.java:294) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitMethod(ClassCodeVisitorSupport.java:106) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassNode.visitMethods(ClassNode.java:1100) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassNode.visitContents(ClassNode.java:1093) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitClass(ClassCodeVisitorSupport.java:52) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.visitClass(ResolveVisitor.java:1483) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.startResolving(ResolveVisitor.java:262) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.CompilationUnit.lambda$new$16(CompilationUnit.java:738) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.CompilationUnit$ISourceUnitOperation.doPhaseOperation(CompilationUnit.java:901) ~[groovy-3.0.11.jar:3.0.11]
+	... 17 more
+2026-01-20 13:53:32,498 INFO o.a.j.t.JMeterThread: Thread started: Update Results 2-6
+2026-01-20 13:53:32,515 INFO o.a.j.t.JMeterThread: Thread finished: Update Results 2-6
+2026-01-20 13:53:32,515 ERROR o.a.j.JMeter: Uncaught exception in thread Thread[#75,Update Results 2-6,5,main]
+org.codehaus.groovy.GroovyBugError: BUG! exception in phase 'semantic analysis' in source unit 'Script6.groovy' Unsupported class file major version 69
+	at org.codehaus.groovy.control.CompilationUnit$ISourceUnitOperation.doPhaseOperation(CompilationUnit.java:905) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.CompilationUnit.compile(CompilationUnit.java:627) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.doParseClass(GroovyClassLoader.java:389) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.lambda$parseClass$3(GroovyClassLoader.java:332) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.runtime.memoize.StampedCommonCache.compute(StampedCommonCache.java:163) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.runtime.memoize.StampedCommonCache.getAndPut(StampedCommonCache.java:154) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.parseClass(GroovyClassLoader.java:330) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.parseClass(GroovyClassLoader.java:314) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.parseClass(GroovyClassLoader.java:257) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.jsr223.GroovyScriptEngineImpl.getScriptClass(GroovyScriptEngineImpl.java:336) ~[groovy-jsr223-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.jsr223.GroovyScriptEngineImpl.compile(GroovyScriptEngineImpl.java:181) ~[groovy-jsr223-3.0.11.jar:3.0.11]
+	at org.apache.jmeter.util.JSR223TestElement.processFileOrScript(JSR223TestElement.java:211) ~[ApacheJMeter_core.jar:5.5]
+	at org.apache.jmeter.protocol.java.sampler.JSR223Sampler.sample(JSR223Sampler.java:72) ~[ApacheJMeter_java.jar:5.5]
+	at org.apache.jmeter.threads.JMeterThread.doSampling(JMeterThread.java:651) ~[ApacheJMeter_core.jar:5.5]
+	at org.apache.jmeter.threads.JMeterThread.executeSamplePackage(JMeterThread.java:570) ~[ApacheJMeter_core.jar:5.5]
+	at org.apache.jmeter.threads.JMeterThread.processSampler(JMeterThread.java:501) ~[ApacheJMeter_core.jar:5.5]
+	at org.apache.jmeter.threads.JMeterThread.run(JMeterThread.java:268) ~[ApacheJMeter_core.jar:5.5]
+	at java.lang.Thread.run(Thread.java:1474) ~[?:?]
+Caused by: java.lang.IllegalArgumentException: Unsupported class file major version 69
+	at groovyjarjarasm.asm.ClassReader.<init>(ClassReader.java:199) ~[groovy-3.0.11.jar:3.0.11]
+	at groovyjarjarasm.asm.ClassReader.<init>(ClassReader.java:180) ~[groovy-3.0.11.jar:3.0.11]
+	at groovyjarjarasm.asm.ClassReader.<init>(ClassReader.java:166) ~[groovy-3.0.11.jar:3.0.11]
+	at groovyjarjarasm.asm.ClassReader.<init>(ClassReader.java:287) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.decompiled.AsmDecompiler.parseClass(AsmDecompiler.java:81) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ClassNodeResolver.findDecompiled(ClassNodeResolver.java:251) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ClassNodeResolver.tryAsLoaderClassOrScript(ClassNodeResolver.java:189) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ClassNodeResolver.findClassNode(ClassNodeResolver.java:169) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ClassNodeResolver.resolveName(ClassNodeResolver.java:125) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveToOuter(ResolveVisitor.java:869) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolve(ResolveVisitor.java:506) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveFromDefaultImports(ResolveVisitor.java:661) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveFromDefaultImports(ResolveVisitor.java:625) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolve(ResolveVisitor.java:505) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolve(ResolveVisitor.java:468) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveOrFail(ResolveVisitor.java:338) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveOrFail(ResolveVisitor.java:330) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveOrFail(ResolveVisitor.java:326) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.transformConstructorCallExpression(ResolveVisitor.java:1236) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.transform(ResolveVisitor.java:900) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.transformDeclarationExpression(ResolveVisitor.java:1298) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.transform(ResolveVisitor.java:892) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeExpressionTransformer.visitExpressionStatement(ClassCodeExpressionTransformer.java:108) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.stmt.ExpressionStatement.visit(ExpressionStatement.java:40) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.CodeVisitorSupport.visitBlockStatement(CodeVisitorSupport.java:86) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitBlockStatement(ClassCodeVisitorSupport.java:164) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.visitBlockStatement(ResolveVisitor.java:1566) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.stmt.BlockStatement.visit(BlockStatement.java:69) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitClassCodeContainer(ClassCodeVisitorSupport.java:138) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitConstructorOrMethod(ClassCodeVisitorSupport.java:111) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeExpressionTransformer.visitConstructorOrMethod(ClassCodeExpressionTransformer.java:66) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.visitConstructorOrMethod(ResolveVisitor.java:294) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitMethod(ClassCodeVisitorSupport.java:106) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassNode.visitMethods(ClassNode.java:1100) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassNode.visitContents(ClassNode.java:1093) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitClass(ClassCodeVisitorSupport.java:52) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.visitClass(ResolveVisitor.java:1483) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.startResolving(ResolveVisitor.java:262) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.CompilationUnit.lambda$new$16(CompilationUnit.java:738) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.CompilationUnit$ISourceUnitOperation.doPhaseOperation(CompilationUnit.java:901) ~[groovy-3.0.11.jar:3.0.11]
+	... 17 more
+2026-01-20 13:53:44,498 INFO o.a.j.t.JMeterThread: Thread started: Update Results 2-7
+2026-01-20 13:53:44,510 INFO o.a.j.t.JMeterThread: Thread finished: Update Results 2-7
+2026-01-20 13:53:44,510 ERROR o.a.j.JMeter: Uncaught exception in thread Thread[#76,Update Results 2-7,5,main]
+org.codehaus.groovy.GroovyBugError: BUG! exception in phase 'semantic analysis' in source unit 'Script7.groovy' Unsupported class file major version 69
+	at org.codehaus.groovy.control.CompilationUnit$ISourceUnitOperation.doPhaseOperation(CompilationUnit.java:905) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.CompilationUnit.compile(CompilationUnit.java:627) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.doParseClass(GroovyClassLoader.java:389) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.lambda$parseClass$3(GroovyClassLoader.java:332) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.runtime.memoize.StampedCommonCache.compute(StampedCommonCache.java:163) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.runtime.memoize.StampedCommonCache.getAndPut(StampedCommonCache.java:154) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.parseClass(GroovyClassLoader.java:330) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.parseClass(GroovyClassLoader.java:314) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.parseClass(GroovyClassLoader.java:257) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.jsr223.GroovyScriptEngineImpl.getScriptClass(GroovyScriptEngineImpl.java:336) ~[groovy-jsr223-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.jsr223.GroovyScriptEngineImpl.compile(GroovyScriptEngineImpl.java:181) ~[groovy-jsr223-3.0.11.jar:3.0.11]
+	at org.apache.jmeter.util.JSR223TestElement.processFileOrScript(JSR223TestElement.java:211) ~[ApacheJMeter_core.jar:5.5]
+	at org.apache.jmeter.protocol.java.sampler.JSR223Sampler.sample(JSR223Sampler.java:72) ~[ApacheJMeter_java.jar:5.5]
+	at org.apache.jmeter.threads.JMeterThread.doSampling(JMeterThread.java:651) ~[ApacheJMeter_core.jar:5.5]
+	at org.apache.jmeter.threads.JMeterThread.executeSamplePackage(JMeterThread.java:570) ~[ApacheJMeter_core.jar:5.5]
+	at org.apache.jmeter.threads.JMeterThread.processSampler(JMeterThread.java:501) ~[ApacheJMeter_core.jar:5.5]
+	at org.apache.jmeter.threads.JMeterThread.run(JMeterThread.java:268) ~[ApacheJMeter_core.jar:5.5]
+	at java.lang.Thread.run(Thread.java:1474) ~[?:?]
+Caused by: java.lang.IllegalArgumentException: Unsupported class file major version 69
+	at groovyjarjarasm.asm.ClassReader.<init>(ClassReader.java:199) ~[groovy-3.0.11.jar:3.0.11]
+	at groovyjarjarasm.asm.ClassReader.<init>(ClassReader.java:180) ~[groovy-3.0.11.jar:3.0.11]
+	at groovyjarjarasm.asm.ClassReader.<init>(ClassReader.java:166) ~[groovy-3.0.11.jar:3.0.11]
+	at groovyjarjarasm.asm.ClassReader.<init>(ClassReader.java:287) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.decompiled.AsmDecompiler.parseClass(AsmDecompiler.java:81) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ClassNodeResolver.findDecompiled(ClassNodeResolver.java:251) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ClassNodeResolver.tryAsLoaderClassOrScript(ClassNodeResolver.java:189) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ClassNodeResolver.findClassNode(ClassNodeResolver.java:169) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ClassNodeResolver.resolveName(ClassNodeResolver.java:125) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveToOuter(ResolveVisitor.java:869) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolve(ResolveVisitor.java:506) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveFromDefaultImports(ResolveVisitor.java:661) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveFromDefaultImports(ResolveVisitor.java:625) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolve(ResolveVisitor.java:505) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolve(ResolveVisitor.java:468) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveOrFail(ResolveVisitor.java:338) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveOrFail(ResolveVisitor.java:330) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveOrFail(ResolveVisitor.java:326) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.transformConstructorCallExpression(ResolveVisitor.java:1236) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.transform(ResolveVisitor.java:900) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.transformDeclarationExpression(ResolveVisitor.java:1298) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.transform(ResolveVisitor.java:892) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeExpressionTransformer.visitExpressionStatement(ClassCodeExpressionTransformer.java:108) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.stmt.ExpressionStatement.visit(ExpressionStatement.java:40) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.CodeVisitorSupport.visitBlockStatement(CodeVisitorSupport.java:86) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitBlockStatement(ClassCodeVisitorSupport.java:164) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.visitBlockStatement(ResolveVisitor.java:1566) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.stmt.BlockStatement.visit(BlockStatement.java:69) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitClassCodeContainer(ClassCodeVisitorSupport.java:138) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitConstructorOrMethod(ClassCodeVisitorSupport.java:111) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeExpressionTransformer.visitConstructorOrMethod(ClassCodeExpressionTransformer.java:66) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.visitConstructorOrMethod(ResolveVisitor.java:294) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitMethod(ClassCodeVisitorSupport.java:106) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassNode.visitMethods(ClassNode.java:1100) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassNode.visitContents(ClassNode.java:1093) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitClass(ClassCodeVisitorSupport.java:52) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.visitClass(ResolveVisitor.java:1483) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.startResolving(ResolveVisitor.java:262) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.CompilationUnit.lambda$new$16(CompilationUnit.java:738) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.CompilationUnit$ISourceUnitOperation.doPhaseOperation(CompilationUnit.java:901) ~[groovy-3.0.11.jar:3.0.11]
+	... 17 more
+2026-01-20 13:53:56,498 INFO o.a.j.t.JMeterThread: Thread started: Update Results 2-8
+2026-01-20 13:53:56,508 INFO o.a.j.t.JMeterThread: Thread finished: Update Results 2-8
+2026-01-20 13:53:56,508 ERROR o.a.j.JMeter: Uncaught exception in thread Thread[#77,Update Results 2-8,5,main]
+org.codehaus.groovy.GroovyBugError: BUG! exception in phase 'semantic analysis' in source unit 'Script8.groovy' Unsupported class file major version 69
+	at org.codehaus.groovy.control.CompilationUnit$ISourceUnitOperation.doPhaseOperation(CompilationUnit.java:905) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.CompilationUnit.compile(CompilationUnit.java:627) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.doParseClass(GroovyClassLoader.java:389) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.lambda$parseClass$3(GroovyClassLoader.java:332) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.runtime.memoize.StampedCommonCache.compute(StampedCommonCache.java:163) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.runtime.memoize.StampedCommonCache.getAndPut(StampedCommonCache.java:154) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.parseClass(GroovyClassLoader.java:330) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.parseClass(GroovyClassLoader.java:314) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.parseClass(GroovyClassLoader.java:257) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.jsr223.GroovyScriptEngineImpl.getScriptClass(GroovyScriptEngineImpl.java:336) ~[groovy-jsr223-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.jsr223.GroovyScriptEngineImpl.compile(GroovyScriptEngineImpl.java:181) ~[groovy-jsr223-3.0.11.jar:3.0.11]
+	at org.apache.jmeter.util.JSR223TestElement.processFileOrScript(JSR223TestElement.java:211) ~[ApacheJMeter_core.jar:5.5]
+	at org.apache.jmeter.protocol.java.sampler.JSR223Sampler.sample(JSR223Sampler.java:72) ~[ApacheJMeter_java.jar:5.5]
+	at org.apache.jmeter.threads.JMeterThread.doSampling(JMeterThread.java:651) ~[ApacheJMeter_core.jar:5.5]
+	at org.apache.jmeter.threads.JMeterThread.executeSamplePackage(JMeterThread.java:570) ~[ApacheJMeter_core.jar:5.5]
+	at org.apache.jmeter.threads.JMeterThread.processSampler(JMeterThread.java:501) ~[ApacheJMeter_core.jar:5.5]
+	at org.apache.jmeter.threads.JMeterThread.run(JMeterThread.java:268) ~[ApacheJMeter_core.jar:5.5]
+	at java.lang.Thread.run(Thread.java:1474) ~[?:?]
+Caused by: java.lang.IllegalArgumentException: Unsupported class file major version 69
+	at groovyjarjarasm.asm.ClassReader.<init>(ClassReader.java:199) ~[groovy-3.0.11.jar:3.0.11]
+	at groovyjarjarasm.asm.ClassReader.<init>(ClassReader.java:180) ~[groovy-3.0.11.jar:3.0.11]
+	at groovyjarjarasm.asm.ClassReader.<init>(ClassReader.java:166) ~[groovy-3.0.11.jar:3.0.11]
+	at groovyjarjarasm.asm.ClassReader.<init>(ClassReader.java:287) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.decompiled.AsmDecompiler.parseClass(AsmDecompiler.java:81) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ClassNodeResolver.findDecompiled(ClassNodeResolver.java:251) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ClassNodeResolver.tryAsLoaderClassOrScript(ClassNodeResolver.java:189) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ClassNodeResolver.findClassNode(ClassNodeResolver.java:169) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ClassNodeResolver.resolveName(ClassNodeResolver.java:125) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveToOuter(ResolveVisitor.java:869) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolve(ResolveVisitor.java:506) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveFromDefaultImports(ResolveVisitor.java:661) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveFromDefaultImports(ResolveVisitor.java:625) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolve(ResolveVisitor.java:505) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolve(ResolveVisitor.java:468) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveOrFail(ResolveVisitor.java:338) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveOrFail(ResolveVisitor.java:330) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveOrFail(ResolveVisitor.java:326) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.transformConstructorCallExpression(ResolveVisitor.java:1236) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.transform(ResolveVisitor.java:900) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.transformDeclarationExpression(ResolveVisitor.java:1298) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.transform(ResolveVisitor.java:892) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeExpressionTransformer.visitExpressionStatement(ClassCodeExpressionTransformer.java:108) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.stmt.ExpressionStatement.visit(ExpressionStatement.java:40) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.CodeVisitorSupport.visitBlockStatement(CodeVisitorSupport.java:86) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitBlockStatement(ClassCodeVisitorSupport.java:164) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.visitBlockStatement(ResolveVisitor.java:1566) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.stmt.BlockStatement.visit(BlockStatement.java:69) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitClassCodeContainer(ClassCodeVisitorSupport.java:138) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitConstructorOrMethod(ClassCodeVisitorSupport.java:111) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeExpressionTransformer.visitConstructorOrMethod(ClassCodeExpressionTransformer.java:66) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.visitConstructorOrMethod(ResolveVisitor.java:294) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitMethod(ClassCodeVisitorSupport.java:106) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassNode.visitMethods(ClassNode.java:1100) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassNode.visitContents(ClassNode.java:1093) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitClass(ClassCodeVisitorSupport.java:52) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.visitClass(ResolveVisitor.java:1483) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.startResolving(ResolveVisitor.java:262) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.CompilationUnit.lambda$new$16(CompilationUnit.java:738) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.CompilationUnit$ISourceUnitOperation.doPhaseOperation(CompilationUnit.java:901) ~[groovy-3.0.11.jar:3.0.11]
+	... 17 more
+2026-01-20 13:54:08,498 INFO o.a.j.t.JMeterThread: Thread started: Update Results 2-9
+2026-01-20 13:54:08,510 INFO o.a.j.t.JMeterThread: Thread finished: Update Results 2-9
+2026-01-20 13:54:08,510 ERROR o.a.j.JMeter: Uncaught exception in thread Thread[#78,Update Results 2-9,5,main]
+org.codehaus.groovy.GroovyBugError: BUG! exception in phase 'semantic analysis' in source unit 'Script9.groovy' Unsupported class file major version 69
+	at org.codehaus.groovy.control.CompilationUnit$ISourceUnitOperation.doPhaseOperation(CompilationUnit.java:905) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.CompilationUnit.compile(CompilationUnit.java:627) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.doParseClass(GroovyClassLoader.java:389) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.lambda$parseClass$3(GroovyClassLoader.java:332) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.runtime.memoize.StampedCommonCache.compute(StampedCommonCache.java:163) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.runtime.memoize.StampedCommonCache.getAndPut(StampedCommonCache.java:154) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.parseClass(GroovyClassLoader.java:330) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.parseClass(GroovyClassLoader.java:314) ~[groovy-3.0.11.jar:3.0.11]
+	at groovy.lang.GroovyClassLoader.parseClass(GroovyClassLoader.java:257) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.jsr223.GroovyScriptEngineImpl.getScriptClass(GroovyScriptEngineImpl.java:336) ~[groovy-jsr223-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.jsr223.GroovyScriptEngineImpl.compile(GroovyScriptEngineImpl.java:181) ~[groovy-jsr223-3.0.11.jar:3.0.11]
+	at org.apache.jmeter.util.JSR223TestElement.processFileOrScript(JSR223TestElement.java:211) ~[ApacheJMeter_core.jar:5.5]
+	at org.apache.jmeter.protocol.java.sampler.JSR223Sampler.sample(JSR223Sampler.java:72) ~[ApacheJMeter_java.jar:5.5]
+	at org.apache.jmeter.threads.JMeterThread.doSampling(JMeterThread.java:651) ~[ApacheJMeter_core.jar:5.5]
+	at org.apache.jmeter.threads.JMeterThread.executeSamplePackage(JMeterThread.java:570) ~[ApacheJMeter_core.jar:5.5]
+	at org.apache.jmeter.threads.JMeterThread.processSampler(JMeterThread.java:501) ~[ApacheJMeter_core.jar:5.5]
+	at org.apache.jmeter.threads.JMeterThread.run(JMeterThread.java:268) ~[ApacheJMeter_core.jar:5.5]
+	at java.lang.Thread.run(Thread.java:1474) ~[?:?]
+Caused by: java.lang.IllegalArgumentException: Unsupported class file major version 69
+	at groovyjarjarasm.asm.ClassReader.<init>(ClassReader.java:199) ~[groovy-3.0.11.jar:3.0.11]
+	at groovyjarjarasm.asm.ClassReader.<init>(ClassReader.java:180) ~[groovy-3.0.11.jar:3.0.11]
+	at groovyjarjarasm.asm.ClassReader.<init>(ClassReader.java:166) ~[groovy-3.0.11.jar:3.0.11]
+	at groovyjarjarasm.asm.ClassReader.<init>(ClassReader.java:287) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.decompiled.AsmDecompiler.parseClass(AsmDecompiler.java:81) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ClassNodeResolver.findDecompiled(ClassNodeResolver.java:251) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ClassNodeResolver.tryAsLoaderClassOrScript(ClassNodeResolver.java:189) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ClassNodeResolver.findClassNode(ClassNodeResolver.java:169) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ClassNodeResolver.resolveName(ClassNodeResolver.java:125) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveToOuter(ResolveVisitor.java:869) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolve(ResolveVisitor.java:506) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveFromDefaultImports(ResolveVisitor.java:661) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveFromDefaultImports(ResolveVisitor.java:625) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolve(ResolveVisitor.java:505) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolve(ResolveVisitor.java:468) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveOrFail(ResolveVisitor.java:338) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveOrFail(ResolveVisitor.java:330) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.resolveOrFail(ResolveVisitor.java:326) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.transformConstructorCallExpression(ResolveVisitor.java:1236) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.transform(ResolveVisitor.java:900) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.transformDeclarationExpression(ResolveVisitor.java:1298) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.transform(ResolveVisitor.java:892) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeExpressionTransformer.visitExpressionStatement(ClassCodeExpressionTransformer.java:108) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.stmt.ExpressionStatement.visit(ExpressionStatement.java:40) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.CodeVisitorSupport.visitBlockStatement(CodeVisitorSupport.java:86) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitBlockStatement(ClassCodeVisitorSupport.java:164) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.visitBlockStatement(ResolveVisitor.java:1566) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.stmt.BlockStatement.visit(BlockStatement.java:69) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitClassCodeContainer(ClassCodeVisitorSupport.java:138) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitConstructorOrMethod(ClassCodeVisitorSupport.java:111) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeExpressionTransformer.visitConstructorOrMethod(ClassCodeExpressionTransformer.java:66) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.visitConstructorOrMethod(ResolveVisitor.java:294) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitMethod(ClassCodeVisitorSupport.java:106) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassNode.visitMethods(ClassNode.java:1100) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassNode.visitContents(ClassNode.java:1093) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.ast.ClassCodeVisitorSupport.visitClass(ClassCodeVisitorSupport.java:52) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.visitClass(ResolveVisitor.java:1483) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.ResolveVisitor.startResolving(ResolveVisitor.java:262) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.CompilationUnit.lambda$new$16(CompilationUnit.java:738) ~[groovy-3.0.11.jar:3.0.11]
+	at org.codehaus.groovy.control.CompilationUnit$ISourceUnitOperation.doPhaseOperation(CompilationUnit.java:901) ~[groovy-3.0.11.jar:3.0.11]
+	... 17 more
+2026-01-20 13:54:15,588 INFO o.a.j.r.ResultCollector: Shutdown hook started
+2026-01-20 13:54:15,589 INFO o.a.j.r.ResultCollector: Shutdown hook ended

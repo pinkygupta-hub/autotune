@@ -1,0 +1,49 @@
+###   Removing Kruize for minikube
+clusterrole.rbac.authorization.k8s.io "kruize-recommendation-updater" deleted
+clusterrolebinding.rbac.authorization.k8s.io "kruize-recommendation-updater-crb" deleted
+clusterrole.rbac.authorization.k8s.io "kruize-edit-ko" deleted
+clusterrole.rbac.authorization.k8s.io "instaslices-access" deleted
+clusterrolebinding.rbac.authorization.k8s.io "instaslices-access-binding" deleted
+clusterrolebinding.rbac.authorization.k8s.io "kruize-edit-ko-binding" deleted
+persistentvolume "kruize-db-pv" deleted
+persistentvolumeclaim "kruize-db-pvc" deleted
+deployment.apps "kruize-db-deployment" deleted
+service "kruize-db-service" deleted
+configmap "kruizeconfig" deleted
+deployment.apps "kruize" deleted
+service "kruize" deleted
+cronjob.batch "create-partition-cronjob" deleted
+servicemonitor.monitoring.coreos.com "kruize-service-monitor" deleted
+configmap "nginx-config" deleted
+service "kruize-ui-nginx-service" deleted
+pod "kruize-ui-nginx-pod" deleted
+cronjob.batch "kruize-delete-partition-cronjob" deleted
+
+###   Installing kruize for minikube
+
+use yaml build - 0
+clusterrole.rbac.authorization.k8s.io/kruize-recommendation-updater created
+clusterrolebinding.rbac.authorization.k8s.io/kruize-recommendation-updater-crb created
+clusterrole.rbac.authorization.k8s.io/kruize-edit-ko created
+clusterrole.rbac.authorization.k8s.io/instaslices-access created
+clusterrolebinding.rbac.authorization.k8s.io/instaslices-access-binding created
+clusterrolebinding.rbac.authorization.k8s.io/kruize-edit-ko-binding created
+persistentvolume/kruize-db-pv created
+persistentvolumeclaim/kruize-db-pvc created
+deployment.apps/kruize-db-deployment created
+service/kruize-db-service created
+configmap/kruizeconfig created
+deployment.apps/kruize created
+service/kruize created
+cronjob.batch/create-partition-cronjob created
+servicemonitor.monitoring.coreos.com/kruize-service-monitor created
+configmap/nginx-config created
+service/kruize-ui-nginx-service created
+pod/kruize-ui-nginx-pod created
+cronjob.batch/kruize-delete-partition-cronjob created
+Info: Waiting for kruize to come up.....
+Info: kruize deploy succeeded: Running
+kruize-5c86db47c9-zx5qh                 1/1     Running   0          36s
+kruize-db-deployment-556c9b5d9c-9jhpl   1/1     Running   0          36s
+kruize-ui-nginx-pod                     1/1     Running   0          36s
+

@@ -1,0 +1,295 @@
+[
+  {
+    "cluster_name": "cluster-one-division-bell",
+    "experiment_type": "container",
+    "kubernetes_objects": [
+      {
+        "type": "deployment",
+        "name": "tfb-qrh-deployment-7",
+        "namespace": "default-7",
+        "containers": [
+          {
+            "container_image_name": "kruize/tfb-qrh:1.13.2.F_et17",
+            "container_name": "tfb-server-1",
+            "recommendations": {
+              "version": "1.0",
+              "notifications": {
+                "111000": {
+                  "type": "info",
+                  "message": "Recommendations Are Available",
+                  "code": 111000
+                }
+              },
+              "data": {
+                "2026-01-21T15:02:08.605Z": {
+                  "notifications": {
+                    "111101": {
+                      "type": "info",
+                      "message": "Short Term Recommendations Available",
+                      "code": 111101
+                    }
+                  },
+                  "monitoring_end_time": "2026-01-21T15:02:08.605Z",
+                  "current": {
+                    "limits": {
+                      "cpu": {
+                        "amount": 0.5,
+                        "format": "cores"
+                      },
+                      "memory": {
+                        "amount": 100.0,
+                        "format": "MiB"
+                      }
+                    },
+                    "requests": {
+                      "cpu": {
+                        "amount": 1.1,
+                        "format": "cores"
+                      },
+                      "memory": {
+                        "amount": 50.21,
+                        "format": "MiB"
+                      }
+                    }
+                  },
+                  "recommendation_terms": {
+                    "short_term": {
+                      "duration_in_hours": 24.0,
+                      "notifications": {
+                        "112101": {
+                          "type": "info",
+                          "message": "Cost Recommendations Available",
+                          "code": 112101
+                        },
+                        "112102": {
+                          "type": "info",
+                          "message": "Performance Recommendations Available",
+                          "code": 112102
+                        }
+                      },
+                      "monitoring_start_time": "2026-01-20T15:02:08.605Z",
+                      "recommendation_engines": {
+                        "cost": {
+                          "pods_count": 7,
+                          "confidence_level": 0.0,
+                          "config": {
+                            "limits": {
+                              "cpu": {
+                                "amount": 0.9299999999999999,
+                                "format": "cores"
+                              },
+                              "memory": {
+                                "amount": 238.2,
+                                "format": "MiB"
+                              }
+                            },
+                            "requests": {
+                              "cpu": {
+                                "amount": 0.9299999999999999,
+                                "format": "cores"
+                              },
+                              "memory": {
+                                "amount": 238.2,
+                                "format": "MiB"
+                              }
+                            }
+                          },
+                          "variation": {
+                            "limits": {
+                              "cpu": {
+                                "amount": 0.42999999999999994,
+                                "format": "cores"
+                              },
+                              "memory": {
+                                "amount": 138.2,
+                                "format": "MiB"
+                              }
+                            },
+                            "requests": {
+                              "cpu": {
+                                "amount": -0.17000000000000015,
+                                "format": "cores"
+                              },
+                              "memory": {
+                                "amount": 187.98999999999998,
+                                "format": "MiB"
+                              }
+                            }
+                          },
+                          "notifications": {}
+                        },
+                        "performance": {
+                          "pods_count": 7,
+                          "confidence_level": 0.0,
+                          "config": {
+                            "limits": {
+                              "cpu": {
+                                "amount": 0.9299999999999999,
+                                "format": "cores"
+                              },
+                              "memory": {
+                                "amount": 238.2,
+                                "format": "MiB"
+                              }
+                            },
+                            "requests": {
+                              "cpu": {
+                                "amount": 0.9299999999999999,
+                                "format": "cores"
+                              },
+                              "memory": {
+                                "amount": 238.2,
+                                "format": "MiB"
+                              }
+                            }
+                          },
+                          "variation": {
+                            "limits": {
+                              "cpu": {
+                                "amount": 0.42999999999999994,
+                                "format": "cores"
+                              },
+                              "memory": {
+                                "amount": 138.2,
+                                "format": "MiB"
+                              }
+                            },
+                            "requests": {
+                              "cpu": {
+                                "amount": -0.17000000000000015,
+                                "format": "cores"
+                              },
+                              "memory": {
+                                "amount": 187.98999999999998,
+                                "format": "MiB"
+                              }
+                            }
+                          },
+                          "notifications": {}
+                        }
+                      },
+                      "plots": {
+                        "datapoints": 4,
+                        "plots_data": {
+                          "2026-01-20T21:02:08.605Z": {
+                            "cpuUsage": {
+                              "min": 0.14,
+                              "q1": 0.9299999999999999,
+                              "median": 0.9299999999999999,
+                              "q3": 0.9299999999999999,
+                              "max": 0.9299999999999999,
+                              "format": "cores"
+                            },
+                            "memoryUsage": {
+                              "min": 28.357142857142858,
+                              "q1": 198.5,
+                              "median": 198.5,
+                              "q3": 198.5,
+                              "max": 198.5,
+                              "format": "MiB"
+                            }
+                          },
+                          "2026-01-21T03:02:08.605Z": {
+                            "cpuUsage": {
+                              "min": 0.14,
+                              "q1": 0.9299999999999999,
+                              "median": 0.9299999999999999,
+                              "q3": 0.9299999999999999,
+                              "max": 0.9299999999999999,
+                              "format": "cores"
+                            },
+                            "memoryUsage": {
+                              "min": 28.357142857142858,
+                              "q1": 198.5,
+                              "median": 198.5,
+                              "q3": 198.5,
+                              "max": 198.5,
+                              "format": "MiB"
+                            }
+                          },
+                          "2026-01-21T09:02:08.605Z": {
+                            "cpuUsage": {
+                              "min": 0.14,
+                              "q1": 0.9299999999999999,
+                              "median": 0.9299999999999999,
+                              "q3": 0.9299999999999999,
+                              "max": 0.9299999999999999,
+                              "format": "cores"
+                            },
+                            "memoryUsage": {
+                              "min": 28.357142857142858,
+                              "q1": 198.5,
+                              "median": 198.5,
+                              "q3": 198.5,
+                              "max": 198.5,
+                              "format": "MiB"
+                            }
+                          },
+                          "2026-01-21T15:02:08.605Z": {
+                            "cpuUsage": {
+                              "min": 0.14,
+                              "q1": 0.9299999999999999,
+                              "median": 0.9299999999999999,
+                              "q3": 0.9299999999999999,
+                              "max": 0.9299999999999999,
+                              "format": "cores"
+                            },
+                            "memoryUsage": {
+                              "min": 28.357142857142858,
+                              "q1": 198.5,
+                              "median": 198.5,
+                              "q3": 198.5,
+                              "max": 198.5,
+                              "format": "MiB"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "medium_term": {
+                      "duration_in_hours": 25.0,
+                      "notifications": {
+                        "120001": {
+                          "type": "info",
+                          "message": "There is not enough data available to generate a recommendation.",
+                          "code": 120001
+                        }
+                      }
+                    },
+                    "long_term": {
+                      "duration_in_hours": 25.0,
+                      "notifications": {
+                        "120001": {
+                          "type": "info",
+                          "message": "There is not enough data available to generate a recommendation.",
+                          "code": 120001
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "container_image_name": "kruize/tfb-db:1.15",
+            "container_name": "tfb-server-0",
+            "recommendations": {
+              "version": "1.0",
+              "notifications": {
+                "120001": {
+                  "type": "info",
+                  "message": "There is not enough data available to generate a recommendation.",
+                  "code": 120001
+                }
+              },
+              "data": {}
+            }
+          }
+        ]
+      }
+    ],
+    "version": "v2.0",
+    "experiment_name": "quarkus-resteasy-kruize-min-http-response-time-db-7"
+  }
+]

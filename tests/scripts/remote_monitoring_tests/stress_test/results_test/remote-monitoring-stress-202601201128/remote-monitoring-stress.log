@@ -1,0 +1,11 @@
+Invoking jmeter setup
+Invoking jmeter setup...done
+Setting up kruize...
+Setting up kruize...Done
+Port forward prometheus...
+Port forward prometheus...done
+./monitor-metrics-promql.sh 1 1800 /home/pg/Documents/workspace/autotune-fork-project/autotune/tests/scripts/remote_monitoring_tests/stress_test/results_test/remote-monitoring-stress-202601201128/resource_usage localhost kruize minikube kruize kruize monitoring &
+
+Running jmeter load for kruize  with the following parameters
+jmeter -n -t jmx/kruize_remote_monitoring_stress.jmx -j /home/pg/Documents/workspace/autotune-fork-project/autotune/tests/scripts/remote_monitoring_tests/stress_test/results_test/remote-monitoring-stress-202601201128/jmeter_logs/jmeter_kruize.stats -l /home/pg/Documents/workspace/autotune-fork-project/autotune/tests/scripts/remote_monitoring_tests/stress_test/results_test/remote-monitoring-stress-202601201128/jmeter_logs/jmeter_kruize.log -Jhost=🤷  The control-plane node minikube host is not running: state=Stopped
+👉  To start a cluster, run: "minikube start" -Jport=31712 -Jusers=10 -Jnum_res=15 -Jlogdir=/home/pg/Documents/workspace/autotune-fork-project/autotune/tests/scripts/remote_monitoring_tests/stress_test/results_test/remote-monitoring-stress-202601201128/jmeter_logs -Jrampup=120 -Jloop=1 > /home/pg/Documents/workspace/autotune-fork-project/autotune/tests/scripts/remote_monitoring_tests/stress_test/results_test/remote-monitoring-stress-202601201128/jmeter.log

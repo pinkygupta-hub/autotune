@@ -1,0 +1,89 @@
+Defaulted container "kruize" out of: kruize, wait-for-kruize-db (init)
+Picked up JAVA_TOOL_OPTIONS: -XX:MaxRAMPercentage=80
+2026-01-2008:25:24.901 INFO [main][InitializeDeployment.java(152)]-Config variable : k8stype  :- found in mounted config file
+2026-01-2008:25:24.906 INFO [main][InitializeDeployment.java(152)]-Config variable : authtype  :- found in mounted config file
+2026-01-2008:25:24.907 INFO [main][InitializeDeployment.java(152)]-Config variable : authtoken  :- Not found in mounted config file, nor not able to set via environment variable and set to null or default.
+2026-01-2008:25:24.908 INFO [main][InitializeDeployment.java(152)]-Config variable : monitoringagent  :- found in mounted config file
+2026-01-2008:25:24.908 INFO [main][InitializeDeployment.java(152)]-Config variable : monitoringservice  :- found in mounted config file
+2026-01-2008:25:24.908 INFO [main][InitializeDeployment.java(152)]-Config variable : monitoringendpoint  :- found in mounted config file
+2026-01-2008:25:24.909 INFO [main][InitializeDeployment.java(152)]-Config variable : clustertype  :- found in mounted config file
+2026-01-2008:25:24.909 INFO [main][InitializeDeployment.java(152)]-Config variable : autotunemode  :- Not found in mounted config file, nor not able to set via environment variable and set to null or default.
+2026-01-2008:25:24.909 INFO [main][InitializeDeployment.java(152)]-Config variable : emonly  :- Not found in mounted config file, nor not able to set via environment variable and set to null or default.
+2026-01-2008:25:24.910 INFO [main][InitializeDeployment.java(152)]-Config variable : bulkresultslimit  :- Not found in mounted config file, nor not able to set via environment variable and set to null or default.
+2026-01-2008:25:24.910 INFO [main][InitializeDeployment.java(152)]-Config variable : deletepartitionsthreshold  :- Not found in mounted config file, nor not able to set via environment variable and set to null or default.
+2026-01-2008:25:24.910 INFO [main][InitializeDeployment.java(152)]-Config variable : savetodb  :- found in mounted config file
+2026-01-2008:25:24.911 INFO [main][InitializeDeployment.java(152)]-Config variable : dbdriver  :- found in mounted config file
+2026-01-2008:25:24.911 INFO [main][InitializeDeployment.java(152)]-Config variable : hibernate_dialect  :- found in mounted config file
+2026-01-2008:25:24.911 INFO [main][InitializeDeployment.java(152)]-Config variable : hibernate_driver  :- found in mounted config file
+2026-01-2008:25:24.912 INFO [main][InitializeDeployment.java(152)]-Config variable : hibernate_c3p0minsize  :- found in mounted config file
+2026-01-2008:25:24.912 INFO [main][InitializeDeployment.java(152)]-Config variable : hibernate_c3p0maxsize  :- found in mounted config file
+2026-01-2008:25:24.912 INFO [main][InitializeDeployment.java(152)]-Config variable : hibernate_c3p0timeout  :- found in mounted config file
+2026-01-2008:25:24.913 INFO [main][InitializeDeployment.java(152)]-Config variable : hibernate_c3p0maxstatements  :- found in mounted config file
+2026-01-2008:25:24.913 INFO [main][InitializeDeployment.java(152)]-Config variable : hibernate_hbm2ddlauto  :- found in mounted config file
+2026-01-2008:25:24.913 INFO [main][InitializeDeployment.java(152)]-Config variable : hibernate_showsql  :- found in mounted config file
+2026-01-2008:25:24.914 INFO [main][InitializeDeployment.java(152)]-Config variable : hibernate_timezone  :- found in mounted config file
+2026-01-2008:25:24.914 INFO [main][InitializeDeployment.java(152)]-Config variable : plots  :- found in mounted config file
+2026-01-2008:25:24.915 INFO [main][InitializeDeployment.java(152)]-Config variable : log_recommendation_metrics_level  :- Not found in mounted config file, nor not able to set via environment variable and set to null or default.
+2026-01-2008:25:24.915 INFO [main][InitializeDeployment.java(152)]-Config variable : logging_cloudwatch_accessKeyId  :- found in mounted config file
+2026-01-2008:25:24.915 INFO [main][InitializeDeployment.java(152)]-Config variable : logging_cloudwatch_secretAccessKey  :- found in mounted config file
+2026-01-2008:25:24.916 INFO [main][InitializeDeployment.java(152)]-Config variable : logging_cloudwatch_logGroup  :- found in mounted config file
+2026-01-2008:25:24.916 INFO [main][InitializeDeployment.java(152)]-Config variable : logging_cloudwatch_region  :- found in mounted config file
+2026-01-2008:25:24.916 INFO [main][InitializeDeployment.java(152)]-Config variable : logging_cloudwatch_logStream  :- found in mounted config file
+2026-01-2008:25:24.917 INFO [main][InitializeDeployment.java(152)]-Config variable : logging_cloudwatch_logLevel  :- found in mounted config file
+2026-01-2008:25:24.917 INFO [main][InitializeDeployment.java(152)]-Config variable : local  :- Not found in mounted config file, nor not able to set via environment variable and set to null or default.
+2026-01-2008:25:24.918 INFO [main][InitializeDeployment.java(152)]-Config variable : logAllHttpReqAndResp  :- found in mounted config file
+2026-01-2008:25:24.918 INFO [main][InitializeDeployment.java(152)]-Config variable : recommendationsURL  :- found in mounted config file
+2026-01-2008:25:24.918 INFO [main][InitializeDeployment.java(152)]-Config variable : experimentsURL  :- found in mounted config file
+2026-01-2008:25:24.919 INFO [main][InitializeDeployment.java(152)]-Config variable : bulkapilimit  :- found in mounted config file
+2026-01-2008:25:24.919 INFO [main][InitializeDeployment.java(152)]-Config variable : testUseOnlycacheJobInMemory  :- Not found in mounted config file, nor not able to set via environment variable and set to null or default.
+2026-01-2008:25:24.919 INFO [main][InitializeDeployment.java(152)]-Config variable : jobFilterToDB  :- Not found in mounted config file, nor not able to set via environment variable and set to null or default.
+2026-01-2008:25:24.919 INFO [main][InitializeDeployment.java(152)]-Config variable : bulkThreadPoolSize  :- Not found in mounted config file, nor not able to set via environment variable and set to null or default.
+2026-01-2008:25:24.920 INFO [main][InitializeDeployment.java(152)]-Config variable : experimentNameFormat  :- found in mounted config file
+2026-01-2008:25:24.920 INFO [main][InitializeDeployment.java(152)]-Config variable : isROSEnabled  :- Not found in mounted config file, nor not able to set via environment variable and set to null or default.
+2026-01-2008:25:24.921 INFO [main][InitializeDeployment.java(152)]-Config variable : datasource  :- found in mounted config file
+2026-01-2008:25:24.921 INFO [main][InitializeDeployment.java(152)]-Config variable : metadataProfileFilePath  :- Not found in mounted config file, nor not able to set via environment variable and set to null or default.
+2026-01-2008:25:24.921 INFO [main][InitializeDeployment.java(152)]-Config variable : metricProfileFilePath  :- Not found in mounted config file, nor not able to set via environment variable and set to null or default.
+2026-01-2008:25:24.922 INFO [main][InitializeDeployment.java(152)]-Config variable : isKafkaEnabled  :- found in mounted config file
+2026-01-2008:25:24.922 INFO [main][InitializeDeployment.java(152)]-Config variable : database_adminusername  :- Not found in mounted config file, nor not able to set via environment variable and set to null or default.
+2026-01-2008:25:24.923 INFO [main][InitializeDeployment.java(152)]-Config variable : database_adminpassword  :- Not found in mounted config file, nor not able to set via environment variable and set to null or default.
+2026-01-2008:25:24.923 INFO [main][InitializeDeployment.java(152)]-Config variable : database_username  :- found in mounted config file
+2026-01-2008:25:24.923 INFO [main][InitializeDeployment.java(152)]-Config variable : database_password  :- found in mounted config file
+2026-01-2008:25:24.924 INFO [main][InitializeDeployment.java(152)]-Config variable : database_hostname  :- found in mounted config file
+2026-01-2008:25:24.924 INFO [main][InitializeDeployment.java(152)]-Config variable : database_name  :- found in mounted config file
+2026-01-2008:25:24.925 INFO [main][InitializeDeployment.java(152)]-Config variable : database_port  :- found in mounted config file
+2026-01-2008:25:24.925 INFO [main][InitializeDeployment.java(152)]-Config variable : database_sslmode  :- Not found in mounted config file, nor not able to set via environment variable and set to null or default.
+2026-01-2008:25:24.931 INFO [main][KruizeDeploymentInfo.java(183)]-Cluster Type: kubernetes
+2026-01-2008:25:24.931 INFO [main][KruizeDeploymentInfo.java(184)]-Kubernetes Type: minikube
+2026-01-2008:25:24.931 INFO [main][KruizeDeploymentInfo.java(185)]-Auth Type: 
+2026-01-2008:25:24.931 INFO [main][KruizeDeploymentInfo.java(186)]-Monitoring Agent: prometheus
+2026-01-2008:25:24.931 INFO [main][KruizeDeploymentInfo.java(187)]-Monitoring Agent URL: prometheus-k8s
+2026-01-2008:25:24.932 INFO [main][KruizeDeploymentInfo.java(188)]-Monitoring agent service: prometheus-k8s
+2026-01-2008:25:24.932 INFO [main][KruizeDeploymentInfo.java(189)]-Kruize Local Flag: false
+
+
+2026-01-2008:25:24.932 INFO [main][KruizeDeploymentInfo.java(190)]-Log Request and Response: true
+
+
+2026-01-2008:25:24.934 INFO [main][CloudWatchAppender.java(118)]-AWS access details are not provided. Skipping sending logs to CloudWatch.
+2026-01-2008:25:24.934 INFO [main][Autotune.java(126)]-Kruize getting started with is_ros_enabled:true , local:false
+2026-01-2008:25:25.220 INFO [main][KruizeHibernateUtil.java(73)]-DB is trying to connect to jdbc:postgresql://kruize-db-service:5432/kruizeDB
+2026-01-2008:25:27.021 INFO [main][KruizeHibernateUtil.java(75)]-DB build session is successful !
+2026-01-2008:25:27.159 INFO [main][Autotune.java(413)]-DB creation successful !
+2026-01-2008:25:27.160 INFO [main][Autotune.java(421)]-DB Liveliness probe connection successful!
+2026-01-2008:25:27.165 INFO [main][KruizeHibernateUtil.java(73)]-DB is trying to connect to jdbc:postgresql://kruize-db-service:5432/kruizeDB
+2026-01-2008:25:27.340 INFO [main][KruizeHibernateUtil.java(75)]-DB build session is successful !
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::allocateMemory has been called by io.netty.util.internal.PlatformDependent0$2 (file:/home/autotune/app/target/repo/io/netty/netty-common/4.1.126.Final/netty-common-4.1.126.Final.jar)
+WARNING: Please consider reporting this to the maintainers of class io.netty.util.internal.PlatformDependent0$2
+WARNING: sun.misc.Unsafe::allocateMemory will be removed in a future release
+2026-01-2008:25:28.486 WARN [main][KubernetesServicesImpl.java(428)]-Watcher not added! Only REST API access is enabled.
+2026-01-2008:25:28.539 WARN [main][KubernetesServicesImpl.java(428)]-Watcher not added! Only REST API access is enabled.
+2026-01-2008:25:28.540 INFO [main][ExperimentManager.java(32)]-EM version: testv1
+2026-01-2008:25:28.542 INFO [main][ExperimentManager.java(28)]-Initializing EM
+2026-01-2008:25:28.542 INFO [main][ExperimentManager.java(71)]-Adding EM Servlets
+2026-01-2008:25:28.544 INFO [main][EMExecutorService.java(30)]-Creating regular executor
+2026-01-2008:25:28.544 INFO [main][EMExecutorService.java(34)]-Creating scheduled executor
+2026-01-2008:25:28.544 INFO [main][EMExecutorService.java(67)]-Starting stage processors
+2026-01-2008:25:28.544 INFO [main][EMExecutorService.java(67)]-Starting stage processors
+Waiting for experiments ... 
+failed to create fsnotify watcher: too many open files
