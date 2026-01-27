@@ -32,7 +32,11 @@ public class MetricResults {
     private String format;
     private boolean percentile_results_available;
     private MetricMetadata metadata;
+<<<<<<< HEAD
     @SerializedName(AnalyzerConstants.AutotuneObjectConstants.JVM_METADATA)
+=======
+    @SerializedName(AnalyzerConstants.AutotuneObjectConstants.METADATA)
+>>>>>>> 79a6e9d5 (add metadata class and corresponding changes)
     private MetricMetadataResults metricMetadataResults;
 
     public MetricMetadata getMetadata() {
