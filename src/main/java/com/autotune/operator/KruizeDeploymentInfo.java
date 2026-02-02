@@ -40,28 +40,39 @@ import static com.autotune.utils.KruizeConstants.KRUIZE_CONFIG_DEFAULT_VALUE.DEL
  */
 public class KruizeDeploymentInfo {
     private static final Logger LOGGER = LoggerFactory.getLogger(KruizeDeploymentInfo.class);
-    public static String database_username;
-    public static String database_password;
-    public static String database_hostname;
-    public static String database_dbname;
-    public static String database_port;
-    public static String settings_db_driver;
-    public static String settings_hibernate_dialect;
-    public static String settings_hibernate_connection_driver_class;
-    public static String settings_hibernate_c3p0_min_size;
-    public static String settings_hibernate_c3p0_max_size;
-    public static String settings_hibernate_c3p0_timeout;
-    public static String settings_hibernate_c3p0_max_statements;
-    public static String settings_hibernate_hbm2ddl_auto;
-    public static String settings_hibernate_show_sql;
-    public static String settings_hibernate_time_zone;
+//    public static String database_username;
+//    public static String database_password;
+//    public static String database_hostname;
+//    public static String database_dbname;
+//    public static String database_port;
+    public static String settings_db_driver = "jdbc:postgresql://";
+    public static String database_username = "admin";
+    public static String database_password = "admin";
+    public static String database_hostname = "kruize-db-service";
+    public static String database_dbname = "kruizeDB";
+    public static String database_port = "5432";
+
+    public static String settings_hibernate_dialect = "org.hibernate.dialect.PostgreSQLDialect";
+    public static String settings_hibernate_connection_driver_class = "org.postgresql.Driver";
+    public static String settings_hibernate_c3p0_min_size = "2";
+    public static String settings_hibernate_c3p0_max_size = "3";
+    public static String settings_hibernate_c3p0_timeout = "300";
+    public static String settings_hibernate_c3p0_max_statements = "50";
+    public static String settings_hibernate_hbm2ddl_auto = "none";
+    public static String settings_hibernate_show_sql = "false";
+    public static String settings_hibernate_time_zone = "UTC";
     public static String autotune_mode;
-    public static String monitoring_agent;
-    public static String monitoring_service;
-    public static String monitoring_agent_endpoint;
-    public static String cluster_type;
-    public static String k8s_type;       // ABC
-    public static String auth_type;
+    public static String monitoring_agent = "prometheus";
+    public static String monitoring_service = "prometheus-k8s";
+    //public static String monitoring_agent_endpoint;
+    public static String monitoring_agent_endpoint = "prometheus-k8s";
+    public static String cluster_type = "kubernetes";
+    public static String k8s_type = "minikube";
+    public static String auth_type = "none";
+
+//    public static String cluster_type;
+//    public static String k8s_type;       // ABC
+//    public static String auth_type;
     public static Boolean plots = true;
     public static String log_recommendation_metrics_level = "error|critical";
     public static String auth_token;
@@ -95,16 +106,22 @@ public class KruizeDeploymentInfo {
     public static Boolean is_ros_enabled = true;
     public static String datasource_via_env = null;
     public static Boolean is_kafka_enabled = false;
-    public static String kafka_bootstrap_servers = System.getenv("KAFKA_BOOTSTRAP_SERVERS");
+ //   public static String kafka_bootstrap_servers = System.getenv("KAFKA_BOOTSTRAP_SERVERS");
     ;
-    public static String bulk_input_topic = System.getenv("BULK_INPUT_TOPIC");
-    public static String kafka_group_id = System.getenv("KAFKA_CONSUMER_GROUP_ID");
+  //  public static String bulk_input_topic = System.getenv("BULK_INPUT_TOPIC");
+//    public static String kafka_group_id = System.getenv("KAFKA_CONSUMER_GROUP_ID");
     public static String metadata_profile_file_path;
     public static String metric_profile_file_path;
-    public static String kafka_topics = System.getenv("KAFKA_TOPICS");
-    public static String kafka_response_filter_include = System.getenv("KAFKA_RESPONSE_FILTER_INCLUDE");
-    public static String kafka_response_filter_exclude = System.getenv("KAFKA_RESPONSE_FILTER_EXCLUDE");
+//    public static String kafka_topics = System.getenv("KAFKA_TOPICS");
+//    public static String kafka_response_filter_include = System.getenv("KAFKA_RESPONSE_FILTER_INCLUDE");
+//    public static String kafka_response_filter_exclude = System.getenv("KAFKA_RESPONSE_FILTER_EXCLUDE");
     public static Integer kafka_thread_pool_size = 3;
+    public static String kafka_bootstrap_servers = "localhost:9092";
+    public static String bulk_input_topic = "autotune_bulk_input";
+    public static String kafka_group_id = "autotune_consumer_group";
+    public static String kafka_topics = "topic1,topic2";
+    public static String kafka_response_filter_include = "summary,metrics";
+    public static String kafka_response_filter_exclude = "";
 
 
     private KruizeDeploymentInfo() {
@@ -179,6 +196,7 @@ public class KruizeDeploymentInfo {
 
 
     public static void setMonitoring_agent(String monitoring_agent) throws MonitoringAgentNotSupportedException {
+        monitoring_agent = "prometheus";
         if (monitoring_agent != null)
             monitoring_agent = monitoring_agent.toLowerCase();
 

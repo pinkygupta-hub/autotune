@@ -40,7 +40,7 @@ public class KruizeSupportedTypes {
     public static final Set<String> VALUE_TYPES_SUPPORTED =
             new HashSet<>(Arrays.asList("double", "int", "string", "categorical"));
     public static final Set<String> CLUSTER_TYPES_SUPPORTED =
-            new HashSet<>(Arrays.asList("kubernetes"));
+            new HashSet<>(Arrays.asList("kubernetes", "minikube"));
     public static final Set<String> K8S_TYPES_SUPPORTED =
             new HashSet<>(Arrays.asList("minikube", "openshift", "icp", null));
     public static final Set<String> AUTH_TYPES_SUPPORTED =

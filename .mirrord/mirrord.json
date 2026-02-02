@@ -1,0 +1,6 @@
+{
+  "target": {
+    "path": "pod/kruize-686cfbb58d-77g9j",
+    "namespace": "monitoring"
+  }
+}
