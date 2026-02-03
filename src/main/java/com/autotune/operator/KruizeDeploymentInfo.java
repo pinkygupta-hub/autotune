@@ -88,7 +88,7 @@ public class KruizeDeploymentInfo {
     public static String cloudwatch_logs_log_level;
     public static String cloudwatch_logs_log_stream;
 
-    public static Boolean settings_save_to_db;
+    public static Boolean settings_save_to_db = true;
     public static String em_only_mode;
     public static Integer bulk_update_results_limit = 100;
     public static Boolean local = false;

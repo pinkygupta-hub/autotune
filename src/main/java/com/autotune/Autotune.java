@@ -330,6 +330,13 @@ public class Autotune {
         try {
             // Collect single file or all .sql files under directory
             List<Path> sqlFiles = new ArrayList<>();
+            Path localPath = Paths.get(
+                    "/home/pg/Documents/workspace/autotune-fork-project/autotune/migrations/rm"
+            );
+            if (Files.exists(localPath)) {
+                basePath = localPath;
+                LOGGER.warn("Falling back to local DDL path: {}", basePath);
+            }
             if (Files.notExists(basePath)) {
                 throw new IllegalArgumentException("DDL path does not exist: " + basePath);
             }

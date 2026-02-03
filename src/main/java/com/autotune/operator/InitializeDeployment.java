@@ -84,6 +84,12 @@ public class InitializeDeployment {
      */
     private static void setConfigValues(String configFileName, Class envClass) {
         String configFile = System.getenv(configFileName);
+        if(configFileName.equalsIgnoreCase("DB_CONFIG_FILE")) {
+            configFile = "/home/pg/kruize-config/dbconfigjson";
+        }
+        if(configFileName.equalsIgnoreCase("KRUIZE_CONFIG_FILE")) {
+            configFile = "/home/pg/kruize-config/kruizeconfigjson";
+        }
         JSONObject configObject = null;
         if (null != configFile) {
             try (InputStream is = new FileInputStream(configFile)) {
