@@ -691,13 +691,12 @@ public class AnalyzerConstants {
         public static final String CONTAINER_LAYER = "container";
         public static final String HOTSPOT_LAYER = "hotspot";
         public static final String QUARKUS_LAYER = "quarkus";
-        public static final String SEMERU_LAYER = "semeru";
+        public static final String OPENJ9_LAYER = "openj9";
 
         public static final List<String> SUPPORTED_LAYERS = Arrays.asList(
                 CONTAINER_LAYER,
                 HOTSPOT_LAYER,
-                QUARKUS_LAYER,
-                SEMERU_LAYER
+                QUARKUS_LAYER
         );
 
         /**
@@ -735,16 +734,21 @@ public class AnalyzerConstants {
             public static final String LAYER_NAME_NOT_NULL = "layerName must not be null or empty";
             public static final String TUNABLE_NAME_NOT_NULL = "tunableName must not be null or empty";
 
-            // Query validation log messages
-            public static final String QUERY_VALIDATION_NO_DATASOURCES = "No datasources available for query validation";
-            public static final String QUERY_VALIDATION_SKIP_NO_OPERATOR = "No operator available for datasource provider '{}', skipping datasource '{}'";
-            public static final String QUERY_VALIDATION_VALIDATING_SYNTAX = "Validating query syntax: {}";
-            public static final String QUERY_VALIDATION_SYNTAX_SUCCESS = "Query syntax validation successful for query: {}";
-            public static final String QUERY_VALIDATION_SYNTAX_FAILED = "Query validation failed for query '%s': %s";
-            public static final String QUERY_VALIDATION_COMPLETE = "Query syntax validation completed successfully for layer: {}";
-
             private LogMessages() {
             }
+        }
+
+        public static final class TunablesConstants {
+            private TunablesConstants() {}
+
+            // Container tunables
+            public static final String MEMORY_LIMIT = "memory-limit";
+            public static final String CPU_LIMIT =  "cpu-limit";
+            // Hotspot tunables
+            public static final String MAX_RAM_PERC = "maxram-percentage";
+            public static final String GC_POLICY = "gc-policy";
+            // Quarkus tunables
+            public static final String CORE_THREADS = "core-threads";
         }
 
         private LayerConstants() {

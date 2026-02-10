@@ -25,10 +25,9 @@ public class TunableDependencyResolver {
     private TunableDependencyResolver() {}
 
     /**
-     * Returns tunable specs ordered such that all dependencies are resolved first.
-     * Each TunableSpec carries layerName and tunableName.
+     * Returns tunables ordered such that all dependencies are resolved first.
      */
-    public static List<TunableSpec> resolve(List<KruizeLayer> kruizeLayers) {
+    public static List<Tunable> resolve(List<KruizeLayer> kruizeLayers) {
 
         Map<TunableSpec, Tunable> tunableMap = new HashMap<>();
 
@@ -38,7 +37,8 @@ public class TunableDependencyResolver {
             String layerName = kruizeLayer.getLayerName();
 
             for (Tunable tunable : kruizeLayer.getTunables()) {
-                TunableSpec spec = new TunableSpec(layerName, tunable.getName());
+                TunableSpec spec =
+                        new TunableSpec(layerName, tunable.getName());
 
                 tunableMap.put(spec, tunable);
                 graph.putIfAbsent(spec, new ArrayList<>());
@@ -52,15 +52,14 @@ public class TunableDependencyResolver {
             if (layerImpl == null)
                 continue;
 
-            Map<String, List<TunableSpec>> deps = layerImpl.getTunableDependencies();
-
-            if (null == deps || deps.isEmpty())
-                continue;
+            Map<String, List<TunableSpec>> deps =
+                    layerImpl.getTunableDependencies();
 
             String layerName = kruizeLayer.getLayerName();
 
             for (Map.Entry<String, List<TunableSpec>> entry : deps.entrySet()) {
-                TunableSpec source = new TunableSpec(layerName, entry.getKey());
+                TunableSpec source =
+                        new TunableSpec(layerName, entry.getKey());
 
                 if (!graph.containsKey(source)) {
                     continue;
@@ -68,15 +67,16 @@ public class TunableDependencyResolver {
 
                 for (TunableSpec dependency : entry.getValue()) {
                     if (tunableMap.containsKey(dependency)) {
-                        graph.get(dependency).add(source);
+                        graph.get(source).add(dependency);
                     }
                 }
             }
         }
+
         return topologicalSort(tunableMap, graph);
     }
 
-    private static List<TunableSpec> topologicalSort(
+    private static List<Tunable> topologicalSort(
             Map<TunableSpec, Tunable> tunableMap,
             Map<TunableSpec, List<TunableSpec>> graph) {
 
@@ -99,11 +99,11 @@ public class TunableDependencyResolver {
             }
         }
 
-        List<TunableSpec> ordered = new ArrayList<>();
+        List<Tunable> ordered = new ArrayList<>();
 
         while (!queue.isEmpty()) {
             TunableSpec current = queue.poll();
-            ordered.add(current);
+            ordered.add(tunableMap.get(current));
 
             for (TunableSpec dep : graph.getOrDefault(current, List.of())) {
                 inDegree.put(dep, inDegree.get(dep) - 1);
@@ -118,6 +118,7 @@ public class TunableDependencyResolver {
                     "Circular or unresolved tunable dependencies detected"
             );
         }
+
         return ordered;
     }
 }

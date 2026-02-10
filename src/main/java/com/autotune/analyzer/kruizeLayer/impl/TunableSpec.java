@@ -17,6 +17,7 @@
 package com.autotune.analyzer.kruizeLayer.impl;
 
 import com.autotune.analyzer.utils.AnalyzerConstants;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -44,7 +45,7 @@ public record TunableSpec(String layerName, String tunableName) {
     }
 
     @Override
-    public String toString() {
+    public @NotNull String toString() {
         return layerName + ":" + tunableName;
     }
 }
