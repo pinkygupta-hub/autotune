@@ -926,20 +926,26 @@ public class RecommendationEngine implements RecommendationEngineService {
                     recommendationAcceleratorRequestMap = model.getAcceleratorRequestRecommendation(filteredResultsMap, notifications);
                     context.put(layerTunable, recommendationAcceleratorRequestMap);
                     break;
-                case AnalyzerConstants.MetricNameConstants.MAX_RAM_PERCENTAGE, AnalyzerConstants.MetricNameConstants.GC_POLICY, AnalyzerConstants.MetricNameConstants.CORE_THREADS:
-                    Object recommendationRuntimes;
-                    recommendationRuntimes = model.getRuntimeRecommendations(layerTunable.getMetricName(), layerTunable.getLayerName(), filteredResultsMap, context, notifications);
-                    context.put(layerTunable, recommendationRuntimes);
+                case AnalyzerConstants.LayerConstants.TunablesConstants.MAX_RAM_PERC:
+                case AnalyzerConstants.LayerConstants.TunablesConstants.GC_POLICY:
+                case AnalyzerConstants.LayerConstants.TunablesConstants.CORE_THREADS:
+                    Object recommendationRuntimes = model.getRuntimeRecommendations(metricName, layerName, filteredResultsMap, context, notifications);
+                    context.put(spec, recommendationRuntimes);
                     break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + layerTunable.getLayerName());
             }
         }
 
-        StringBuilder recommendationOpenjdkBuilder = new StringBuilder();
-        StringBuilder recommendationQuarkusBuilder = new StringBuilder();
-        // Combine Recommendation tunables for each layer
-        for (Map.Entry<LayerTunable, Object> entry : context.entrySet()) {
+        // Build env var strings via layer handlers
+        StringBuilder jvmOptsBuilder = new StringBuilder();
+        StringBuilder quarkusBuilder = new StringBuilder();
+        Map<String, StringBuilder> envBuilders = new HashMap<>();
+        envBuilders.put(KruizeConstants.JSONKeys.JDK_JAVA_OPTIONS, jvmOptsBuilder);
+        envBuilders.put(KruizeConstants.JSONKeys.JAVA_OPTIONS, jvmOptsBuilder);
+        envBuilders.put(AnalyzerConstants.LayerConstants.TunablesConstants.CORE_THREADS, quarkusBuilder);
+
+        for (Map.Entry<TunableSpec, Object> entry : context.entrySet()) {
             Object value = entry.getValue();
             if (value == null) {
                 continue;
@@ -976,10 +982,9 @@ public class RecommendationEngine implements RecommendationEngineService {
             }
         }
 
-        // Add recommended ENV values in the list
-        addIfNotEmpty(runtimeRecommList, KruizeConstants.JSONKeys.JDK_JAVA_OPTIONS, recommendationOpenjdkBuilder);
-        addIfNotEmpty(runtimeRecommList, KruizeConstants.JSONKeys.JAVA_OPTIONS, recommendationOpenjdkBuilder);
-        addIfNotEmpty(runtimeRecommList, AnalyzerConstants.MetricNameConstants.CORE_THREADS, recommendationQuarkusBuilder);
+        addIfNotEmpty(runtimeRecommList, KruizeConstants.JSONKeys.JDK_JAVA_OPTIONS, jvmOptsBuilder);
+        addIfNotEmpty(runtimeRecommList, KruizeConstants.JSONKeys.JAVA_OPTIONS, jvmOptsBuilder);
+        addIfNotEmpty(runtimeRecommList, AnalyzerConstants.LayerConstants.TunablesConstants.CORE_THREADS, quarkusBuilder);
 
         return runtimeRecommList;
     }
@@ -2892,22 +2897,10 @@ public class RecommendationEngine implements RecommendationEngineService {
         }
     }
 
-    public static List<LayerTunable> getTunablesList(Map<String, KruizeLayer> layerHashMap) {
-        List<LayerTunable> layerTunableList = new ArrayList<>();
-
-        for (KruizeLayer kruizeLayer : layerHashMap.values()) {
-            if (kruizeLayer.getTunables() == null) continue;
-
-            for (Tunable tunable : kruizeLayer.getTunables()) {
-                if (kruizeLayer.getTunables() == null) {
-                    LOGGER.warn("Missing layer or tunables for: {}", kruizeLayer.getLayerName());
-                }
-                layerTunableList.add(new LayerTunable(kruizeLayer.getLayerName(), tunable.getName()));
-            }
-        }
-
-        LOGGER.debug("list of tunables: {}", layerTunableList);
-        return layerTunableList;
+    private static boolean isRuntimeTunable(String metricName) {
+        return AnalyzerConstants.LayerConstants.TunablesConstants.MAX_RAM_PERC.equals(metricName)
+                || AnalyzerConstants.LayerConstants.TunablesConstants.GC_POLICY.equals(metricName)
+                || AnalyzerConstants.LayerConstants.TunablesConstants.CORE_THREADS.equals(metricName);
     }
 
 }
