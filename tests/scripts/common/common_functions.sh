@@ -265,12 +265,13 @@ function autotune_cleanup() {
 		echo "Cleaning up operator deployment..."
 		OPERATOR_REPO_DIR="${KRUIZE_REPO}/kruize-operator"
 		if [ -d "${OPERATOR_REPO_DIR}" ]; then
+			pushd "${OPERATOR_REPO_DIR}" > /dev/null
 			echo "Running: make undeploy"
-			echo "make undeploy-${cluster_type}"
-			make undeploy-${cluster_type} >> ${KRUIZE_SETUP_LOG} 2>&1
+			make undeploy >> ${KRUIZE_SETUP_LOG} 2>&1
 			if [ $? -ne 0 ]; then
 				echo "Warning: make undeploy failed, check ${KRUIZE_SETUP_LOG}"
 			fi
+			popd > /dev/null
 		else
 			echo "Warning: kruize-operator directory not found, skipping operator cleanup"
 		fi
@@ -1060,6 +1061,7 @@ function kruize_local_patch() {
 function deploy_kruize_operator() {
 	echo "Deploying Kruize using operator..." | tee -a ${LOG}
 
+
 	# Create namespace based on cluster type
 	case "${cluster_type}" in
 		openshift)
@@ -1084,12 +1086,8 @@ function deploy_kruize_operator() {
 		echo "kruize-operator repository already exists, using existing clone..." | tee -a ${LOG}
 	fi
 
-	# Patch the CR resources before deployment for openshift
-	if [ ${cluster_type} == "openshift" ]; then
-	  kruize_operator_patch
-	else
-	  remove_optional_cr_blocks_for_minikube
-	fi
+	# Patch the CR resources before deployment
+	kruize_operator_patch
 
 	# Deploy using operator
 	pushd "${OPERATOR_REPO_DIR}" > /dev/null
@@ -1103,7 +1101,7 @@ function deploy_kruize_operator() {
 	fi
 
 	# Deploy the operator using make
-	make deploy-${cluster_type} >> ${KRUIZE_SETUP_LOG} 2>&1
+	make deploy >> ${KRUIZE_SETUP_LOG} 2>&1
 
 	if [ $? -ne 0 ]; then
 		echo "Error: Failed to deploy Kruize operator using make deploy" | tee -a ${LOG}
@@ -1117,16 +1115,8 @@ function deploy_kruize_operator() {
 	# Apply the Kruize CR (Custom Resource)
 	echo "Applying Kruize CR..." | tee -a ${LOG}
 
-	# Determine the CR file
+	# Determine the CR file based on cluster type
 	CR_FILE="config/samples/v1alpha1_kruize.yaml"
-
-	if [ -n "${KRUIZE_DOCKER_IMAGE}" ]; then
-	  sed -i -E 's#^([[:space:]]*)autotune_image:.*#\1autotune_image: "'"${KRUIZE_DOCKER_IMAGE}"'"#' "./config/samples/v1alpha1_kruize.yaml"
-	fi
-
-	sed -i -E 's#^([[:space:]]*)cluster_type:.*#\1cluster_type: "'"${cluster_type}"'"#' "./config/samples/v1alpha1_kruize.yaml"
-
-	sed -i -E 's#^([[:space:]]*)namespace:.*#\1namespace: "'"${NAMESPACE}"'"#' "./config/samples/v1alpha1_kruize.yaml"
 
 	if [ -f "${CR_FILE}" ]; then
 		kubectl apply -f "${CR_FILE}" -n $NAMESPACE>> ${KRUIZE_SETUP_LOG} 2>&1
@@ -1141,22 +1131,6 @@ function deploy_kruize_operator() {
 		echo "Warning: CR file ${CR_FILE} not found, skipping CR application" | tee -a ${LOG}
 	fi
 
-	sleep 10
-  echo
-  echo "⏳ Waiting for all operator pods to be ready..."
-
-  wait_for_pod_ready kruize-db
-
-  wait_for_pod_ready kruize
-
-  wait_for_pod_ready kruize-ui-nginx
-
-  echo "✅ All Kruize application pods are ready!"
-
-  echo "✅ Deployment complete! Checking status..."
-  kubectl get kruize -n $NAMESPACE
-  kubectl get pods -n $NAMESPACE
-
 	popd > /dev/null
 	echo "Kruize operator deployment completed" | tee -a ${LOG}
 }
@@ -1170,7 +1144,7 @@ function cleanup_kruize_operator() {
 		pushd "${OPERATOR_REPO_DIR}" > /dev/null
 
 		echo "Undeploying operator using make undeploy..." | tee -a ${LOG}
-		make undeploy-${cluster_type} >> ${KRUIZE_SETUP_LOG} 2>&1
+		make undeploy >> ${KRUIZE_SETUP_LOG} 2>&1
 
 		if [ $? -ne 0 ]; then
 			echo "Warning: Failed to undeploy operator, continuing cleanup..." | tee -a ${LOG}
@@ -1182,176 +1156,4 @@ function cleanup_kruize_operator() {
 	fi
 
 	echo "Kruize operator cleanup completed" | tee -a ${LOG}
-}
-
-# Helper function to wait for pod to be ready based on label and namespace
-wait_for_pod_ready() {
-  local label="$1"
-  local namespace="${2:-$NAMESPACE}"
-  local create_timeout="${3:-180}"
-  local ready_timeout="${4:-600s}"
-
-  local elapsed=0
-  local pod_names=""
-
-  while [ "$elapsed" -lt "$create_timeout" ]; do
-    pod_names=$(kubectl get pods -l "app=${label}" -n "$namespace" -o name 2>/dev/null)
-    if [ -n "$pod_names" ]; then
-      echo
-      break
-    fi
-    echo -n "."
-    sleep 2
-    elapsed=$((elapsed + 2))
-  done
-
-  if [ "$elapsed" -ge "$create_timeout" ]; then
-    echo
-    echo "❌ Timeout waiting for pod with label app=${label} to be created"
-    kubectl get pods -n "$namespace"
-    exit 1
-  fi
-
-  echo "⏳ Waiting for pod with label app=${label} to be ready..."
-  kubectl wait --for=condition=Ready pod -l "app=${label}" -n "$namespace" --timeout="$ready_timeout"
-  if [ $? -ne 0 ]; then
-    echo "❌ Pod with label app=${label} failed to become ready"
-    kubectl get pods -n "$namespace"
-    kubectl describe pod -l "app=${label}" -n "$namespace"
-    exit 1
-  fi
-}
-
-
-# Patch operator CR resources for functional local monitoring tests
-function kruize_operator_patch() {
-  OPERATOR_REPO_DIR="${KRUIZE_REPO}/kruize-operator"
-
-  CR_FILE="${OPERATOR_REPO_DIR}/config/samples/v1alpha1_kruize.yaml"
-
-  if [ ! -f "${CR_FILE}" ]; then
-   echo "Warning: CR file ${CR_FILE} not found, skipping resource patching"
-   return
-  fi
-
-  echo "Patching operator CR resources in ${CR_FILE}..."
-
-  # Backup original file
-  cp "${CR_FILE}" "${CR_FILE}.bak"
-  if [[ "$OSTYPE" == "darwin"* ]]; then
-    SED_INPLACE="sed -i ''"
-  else
-    SED_INPLACE="sed -i"
-  fi
-
-
-  # Update kruize-db resources
-  ${SED_INPLACE} -i '/kruize-db:/,/volumeMounts:/ {
-    /requests:/,/limits:/ {
-      s/cpu: ".*"/cpu: "2"/g
-      s/memory: ".*"/memory: "2Gi"/g
-    }
-  }' ${CR_FILE}
-
-  ${SED_INPLACE} -i '/kruize-db:/,/volumeMounts:/ {
-    /limits:/,/volumeMounts:/ {
-      s/cpu: ".*"/cpu: "2"/g
-      s/memory: ".*"/memory: "2Gi"/g
-    }
-  }' ${CR_FILE}
-
-  # Update kruize application resources
-  ${SED_INPLACE} -i '/^[[:space:]]*kruize:/,$ {
-    /^[[:space:]]*requests:/,/^[[:space:]]*limits:/ {
-        s/cpu: ".*"/cpu: "2"/g
-        s/memory: ".*"/memory: "2Gi"/g
-    }
-    /^[[:space:]]*limits:/,$ {
-        s/cpu: ".*"/cpu: "2"/g
-        s/memory: ".*"/memory: "2Gi"/g
-    }
-  }' ${CR_FILE}
-
-  # Update persistent volume configuration
-  ${SED_INPLACE} -i '/persistentVolume:/,/persistentVolumeClaim:/ {
-    /capacity:/,/accessModes:/ {
-      s/storage: ".*"/storage: "1Gi"/
-    }
-  }' ${CR_FILE}
-
-  # Update persistent volume claim storage request
-  ${SED_INPLACE} -i '/persistentVolumeClaim:/,/kruize-db:/ {
-    /resources:/,/labels:/ {
-      s/storage: ".*"/storage: "1Gi"/
-    }
-  }' ${CR_FILE}
-
-  echo "Operator CR resources patched successfully"
-}
-
-# Patch to remove resources config from CR for minikube/kind clusters
-remove_optional_cr_blocks_for_minikube() {
-  local CR_FILE="${OPERATOR_REPO_DIR}/config/samples/v1alpha1_kruize.yaml"
-
-  if [ ! -f "${CR_FILE}" ]; then
-    echo "Warning: CR file ${CR_FILE} not found, skipping cleanup"
-    return
-  fi
-
-  echo "Removing optional CR blocks for minikube from ${CR_FILE}..."
-
-  cp "${CR_FILE}" "${CR_FILE}.bak"
-
-  awk '
-    BEGIN {
-      skip = 0
-    }
-
-    # start skipping these top-level spec children
-    /^  persistentVolume:$/      { skip = 1; next }
-    /^  persistentVolumeClaim:$/ { skip = 1; next }
-    /^  kruize-db:$/             { skip = 1; next }
-    /^  kruize:$/                { skip = 1; next }
-
-    # next top-level spec child stops skipping
-    /^  [a-zA-Z0-9_-]+:/ {
-      skip = 0
-    }
-
-    !skip { print }
-  ' "${CR_FILE}" > "${CR_FILE}.tmp" && mv "${CR_FILE}.tmp" "${CR_FILE}"
-}
-
-###########################################
-#   Benchmarks Install
-###########################################
-function benchmarks_install() {
-	APP_NAMESPACE="${1:-${APP_NAMESPACE}}"
-	BENCHMARK="${2:-tfb}"
-	MANIFESTS="${3:-default_manifests}"
-
-	echo
-	echo "#######################################"
-	pushd benchmarks >/dev/null
-	  if [ ${BENCHMARK} == "tfb" ]; then
-      echo "Installing TechEmpower (Quarkus REST EASY) benchmark into cluster"
-      pushd techempower >/dev/null
-			  kubectl apply -f manifests/${MANIFESTS} -n ${APP_NAMESPACE}
-        check_err "ERROR: TechEmpower app failed to start, exiting"
-      popd >/dev/null
-    fi
-    if [ ${BENCHMARK} == "petclinic" ]; then
-			echo "Installing spring petclinic benchmark into cluster"
-			pushd spring-petclinic >/dev/null
-        if [ "${MANIFESTS}" != "default_manifests" ]; then
-          kubectl apply -f manifests/${MANIFESTS} -n ${APP_NAMESPACE}
-        else
-          kubectl apply -f manifests/*.yaml -n ${APP_NAMESPACE}
-        fi
-        check_err "ERROR: spring petclinic failed to start, exiting"
-			popd >/dev/null
-		fi
-  popd >/dev/null
-	echo "#######################################"
-	echo
 }
