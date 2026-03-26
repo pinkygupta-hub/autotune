@@ -20,14 +20,13 @@
         <appassembler-maven-plugin-version>2.1.0</appassembler-maven-plugin-version>
         <apachehttpclient-version>4.5.14</apachehttpclient-version>
         <postgresql-version>42.7.10</postgresql-version>
-        <hibernatecore-version>6.6.44.Final</hibernatecore-version>
-        <hibernatecp30-version>6.6.44.Final</hibernatecp30-version>
+        <hibernate-version>6.6.45.Final</hibernate-version>
         <hibernate-Validator>8.0.3.Final</hibernate-Validator>
         <micrometer-version>1.12.10</micrometer-version>
         <awssdk-version>2.42.6</awssdk-version>
         <jackson-version>2.21.1</jackson-version>
         <evalex-version>3.6.0</evalex-version>
-        <junit-version>5.14.3</junit-version>
+        <mockito-version>5.21.0</mockito-version>
         <kafka-version>4.2.0</kafka-version>
         <maven-surefire-plugin-version>3.5.2</maven-surefire-plugin-version>
         <argLine></argLine>
@@ -113,11 +112,17 @@
             <version>${evalex-version}</version>
         </dependency>
 
-        <!-- junit 5, unit test -->
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>${junit-version}</version>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito-version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>${mockito-version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -152,7 +157,6 @@
             <version>${gson-version}</version>
         </dependency>
 
-
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -168,6 +172,8 @@
             <artifactId>hibernate-c3p0</artifactId>
             <version>${hibernate-version}</version>
         </dependency>
+
+
         <dependency>
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
@@ -243,6 +249,14 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin-version}</version>
+                <configuration>
+                    <failIfNoTests>true</failIfNoTests>
+                    <argLine>
+                        ${argLine} ${surefireArgLine}
+                        -XX:+EnableDynamicAgentLoading
+                        -javaagent:${settings.localRepository}/net/bytebuddy/byte-buddy-agent/1.17.7/byte-buddy-agent-1.17.7.jar
+                    </argLine>
+                </configuration>
             </plugin>
         </plugins>
     </build>
