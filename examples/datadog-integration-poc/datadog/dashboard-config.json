@@ -1,0 +1,157 @@
+{
+  "title": "Memory Monitor POC - Datadog Integration",
+  "description": "Dashboard for monitoring memory threshold alerts from the POC application",
+  "widgets": [
+    {
+      "id": 1,
+      "definition": {
+        "type": "timeseries",
+        "requests": [
+          {
+            "q": "avg:app_memory_usage_percent{kube_namespace:datadog-poc} by {pod}",
+            "display_type": "line",
+            "style": {
+              "palette": "dog_classic",
+              "line_type": "solid",
+              "line_width": "normal"
+            }
+          }
+        ],
+        "title": "Memory Usage Percentage by Pod",
+        "show_legend": true,
+        "legend_layout": "auto",
+        "legend_columns": ["avg", "min", "max", "value", "sum"],
+        "yaxis": {
+          "min": "0",
+          "max": "100"
+        },
+        "markers": [
+          {
+            "value": "y = 60",
+            "display_type": "error dashed",
+            "label": "Threshold (60%)"
+          }
+        ]
+      },
+      "layout": {
+        "x": 0,
+        "y": 0,
+        "width": 6,
+        "height": 3
+      }
+    },
+    {
+      "id": 2,
+      "definition": {
+        "type": "query_value",
+        "requests": [
+          {
+            "q": "sum:memory_threshold_exceeded_total{kube_namespace:datadog-poc}.as_count()",
+            "aggregator": "sum"
+          }
+        ],
+        "title": "Total Threshold Violations",
+        "precision": 0,
+        "autoscale": true
+      },
+      "layout": {
+        "x": 6,
+        "y": 0,
+        "width": 2,
+        "height": 3
+      }
+    },
+    {
+      "id": 3,
+      "definition": {
+        "type": "timeseries",
+        "requests": [
+          {
+            "q": "sum:memory_threshold_exceeded_total{kube_namespace:datadog-poc}.as_count()",
+            "display_type": "bars",
+            "style": {
+              "palette": "warm"
+            }
+          }
+        ],
+        "title": "Memory Threshold Violations Over Time",
+        "show_legend": false
+      },
+      "layout": {
+        "x": 8,
+        "y": 0,
+        "width": 4,
+        "height": 3
+      }
+    },
+    {
+      "id": 4,
+      "definition": {
+        "type": "note",
+        "content": "## Memory Monitor POC Dashboard\n\nThis dashboard monitors the memory threshold violations from the POC application.\n\n### Key Metrics:\n- **Memory Usage %**: Current memory usage of pods\n- **Threshold**: 60% (shown as red dashed line)\n- **Violations**: Counter increments when threshold is exceeded\n\n### Actions:\n- Monitor the memory usage trend\n- Check for threshold violations\n- Review alerts when violations occur",
+        "background_color": "blue",
+        "font_size": "14",
+        "text_align": "left",
+        "show_tick": false,
+        "tick_pos": "50%",
+        "tick_edge": "left"
+      },
+      "layout": {
+        "x": 0,
+        "y": 3,
+        "width": 4,
+        "height": 2
+      }
+    },
+    {
+      "id": 5,
+      "definition": {
+        "type": "check_status",
+        "title": "Pod Health Status",
+        "check": "kubernetes.pod.ready",
+        "grouping": "cluster",
+        "group_by": ["pod_name"],
+        "tags": ["kube_namespace:datadog-poc"]
+      },
+      "layout": {
+        "x": 4,
+        "y": 3,
+        "width": 4,
+        "height": 2
+      }
+    },
+    {
+      "id": 6,
+      "definition": {
+        "type": "toplist",
+        "requests": [
+          {
+            "q": "top(avg:app_memory_usage_percent{kube_namespace:datadog-poc} by {pod}, 10, 'mean', 'desc')"
+          }
+        ],
+        "title": "Top Pods by Memory Usage"
+      },
+      "layout": {
+        "x": 8,
+        "y": 3,
+        "width": 4,
+        "height": 2
+      }
+    }
+  ],
+  "template_variables": [
+    {
+      "name": "namespace",
+      "default": "datadog-poc",
+      "prefix": "kube_namespace"
+    },
+    {
+      "name": "pod",
+      "default": "*",
+      "prefix": "pod"
+    }
+  ],
+  "layout_type": "ordered",
+  "notify_list": [],
+  "reflow_type": "fixed"
+}

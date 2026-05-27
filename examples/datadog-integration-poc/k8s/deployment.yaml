@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: memory-monitor-app
+  namespace: datadog-poc
+  labels:
+    app: memory-monitor
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: memory-monitor
+  template:
+    metadata:
+      labels:
+        app: memory-monitor
+        version: v1
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+        prometheus.io/path: "/metrics"
+    spec:
+      containers:
+      - name: memory-monitor
+        image: image-registry.openshift-image-registry.svc:5000/datadog-poc/memory-monitor-app:cgroup-fix-v2
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        env:
+        - name: MEMORY_THRESHOLD
+          value: "20"
+        - name: CHECK_INTERVAL
+          value: "10"
+        - name: LOAD_CHUNK_MB
+          value: "8"
+        - name: LOAD_ITERATIONS
+          value: "2"
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
+
+# Made with Bob

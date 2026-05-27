@@ -1,0 +1,76 @@
+kind: "DatadogAgent"
+apiVersion: "datadoghq.com/v2alpha1"
+metadata:
+  name: "datadog"
+  namespace: "openshift-operators"
+spec:
+  global:
+    clusterName: "your-cluster-name-here"
+    site: "us5.datadoghq.com"
+    credentials:
+      apiSecret:
+        secretName: "datadog-secret"
+        keyName: "api-key"
+    kubelet:
+      tlsVerify: false
+    tags:
+      - "env:dev"
+  features:
+    clusterChecks:
+      enabled: true
+    orchestratorExplorer:
+      enabled: true
+    apm:
+      hostPortConfig:
+        enabled: true
+      unixDomainSocketConfig:
+        enabled: false
+      instrumentation:
+        enabled: true
+        targets:
+          - name: "default-target"
+            ddTraceVersions:
+              java: "1"
+              python: "4"
+              js: "5"
+              php: "1"
+              dotnet: "3"
+              ruby: "2"
+            ddTraceConfigs:
+              - name: "DD_RUM_ENABLED"
+                value: "true"
+              - name: "DD_RUM_APPLICATION_ID"
+                value: "f06d1670-7209-47e3-9784-66da2d2ea0dd"
+              - name: "DD_RUM_CLIENT_TOKEN"
+                value: "pubf199c7426185e26941add9a076e35cfa"
+              - name: "DD_RUM_REMOTE_CONFIGURATION_ID"
+                value: "0c75396d-dce1-4209-aa07-5bad9da16826"
+              - name: "DD_RUM_SITE"
+                value: "us5.datadoghq.com"
+    dogstatsd:
+      unixDomainSocketConfig:
+        enabled: false
+    logCollection:
+      enabled: true
+      containerCollectAll: true
+  override:
+    clusterAgent:
+      serviceAccountName: "datadog-agent-scc"
+    nodeAgent:
+      serviceAccountName: "datadog-agent-scc"
+      hostNetwork: true
+      securityContext:
+        runAsUser: 0
+        seLinuxOptions:
+          level: "s0"
+          role: "system_r"
+          type: "spc_t"
+          user: "system_u"
+      tolerations:
+        - key: "node-role.kubernetes.io/master"
+          operator: "Exists"
+          effect: "NoSchedule"
+        - key: "node-role.kubernetes.io/infra"
+          operator: "Exists"
+          effect: "NoSchedule"
+

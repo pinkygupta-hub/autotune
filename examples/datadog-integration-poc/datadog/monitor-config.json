@@ -1,0 +1,30 @@
+{
+  "name": "Memory Usage Above Threshold - POC Application",
+  "type": "metric alert",
+  "query": "avg(last_5m):avg:app_memory_usage_percent{kube_namespace:datadog-poc} by {pod} > 60",
+  "message": "## Memory Usage Threshold Alert\n\n**Application:** Memory Monitor POC\n**Namespace:** datadog-poc\n**Pod:** {{pod.name}}\n\n### Alert Details\nThe application memory usage has exceeded the configured threshold (60%) in the last 5 minutes.\n\n**Metric:** `app_memory_usage_percent`\n**Current Value:** {{value}}\n\n### Actions Required\n1. Check pod memory usage: `oc top pod -n datadog-poc`\n2. Review application logs: `oc logs -n datadog-poc {{pod.name}}`\n3. Check for memory leaks or unusual activity\n4. Consider increasing limits or scaling resources if needed\n\n### Additional Context\n- **Cluster:** {{kube_cluster_name.name}}\n- **Namespace:** {{kube_namespace.name}}\n\n@slack-datadog-alerts @pagerduty",
+  "tags": [
+    "env:poc",
+    "service:memory-monitor",
+    "team:platform",
+    "integration:datadog-poc"
+  ],
+  "priority": 3,
+  "options": {
+    "notify_audit": false,
+    "locked": false,
+    "timeout_h": 0,
+    "include_tags": true,
+    "no_data_timeframe": 10,
+    "require_full_window": false,
+    "new_host_delay": 300,
+    "notify_no_data": false,
+    "renotify_interval": 0,
+    "escalation_message": "Memory usage continues to exceed the configured threshold. Please investigate immediately.",
+    "thresholds": {
+      "critical": 60,
+      "warning": 50
+    },
+    "evaluation_delay": 60
+  }
+}

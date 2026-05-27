@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: memory-monitor-servicemonitor
+  namespace: datadog-poc
+  labels:
+    app: memory-monitor
+spec:
+  selector:
+    matchLabels:
+      app: memory-monitor
+  endpoints:
+  - port: http
+    path: /metrics
+    interval: 30s
+    scrapeTimeout: 10s
+
+# Made with Bob

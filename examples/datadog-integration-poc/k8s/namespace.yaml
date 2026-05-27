@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: datadog-poc
+  labels:
+    app: datadog-integration-poc
+
+# Made with Bob
