@@ -479,43 +479,20 @@ public class DataSourceMetadataHelper {
                 return;
             }
 
-            // null = no filter requested, empty HashMap = filter requested but no matches
-            boolean namespaceFilterRequested = matchedNamespaces != null;
-            boolean workloadFilterRequested = matchedWorkloads != null;
-            
-            // If no filters were requested at all, don't filter anything
-            if (!namespaceFilterRequested && !workloadFilterRequested) {
-                LOGGER.debug("No label filters requested, keeping all workloads");
+            // Both maps are non-null (caller guarantees this); empty means the filter was
+            // configured but matched nothing.
+            boolean hasNamespaceMatches = !matchedNamespaces.isEmpty();
+            boolean hasWorkloadMatches  = !matchedWorkloads.isEmpty();
+
+            // If ALL filters returned no matches, skip filtering to avoid wiping all resources.
+            // This guards against label-filter queries failing or finding nothing.
+            if (!hasNamespaceMatches && !hasWorkloadMatches) {
+                LOGGER.warn("Label filters were configured but no resources matched - skipping label filtering (keeping all resources). " +
+                           "Check that kube_namespace_labels and kube_pod_labels metrics exist and have the requested labels.");
                 return;
             }
 
-            // Check if we have any matches
-            boolean hasNamespaceMatches = namespaceFilterRequested && !matchedNamespaces.isEmpty();
-            boolean hasWorkloadMatches = workloadFilterRequested && !matchedWorkloads.isEmpty();
-            
-            // OR logic: Keep results if EITHER filter has matches
-            // If ALL requested filters returned no matches, skip filtering (keep all resources)
-            // This prevents empty metadata when label filter queries fail or return no results
-            if (namespaceFilterRequested && workloadFilterRequested) {
-                // Both filters requested - if BOTH have no matches, skip filtering
-                if (!hasNamespaceMatches && !hasWorkloadMatches) {
-                    LOGGER.warn("Both label filters requested but no resources matched - skipping label filtering (keeping all workloads). " +
-                               "This may indicate label filter queries are not finding matches. Check that kube_namespace_labels and kube_pod_labels metrics exist.");
-                    return;
-                }
-                // If at least one has matches, continue with filtering below
-                LOGGER.info("Label filters: namespace matches={}, workload matches={}", hasNamespaceMatches, hasWorkloadMatches);
-            } else if (namespaceFilterRequested && !hasNamespaceMatches) {
-                // Only namespace filter requested, no matches - skip filtering
-                LOGGER.warn("Namespace label filter requested but no resources matched - skipping label filtering (keeping all workloads). " +
-                           "Check that kube_namespace_labels metric exists and has the requested labels.");
-                return;
-            } else if (workloadFilterRequested && !hasWorkloadMatches) {
-                // Only workload filter requested, no matches - skip filtering
-                LOGGER.warn("Workload label filter requested but no resources matched - skipping label filtering (keeping all workloads). " +
-                           "Check that kube_pod_labels metric exists and has the requested labels.");
-                return;
-            }
+            LOGGER.info("Label filters: namespace matches={}, workload matches={}", hasNamespaceMatches, hasWorkloadMatches);
 
             cluster.getNamespaces().entrySet().removeIf(namespaceEntry -> {
                 String namespaceName = namespaceEntry.getKey();

@@ -172,6 +172,8 @@ public class DataSourceMetadataOperator {
                                                                                   Map<String, String> includeResources,
                                                                                   Map<String, String> excludeResources) throws IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
         DataSourceMetadataHelper dataSourceDetailsHelper = new DataSourceMetadataHelper();
+        if (includeResources == null) includeResources = new HashMap<>();
+        if (excludeResources == null) excludeResources = new HashMap<>();
         /**
          * Get DataSourceOperatorImpl instance on runtime based on dataSource provider
          */
@@ -362,15 +364,28 @@ public class DataSourceMetadataOperator {
                 }
             }
             
-            // Apply the label filter results to remove non-matching resources
-            LOGGER.info("Calling filterMetadataInfoObject with matchedNamespaces: {}, matchedWorkloads: {}",
-                       matchedNamespaces.keySet(),
-                       matchedWorkloads.entrySet().stream()
-                           .collect(java.util.stream.Collectors.toMap(
-                               java.util.Map.Entry::getKey,
-                               e -> e.getValue().keySet()
-                           )));
-            dataSourceDetailsHelper.filterMetadataInfoObject(dataSourceName, dataSourceMetadataInfo, matchedNamespaces, matchedWorkloads);
+            // Apply the label filter results to remove non-matching resources.
+            // Only call filterMetadataInfoObject when at least one label filter was actually configured —
+            // both maps are empty either because no filters were configured OR because no resources matched,
+            // and we can only distinguish those cases here where we have access to includeResources/excludeResources.
+            boolean anyLabelFilterConfigured =
+                    !includeResources.getOrDefault("namespaceLabelFilter", "").isEmpty() ||
+                    !includeResources.getOrDefault("podLabelFilter", "").isEmpty() ||
+                    !excludeResources.getOrDefault("namespaceLabelFilter", "").isEmpty() ||
+                    !excludeResources.getOrDefault("podLabelFilter", "").isEmpty();
+
+            if (anyLabelFilterConfigured) {
+                LOGGER.info("Calling filterMetadataInfoObject with matchedNamespaces: {}, matchedWorkloads: {}",
+                           matchedNamespaces.keySet(),
+                           matchedWorkloads.entrySet().stream()
+                               .collect(java.util.stream.Collectors.toMap(
+                                   java.util.Map.Entry::getKey,
+                                   e -> e.getValue().keySet()
+                               )));
+                dataSourceDetailsHelper.filterMetadataInfoObject(dataSourceName, dataSourceMetadataInfo, matchedNamespaces, matchedWorkloads);
+            } else {
+                LOGGER.debug("No label filters configured, skipping filterMetadataInfoObject");
+            }
 
             return getDataSourceMetadataInfo(dataSourceInfo);
         }
