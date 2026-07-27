@@ -172,8 +172,6 @@ public class DataSourceMetadataOperator {
                                                                                   Map<String, String> includeResources,
                                                                                   Map<String, String> excludeResources) throws IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
         DataSourceMetadataHelper dataSourceDetailsHelper = new DataSourceMetadataHelper();
-        if (includeResources == null) includeResources = new HashMap<>();
-        if (excludeResources == null) excludeResources = new HashMap<>();
         /**
          * Get DataSourceOperatorImpl instance on runtime based on dataSource provider
          */
