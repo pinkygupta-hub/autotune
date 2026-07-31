@@ -229,9 +229,19 @@ public class DataSourceMetadataOperator {
             workloadQuery = workloadQuery.replace(KruizeConstants.KRUIZE_BULK_API.ADDITIONAL_LABEL, "," + uniqueKey);
             containerQuery = containerQuery.replace(KruizeConstants.KRUIZE_BULK_API.ADDITIONAL_LABEL, "," + uniqueKey);
         } else {
-            namespaceQuery = namespaceQuery.replace(KruizeConstants.KRUIZE_BULK_API.ADDITIONAL_LABEL, "");
-            workloadQuery = workloadQuery.replace(KruizeConstants.KRUIZE_BULK_API.ADDITIONAL_LABEL, "");
-            containerQuery = containerQuery.replace(KruizeConstants.KRUIZE_BULK_API.ADDITIONAL_LABEL, "");
+            StringBuilder additionalLabelBuilder = new StringBuilder();
+            String nsIncludeRegex = includeResources.getOrDefault("namespaceRegex", "");
+            String nsExcludeRegex = excludeResources.getOrDefault("namespaceRegex", "");
+            if (!nsIncludeRegex.isEmpty()) {
+                additionalLabelBuilder.append(",namespace=~\"").append(nsIncludeRegex).append("\"");
+            }
+            if (!nsExcludeRegex.isEmpty()) {
+                additionalLabelBuilder.append(",namespace!~\"").append(nsExcludeRegex).append("\"");
+            }
+            String additionalLabel = additionalLabelBuilder.toString();
+            namespaceQuery = namespaceQuery.replace(KruizeConstants.KRUIZE_BULK_API.ADDITIONAL_LABEL, additionalLabel);
+            workloadQuery = workloadQuery.replace(KruizeConstants.KRUIZE_BULK_API.ADDITIONAL_LABEL, additionalLabel);
+            containerQuery = containerQuery.replace(KruizeConstants.KRUIZE_BULK_API.ADDITIONAL_LABEL, additionalLabel);
         }
 
         namespaceQuery = namespaceQuery.replace(AnalyzerConstants.MEASUREMENT_DURATION_IN_MIN_VARAIBLE, Integer.toString(measurementDuration));
@@ -292,9 +302,14 @@ public class DataSourceMetadataOperator {
             dataSourceDetailsHelper.updateContainerDataSourceMetadataInfoObject(dataSourceName, dataSourceMetadataInfo,
                     datasourceWorkloads, datasourceContainers);
 
-            // For exclude-only label filters, we need to query for resources to exclude now
-            // (after main queries have run) and populate matchedNamespaces/matchedWorkloads
-            if (matchedNamespaces.isEmpty() && matchedWorkloads.isEmpty()) {
+            // For exclude-only label filters (no include label configured), query for resources
+            // to exclude now (after main queries have run).
+            // If an include label filter was configured, empty maps mean 0 matches — don't enter this path.
+            boolean anyIncludeLabelConfigured =
+                    !includeResources.getOrDefault("namespaceLabelFilter", "").isEmpty() ||
+                    !includeResources.getOrDefault("podLabelFilter", "").isEmpty();
+
+            if (matchedNamespaces.isEmpty() && matchedWorkloads.isEmpty() && !anyIncludeLabelConfigured) {
                 String excludeNamespaceLabelFilter = excludeResources.getOrDefault("namespaceLabelFilter", "");
                 String excludePodLabelFilter = excludeResources.getOrDefault("podLabelFilter", "");
                 
@@ -471,55 +486,50 @@ public class DataSourceMetadataOperator {
             }
         }
 
-        // Process include filters (OR logic)
-        if (!namespaceLabelFilter.isEmpty()) {
-            String[] labelFilters = namespaceLabelFilter.split(",");
-            LOGGER.info("Include namespaceLabelFilter has {} label(s): {}", labelFilters.length, namespaceLabelFilter);
-            
-            for (int i = 0; i < labelFilters.length; i++) {
-                String singleLabelFilter = labelFilters[i].trim();
-                String namespaceQuery = queryTemplate
-                        .replace("LABEL_FILTER", singleLabelFilter)
-                        .replace(AnalyzerConstants.MEASUREMENT_DURATION_IN_MIN_VARAIBLE, Integer.toString(measurementDuration));
+        // Process include filters — use the full filter string as one PromQL query.
+        // In PromQL, comma-separated matchers inside {} are AND.
+        // Build ADDITIONAL_LABEL replacement from namespace include/exclude regex
+        String namespaceIncludeRegex = includeResources.getOrDefault("namespaceRegex", "");
+        String namespaceExcludeRegex = excludeResources.getOrDefault("namespaceRegex", "");
+        StringBuilder additionalLabelBuilder = new StringBuilder();
+        if (!namespaceIncludeRegex.isEmpty()) {
+            additionalLabelBuilder.append(",namespace=~\"").append(namespaceIncludeRegex).append("\"");
+        }
+        if (!namespaceExcludeRegex.isEmpty()) {
+            additionalLabelBuilder.append(",namespace!~\"").append(namespaceExcludeRegex).append("\"");
+        }
+        String additionalLabel = additionalLabelBuilder.toString();
 
-                LOGGER.info("Executing include namespace label filter query {} of {}: {}", i+1, labelFilters.length, namespaceQuery);
-                JsonArray namespaceQueryResultArray = fetchQueryResults(dataSourceInfo, namespaceQuery, startTime, endTime, steps);
-                LOGGER.info("Query {} returned {} results", i+1, namespaceQueryResultArray != null ? namespaceQueryResultArray.size() : 0);
-                
-                HashMap<String, DataSourceNamespace> currentMatches = dataSourceDetailsHelper.getActiveNamespaces(namespaceQueryResultArray);
-                LOGGER.info("Query {} matched {} namespace(s): {}", i+1, currentMatches.size(), currentMatches.keySet());
-                
-                // Merge results (OR logic - add all matches from each label)
-                matchedNamespaces.putAll(currentMatches);
-            }
-            
-            LOGGER.info("Total included namespaces after OR logic: {} - {}", matchedNamespaces.size(), matchedNamespaces.keySet());
+        if (!namespaceLabelFilter.isEmpty()) {
+            LOGGER.info("Include namespaceLabelFilter: {}", namespaceLabelFilter);
+
+            String namespaceQuery = queryTemplate
+                    .replace("LABEL_FILTER", namespaceLabelFilter)
+                    .replace(KruizeConstants.KRUIZE_BULK_API.ADDITIONAL_LABEL, additionalLabel)
+                    .replace(AnalyzerConstants.MEASUREMENT_DURATION_IN_MIN_VARAIBLE, Integer.toString(measurementDuration));
+
+            LOGGER.info("Executing include namespace label filter query: {}", namespaceQuery);
+            JsonArray namespaceQueryResultArray = fetchQueryResults(dataSourceInfo, namespaceQuery, startTime, endTime, steps);
+            LOGGER.info("Query returned {} results", namespaceQueryResultArray != null ? namespaceQueryResultArray.size() : 0);
+
+            matchedNamespaces.putAll(dataSourceDetailsHelper.getActiveNamespaces(namespaceQueryResultArray));
+            LOGGER.info("Matched {} namespace(s): {}", matchedNamespaces.size(), matchedNamespaces.keySet());
         }
 
         // Process exclude filters (remove matching namespaces)
         if (!excludeNamespaceLabelFilter.isEmpty()) {
             LOGGER.info("=== PROCESSING EXCLUDE NAMESPACE FILTERS ===");
-            HashMap<String, DataSourceNamespace> excludedNamespaces = new HashMap<>();
-            String[] excludeLabelFilters = excludeNamespaceLabelFilter.split(",");
-            LOGGER.info("Exclude namespaceLabelFilter has {} label(s): {}", excludeLabelFilters.length, excludeNamespaceLabelFilter);
-            
-            for (int i = 0; i < excludeLabelFilters.length; i++) {
-                String singleLabelFilter = excludeLabelFilters[i].trim();
-                String namespaceQuery = queryTemplate
-                        .replace("LABEL_FILTER", singleLabelFilter)
-                        .replace(AnalyzerConstants.MEASUREMENT_DURATION_IN_MIN_VARAIBLE, Integer.toString(measurementDuration));
 
-                LOGGER.info("Executing exclude namespace label filter query {} of {}: {}", i+1, excludeLabelFilters.length, namespaceQuery);
-                JsonArray namespaceQueryResultArray = fetchQueryResults(dataSourceInfo, namespaceQuery, startTime, endTime, steps);
-                LOGGER.info("Query {} returned {} results", i+1, namespaceQueryResultArray != null ? namespaceQueryResultArray.size() : 0);
-                
-                HashMap<String, DataSourceNamespace> currentExcludes = dataSourceDetailsHelper.getActiveNamespaces(namespaceQueryResultArray);
-                LOGGER.info("Query {} matched {} namespace(s) to exclude: {}", i+1, currentExcludes.size(), currentExcludes.keySet());
-                
-                // Collect all namespaces to exclude (OR logic)
-                excludedNamespaces.putAll(currentExcludes);
-            }
-            
+            String namespaceQuery = queryTemplate
+                    .replace("LABEL_FILTER", excludeNamespaceLabelFilter)
+                    .replace(KruizeConstants.KRUIZE_BULK_API.ADDITIONAL_LABEL, additionalLabel)
+                    .replace(AnalyzerConstants.MEASUREMENT_DURATION_IN_MIN_VARAIBLE, Integer.toString(measurementDuration));
+
+            LOGGER.info("Executing exclude namespace label filter query: {}", namespaceQuery);
+            JsonArray namespaceQueryResultArray = fetchQueryResults(dataSourceInfo, namespaceQuery, startTime, endTime, steps);
+            LOGGER.info("Query returned {} results", namespaceQueryResultArray != null ? namespaceQueryResultArray.size() : 0);
+
+            HashMap<String, DataSourceNamespace> excludedNamespaces = dataSourceDetailsHelper.getActiveNamespaces(namespaceQueryResultArray);
             LOGGER.info("Total namespaces to exclude: {} - {}", excludedNamespaces.size(), excludedNamespaces.keySet());
             
             // Remove excluded namespaces from matched namespaces
@@ -592,34 +602,38 @@ public class DataSourceMetadataOperator {
             }
         }
 
-        // Process include filters (OR logic)
-        if (!podLabelFilter.isEmpty()) {
-            String[] labelFilters = podLabelFilter.split(",");
-            LOGGER.info("Include podLabelFilter has {} label(s): {}", labelFilters.length, podLabelFilter);
-            
-            for (int i = 0; i < labelFilters.length; i++) {
-                String singleLabelFilter = labelFilters[i].trim();
-                String workloadQuery = queryTemplate
-                        .replace("LABEL_FILTER", singleLabelFilter)
-                        .replace(AnalyzerConstants.MEASUREMENT_DURATION_IN_MIN_VARAIBLE, Integer.toString(measurementDuration));
+        // Build ADDITIONAL_LABEL replacement from namespace include/exclude regex
+        String namespaceIncludeRegex = includeResources.getOrDefault("namespaceRegex", "");
+        String namespaceExcludeRegex = excludeResources.getOrDefault("namespaceRegex", "");
+        StringBuilder additionalLabelBuilder = new StringBuilder();
+        if (!namespaceIncludeRegex.isEmpty()) {
+            additionalLabelBuilder.append(",namespace=~\"").append(namespaceIncludeRegex).append("\"");
+        }
+        if (!namespaceExcludeRegex.isEmpty()) {
+            additionalLabelBuilder.append(",namespace!~\"").append(namespaceExcludeRegex).append("\"");
+        }
+        String additionalLabel = additionalLabelBuilder.toString();
 
-                LOGGER.info("Executing include pod label filter query {} of {}: {}", i+1, labelFilters.length, workloadQuery);
-                JsonArray workloadQueryResultArray = fetchQueryResults(dataSourceInfo, workloadQuery, startTime, endTime, steps);
-                LOGGER.info("Query {} returned {} results", i+1, workloadQueryResultArray != null ? workloadQueryResultArray.size() : 0);
-                
-                HashMap<String, HashMap<String, DataSourceWorkload>> currentMatches = dataSourceDetailsHelper.getWorkloadInfo(workloadQueryResultArray);
-                int currentWorkloadCount = currentMatches.values().stream().mapToInt(Map::size).sum();
-                LOGGER.info("Query {} matched {} workload(s)", i+1, currentWorkloadCount);
-                
-                // Merge results (OR logic - add all matches from each label)
-                currentMatches.forEach((namespace, workloads) -> {
-                    LOGGER.debug("Merging {} workload(s) from namespace {}: {}", workloads.size(), namespace, workloads.keySet());
-                    matchedWorkloads.computeIfAbsent(namespace, k -> new HashMap<>()).putAll(workloads);
-                });
-            }
-            
+        // Process include filters — use the full filter string as one PromQL query.
+        // In PromQL, comma-separated matchers inside {} are AND.
+        if (!podLabelFilter.isEmpty()) {
+            LOGGER.info("Include podLabelFilter: {}", podLabelFilter);
+
+            String workloadQuery = queryTemplate
+                    .replace("LABEL_FILTER", podLabelFilter)
+                    .replace(KruizeConstants.KRUIZE_BULK_API.ADDITIONAL_LABEL, additionalLabel)
+                    .replace(AnalyzerConstants.MEASUREMENT_DURATION_IN_MIN_VARAIBLE, Integer.toString(measurementDuration));
+
+            LOGGER.info("Executing include pod label filter query: {}", workloadQuery);
+            JsonArray workloadQueryResultArray = fetchQueryResults(dataSourceInfo, workloadQuery, startTime, endTime, steps);
+            LOGGER.info("Query returned {} results", workloadQueryResultArray != null ? workloadQueryResultArray.size() : 0);
+
+            HashMap<String, HashMap<String, DataSourceWorkload>> includeResults = dataSourceDetailsHelper.getWorkloadInfo(workloadQueryResultArray);
+            includeResults.forEach((namespace, workloads) -> {
+                matchedWorkloads.computeIfAbsent(namespace, k -> new HashMap<>()).putAll(workloads);
+            });
             int totalWorkloads = matchedWorkloads.values().stream().mapToInt(Map::size).sum();
-            LOGGER.info("Total included workloads after OR logic: {}", totalWorkloads);
+            LOGGER.info("Matched {} workload(s)", totalWorkloads);
             matchedWorkloads.forEach((ns, wls) -> {
                 LOGGER.info("  Namespace {}: {} workload(s) - {}", ns, wls.size(), wls.keySet());
             });
@@ -628,31 +642,17 @@ public class DataSourceMetadataOperator {
         // Process exclude filters (remove matching workloads)
         if (!excludePodLabelFilter.isEmpty()) {
             LOGGER.info("=== PROCESSING EXCLUDE POD LABEL FILTERS ===");
-            HashMap<String, HashMap<String, DataSourceWorkload>> excludedWorkloads = new HashMap<>();
-            String[] excludeLabelFilters = excludePodLabelFilter.split(",");
-            LOGGER.info("Exclude podLabelFilter has {} label(s): {}", excludeLabelFilters.length, excludePodLabelFilter);
-            
-            for (int i = 0; i < excludeLabelFilters.length; i++) {
-                String singleLabelFilter = excludeLabelFilters[i].trim();
-                String workloadQuery = queryTemplate
-                        .replace("LABEL_FILTER", singleLabelFilter)
-                        .replace(AnalyzerConstants.MEASUREMENT_DURATION_IN_MIN_VARAIBLE, Integer.toString(measurementDuration));
 
-                LOGGER.info("Executing exclude pod label filter query {} of {}: {}", i+1, excludeLabelFilters.length, workloadQuery);
-                JsonArray workloadQueryResultArray = fetchQueryResults(dataSourceInfo, workloadQuery, startTime, endTime, steps);
-                LOGGER.info("Query {} returned {} results", i+1, workloadQueryResultArray != null ? workloadQueryResultArray.size() : 0);
-                
-                HashMap<String, HashMap<String, DataSourceWorkload>> currentExcludes = dataSourceDetailsHelper.getWorkloadInfo(workloadQueryResultArray);
-                int currentWorkloadCount = currentExcludes.values().stream().mapToInt(Map::size).sum();
-                LOGGER.info("Query {} matched {} workload(s) to exclude", i+1, currentWorkloadCount);
-                
-                // Collect all workloads to exclude (OR logic)
-                currentExcludes.forEach((namespace, workloads) -> {
-                    LOGGER.debug("Collecting {} workload(s) to exclude from namespace {}: {}", workloads.size(), namespace, workloads.keySet());
-                    excludedWorkloads.computeIfAbsent(namespace, k -> new HashMap<>()).putAll(workloads);
-                });
-            }
-            
+            String workloadQuery = queryTemplate
+                    .replace("LABEL_FILTER", excludePodLabelFilter)
+                    .replace(KruizeConstants.KRUIZE_BULK_API.ADDITIONAL_LABEL, additionalLabel)
+                    .replace(AnalyzerConstants.MEASUREMENT_DURATION_IN_MIN_VARAIBLE, Integer.toString(measurementDuration));
+
+            LOGGER.info("Executing exclude pod label filter query: {}", workloadQuery);
+            JsonArray workloadQueryResultArray = fetchQueryResults(dataSourceInfo, workloadQuery, startTime, endTime, steps);
+            LOGGER.info("Query returned {} results", workloadQueryResultArray != null ? workloadQueryResultArray.size() : 0);
+
+            HashMap<String, HashMap<String, DataSourceWorkload>> excludedWorkloads = dataSourceDetailsHelper.getWorkloadInfo(workloadQueryResultArray);
             int totalExcludedWorkloads = excludedWorkloads.values().stream().mapToInt(Map::size).sum();
             LOGGER.info("Total workloads to exclude: {}", totalExcludedWorkloads);
             excludedWorkloads.forEach((ns, wls) -> {

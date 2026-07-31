@@ -484,11 +484,9 @@ public class DataSourceMetadataHelper {
             boolean hasNamespaceMatches = !matchedNamespaces.isEmpty();
             boolean hasWorkloadMatches  = !matchedWorkloads.isEmpty();
 
-            // If ALL filters returned no matches, skip filtering to avoid wiping all resources.
-            // This guards against label-filter queries failing or finding nothing.
             if (!hasNamespaceMatches && !hasWorkloadMatches) {
-                LOGGER.warn("Label filters were configured but no resources matched - skipping label filtering (keeping all resources). " +
-                           "Check that kube_namespace_labels and kube_pod_labels metrics exist and have the requested labels.");
+                LOGGER.info("Label filters matched no resources - removing all entries (0 experiments expected)");
+                cluster.getNamespaces().clear();
                 return;
             }
 

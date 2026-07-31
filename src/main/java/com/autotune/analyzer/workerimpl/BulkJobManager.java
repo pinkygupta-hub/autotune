@@ -667,52 +667,52 @@ public class BulkJobManager implements Runnable {
         }
 
         LOGGER.info("Building label filters from {} label(s)", labels.size());
-        
-        // For multiple labels, we need OR logic (match if ANY label matches)
-        // Build separate queries for each label and combine with 'or' operator
+
+        // For multiple label keys, we need AND logic (match ALL keys).
+        // For multiple values under the same key, we use regex OR (match ANY value).
+        // Example: {app: ["heap-oom","system-oom"], version: "v1"}
+        //   -> label_app=~"heap-oom|system-oom",label_version="v1"
+        // In PromQL, comma inside {} is AND; =~ with pipe is OR.
         List<String> podLabelQueries = new ArrayList<>();
         List<String> namespaceLabelQueries = new ArrayList<>();
 
         labels.forEach((key, value) -> {
             LOGGER.info("Processing label key: '{}' (original), value: '{}'", key, value);
-            
-            // Handle both single string values and arrays of values
+
             List<String> values = new ArrayList<>();
             if (value instanceof List) {
-                // Array of values: {"app": ["kindnet", "sysbench"]}
                 ((List<?>) value).forEach(v -> values.add(v.toString()));
             } else {
-                // Single value: {"app": "kindnet"}
                 values.add(value.toString());
             }
-            
-            // kube-state-metrics normalizes label names by replacing special chars with underscores
-            // e.g., "pod-template-hash" becomes "label_pod_template_hash"
-            // e.g., "app.kubernetes.io/component" becomes "label_app_kubernetes_io_component"
+
             String normalizedKey = key.replaceAll("[^a-zA-Z0-9_]", "_");
             LOGGER.info("Normalized key for PromQL: '{}'", normalizedKey);
-            
-            // Create a matcher for each value
-            for (String val : values) {
-                String escapedValue = escapePromQLLabelValue(val);
-                // Use normalized key for PromQL query
-                String matcher = "label_" + normalizedKey + "=\"" + escapedValue + "\"";
-                podLabelQueries.add(matcher);
-                namespaceLabelQueries.add(matcher);
+
+            String matcher;
+            if (values.size() == 1) {
+                String escapedValue = escapePromQLLabelValue(values.get(0));
+                matcher = "label_" + normalizedKey + "=\"" + escapedValue + "\"";
+            } else {
+                String regexValues = values.stream()
+                        .map(this::escapePromQLLabelValue)
+                        .collect(Collectors.joining("|"));
+                matcher = "label_" + normalizedKey + "=~\"" + regexValues + "\"";
             }
+            podLabelQueries.add(matcher);
+            namespaceLabelQueries.add(matcher);
         });
 
-        // Join multiple label conditions with comma (will be used in OR queries)
         if (!podLabelQueries.isEmpty()) {
             String podFilter = String.join(",", podLabelQueries);
             labelFilters.put("podLabelFilter", podFilter);
-            LOGGER.info("Built podLabelFilter with {} condition(s): {}", podLabelQueries.size(), podFilter);
+            LOGGER.info("Built podLabelFilter (AND between keys, OR within key): {}", podFilter);
         }
 
         if (!namespaceLabelQueries.isEmpty()) {
             String namespaceFilter = String.join(",", namespaceLabelQueries);
             labelFilters.put("namespaceLabelFilter", namespaceFilter);
-            LOGGER.info("Built namespaceLabelFilter with {} condition(s): {}", namespaceLabelQueries.size(), namespaceFilter);
+            LOGGER.info("Built namespaceLabelFilter (AND between keys, OR within key): {}", namespaceFilter);
         }
 
         LOGGER.info("Final label filters: {}", labelFilters);
