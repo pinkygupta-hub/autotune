@@ -200,6 +200,8 @@ public class BulkJobManager implements Runnable {
                         jobData.getSummary().setProcessed_experiments(0);
                         if (jobData.getSummary().getTotal_experiments() > KruizeDeploymentInfo.bulk_api_limit) {
                             setFinalJobStatus(FAILED, String.valueOf(HttpURLConnection.HTTP_BAD_REQUEST), LIMIT_INFO, datasource);
+                        } else if (createExperimentAPIObjectMap.isEmpty()) {
+                            setFinalJobStatus(COMPLETED, String.valueOf(HttpURLConnection.HTTP_OK), NOTHING_INFO, datasource);
                         } else {
                             if (!KruizeDeploymentInfo.test_use_only_cache_job_in_mem) {                       // Todo Try to avoid this check in multiple places
                                 new ExperimentDAOImpl().bulkJobSave(jobData.getBulkJobForDB("{}"));

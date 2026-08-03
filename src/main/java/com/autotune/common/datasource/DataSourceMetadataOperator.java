@@ -619,9 +619,11 @@ public class DataSourceMetadataOperator {
         if (!podLabelFilter.isEmpty()) {
             LOGGER.info("Include podLabelFilter: {}", podLabelFilter);
 
+            String unsupportedWorkloadTypesFilter = AnalyzerConstants.getUnsupportedWorkloadTypesFilter();
             String workloadQuery = queryTemplate
                     .replace("LABEL_FILTER", podLabelFilter)
                     .replace(KruizeConstants.KRUIZE_BULK_API.ADDITIONAL_LABEL, additionalLabel)
+                    .replace(AnalyzerConstants.UNSUPPORTED_WORKLOAD_TYPES_VARIABLE, unsupportedWorkloadTypesFilter)
                     .replace(AnalyzerConstants.MEASUREMENT_DURATION_IN_MIN_VARAIBLE, Integer.toString(measurementDuration));
 
             LOGGER.info("Executing include pod label filter query: {}", workloadQuery);
@@ -643,9 +645,11 @@ public class DataSourceMetadataOperator {
         if (!excludePodLabelFilter.isEmpty()) {
             LOGGER.info("=== PROCESSING EXCLUDE POD LABEL FILTERS ===");
 
+            String unsupportedWorkloadTypesFilter = AnalyzerConstants.getUnsupportedWorkloadTypesFilter();
             String workloadQuery = queryTemplate
                     .replace("LABEL_FILTER", excludePodLabelFilter)
                     .replace(KruizeConstants.KRUIZE_BULK_API.ADDITIONAL_LABEL, additionalLabel)
+                    .replace(AnalyzerConstants.UNSUPPORTED_WORKLOAD_TYPES_VARIABLE, unsupportedWorkloadTypesFilter)
                     .replace(AnalyzerConstants.MEASUREMENT_DURATION_IN_MIN_VARAIBLE, Integer.toString(measurementDuration));
 
             LOGGER.info("Executing exclude pod label filter query: {}", workloadQuery);
