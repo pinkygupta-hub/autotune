@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Unit tests for {@link WorkloadQueryUtil#substituteWorkloadQueryPlaceholders}.
+ * Unit tests for {@link DataSourceMetadataOperator#substituteWorkloadQueryPlaceholders}.
  *
  * Validates:
  *   Error-1 fix — comma between LABEL_FILTER and ADDITIONAL_LABEL in the template means both
@@ -56,7 +56,7 @@ class DataSourceMetadataOperatorPlaceholderTest {
         @Test
         @DisplayName("hasLabelFilter=false: LABEL_FILTER placeholder removed, no raw token in result")
         void labelFilterRemovedWhenFalse() {
-            String result = WorkloadQueryUtil.substituteWorkloadQueryPlaceholders(
+            String result = DataSourceMetadataOperator.substituteWorkloadQueryPlaceholders(
                     TEMPLATE, "", "", false);
 
             assertFalse(result.contains("LABEL_FILTER"),
@@ -68,7 +68,7 @@ class DataSourceMetadataOperatorPlaceholderTest {
         @Test
         @DisplayName("hasLabelFilter=true: LABEL_FILTER replaced with include filter value")
         void labelFilterReplacedWithInclude() {
-            String result = WorkloadQueryUtil.substituteWorkloadQueryPlaceholders(
+            String result = DataSourceMetadataOperator.substituteWorkloadQueryPlaceholders(
                     TEMPLATE, "label_app=\"heap-oom\"", "", true);
 
             assertFalse(result.contains("LABEL_FILTER"),
@@ -80,7 +80,7 @@ class DataSourceMetadataOperatorPlaceholderTest {
         @Test
         @DisplayName("hasLabelFilter=true: LABEL_FILTER replaced with exclude filter value")
         void labelFilterReplacedWithExclude() {
-            String result = WorkloadQueryUtil.substituteWorkloadQueryPlaceholders(
+            String result = DataSourceMetadataOperator.substituteWorkloadQueryPlaceholders(
                     TEMPLATE, "", "label_app!=\"heap-oom\"", true);
 
             assertFalse(result.contains("LABEL_FILTER"));
@@ -90,7 +90,7 @@ class DataSourceMetadataOperatorPlaceholderTest {
         @Test
         @DisplayName("hasLabelFilter=true with both include and exclude: comma-joined")
         void labelFilterIncludeAndExcludeJoined() {
-            String result = WorkloadQueryUtil.substituteWorkloadQueryPlaceholders(
+            String result = DataSourceMetadataOperator.substituteWorkloadQueryPlaceholders(
                     TEMPLATE, "label_app=\"heap-oom\"", "label_env!=\"prod\"", true);
 
             assertFalse(result.contains("LABEL_FILTER"));
@@ -110,7 +110,7 @@ class DataSourceMetadataOperatorPlaceholderTest {
         @Test
         @DisplayName("hasLabelFilter=false: no leading/trailing/consecutive commas after cleanup")
         void noStrayCommaWhenLabelFilterAbsent() {
-            String result = WorkloadQueryUtil.substituteWorkloadQueryPlaceholders(
+            String result = DataSourceMetadataOperator.substituteWorkloadQueryPlaceholders(
                     TEMPLATE, "", "", false);
 
             assertFalse(result.contains(",}"),
@@ -124,7 +124,7 @@ class DataSourceMetadataOperatorPlaceholderTest {
         @Test
         @DisplayName("hasLabelFilter=true: no trailing comma before } after ADDITIONAL_LABEL removed")
         void noTrailingCommaWhenAdditionalLabelEmpty() {
-            String result = WorkloadQueryUtil.substituteWorkloadQueryPlaceholders(
+            String result = DataSourceMetadataOperator.substituteWorkloadQueryPlaceholders(
                     TEMPLATE, "label_app=\"heap-oom\"", "", true);
 
             assertFalse(result.contains(",}"),
@@ -136,7 +136,7 @@ class DataSourceMetadataOperatorPlaceholderTest {
         @Test
         @DisplayName("hasLabelFilter=false: kube_pod_labels selector contains only pod!=\\\"\\\" (no extra comma)")
         void podSelectorRemainsValid() {
-            String result = WorkloadQueryUtil.substituteWorkloadQueryPlaceholders(
+            String result = DataSourceMetadataOperator.substituteWorkloadQueryPlaceholders(
                     TEMPLATE, "", "", false);
 
             assertTrue(result.contains("kube_pod_labels{pod!=\"\"}"),
@@ -146,7 +146,7 @@ class DataSourceMetadataOperatorPlaceholderTest {
         @Test
         @DisplayName("hasLabelFilter=true: label filter embedded cleanly in selector")
         void labelFilterEmbeddedCleanly() {
-            String result = WorkloadQueryUtil.substituteWorkloadQueryPlaceholders(
+            String result = DataSourceMetadataOperator.substituteWorkloadQueryPlaceholders(
                     TEMPLATE, "label_app=\"foo\"", "", true);
 
             assertTrue(result.contains("kube_pod_labels{pod!=\"\",label_app=\"foo\"}"),
