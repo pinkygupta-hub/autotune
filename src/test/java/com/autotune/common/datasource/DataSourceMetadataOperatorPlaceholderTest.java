@@ -25,20 +25,21 @@ import static org.junit.jupiter.api.Assertions.*;
  * Unit tests for {@link DataSourceMetadataOperator#substituteWorkloadQueryPlaceholders}.
  *
  * Validates:
- *   Error-1 fix — comma between LABEL_FILTER and ADDITIONAL_LABEL in the template means both
- *                 placeholders are clearly separated; stray commas are cleaned up after expansion.
- *   Error-2 fix — LABEL_FILTER is always replaced (never left raw in PromQL), even when
- *                 hasLabelFilter is false.
+ *   Commas are never baked into the template around placeholders — they are prepended
+ *   only when the variable is substituted with a non-empty value.
+ *   LABEL_FILTER is always replaced (never left raw in PromQL), even when
+ *   hasLabelFilter is false.
  */
 class DataSourceMetadataOperatorPlaceholderTest {
 
     /**
      * Template string mirroring the manifest entry in
-     * bulk_cluster_metadata_local_monitoring.json / .yaml (with the comma fix applied).
+     * bulk_cluster_metadata_local_monitoring.json / .yaml.
+     * Placeholders are space-separated; commas are prepended by the substitution logic.
      */
     private static final String TEMPLATE =
             "sum by (namespace, workload, workload_type) " +
-            "(max_over_time(kube_pod_labels{pod!=\"\",LABEL_FILTER,ADDITIONAL_LABEL}" +
+            "(max_over_time(kube_pod_labels{pod!=\"\" LABEL_FILTER ADDITIONAL_LABEL}" +
             "[$MEASUREMENT_DURATION_IN_MIN$m]) * on (namespace, pod) " +
             "group_left(workload, workload_type) " +
             "max_over_time(namespace_workload_pod:kube_pod_owner:relabel" +
@@ -100,51 +101,47 @@ class DataSourceMetadataOperatorPlaceholderTest {
     }
 
     // -------------------------------------------------------------------------
-    // Error-1: No stray commas after placeholder substitution
+    // No stray spaces or commas after placeholder substitution
     // -------------------------------------------------------------------------
 
     @Nested
-    @DisplayName("Error-1: No stray commas after placeholder substitution")
-    class NoStrayCommas {
+    @DisplayName("No stray spaces or commas after placeholder substitution")
+    class NoStrayArtifacts {
 
         @Test
-        @DisplayName("hasLabelFilter=false: no leading/trailing/consecutive commas after cleanup")
-        void noStrayCommaWhenLabelFilterAbsent() {
+        @DisplayName("hasLabelFilter=false: no extra spaces inside braces after cleanup")
+        void noStraySpacesWhenLabelFilterAbsent() {
             String result = DataSourceMetadataOperator.substituteWorkloadQueryPlaceholders(
                     TEMPLATE, "", "", false);
 
-            assertFalse(result.contains(",}"),
-                    "Trailing comma before } must be cleaned up");
-            assertFalse(result.contains("{,"),
-                    "Leading comma after { must be cleaned up");
-            assertFalse(result.contains(",,"),
-                    "Consecutive commas must be cleaned up");
+            assertFalse(result.contains(" }"),
+                    "Trailing space before } must be cleaned up");
+            assertFalse(result.contains("{ "),
+                    "Leading space after { must be cleaned up");
         }
 
         @Test
-        @DisplayName("hasLabelFilter=true: no trailing comma before } after ADDITIONAL_LABEL removed")
-        void noTrailingCommaWhenAdditionalLabelEmpty() {
+        @DisplayName("hasLabelFilter=true: no trailing space before } after ADDITIONAL_LABEL removed")
+        void noTrailingSpaceWhenAdditionalLabelEmpty() {
             String result = DataSourceMetadataOperator.substituteWorkloadQueryPlaceholders(
                     TEMPLATE, "label_app=\"heap-oom\"", "", true);
 
-            assertFalse(result.contains(",}"),
-                    "Trailing comma before } must be cleaned up");
-            assertFalse(result.contains(",,"),
-                    "Consecutive commas must be cleaned up");
+            assertFalse(result.contains(" }"),
+                    "Trailing space before } must be cleaned up");
         }
 
         @Test
-        @DisplayName("hasLabelFilter=false: kube_pod_labels selector contains only pod!=\\\"\\\" (no extra comma)")
+        @DisplayName("hasLabelFilter=false: kube_pod_labels selector contains only pod!=\\\"\\\" (clean)")
         void podSelectorRemainsValid() {
             String result = DataSourceMetadataOperator.substituteWorkloadQueryPlaceholders(
                     TEMPLATE, "", "", false);
 
             assertTrue(result.contains("kube_pod_labels{pod!=\"\"}"),
-                    "kube_pod_labels selector must be {pod!=\"\"} with no stray commas; got: " + result);
+                    "kube_pod_labels selector must be {pod!=\"\"} with no extra spaces; got: " + result);
         }
 
         @Test
-        @DisplayName("hasLabelFilter=true: label filter embedded cleanly in selector")
+        @DisplayName("hasLabelFilter=true: label filter embedded cleanly in selector with comma prepended")
         void labelFilterEmbeddedCleanly() {
             String result = DataSourceMetadataOperator.substituteWorkloadQueryPlaceholders(
                     TEMPLATE, "label_app=\"foo\"", "", true);

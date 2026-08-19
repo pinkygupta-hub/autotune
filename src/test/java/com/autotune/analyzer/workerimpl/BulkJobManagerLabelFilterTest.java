@@ -402,6 +402,66 @@ class BulkJobManagerLabelFilterTest {
     }
 
     @Nested
+    @DisplayName("Key sanitization — dots and slashes replaced with underscores")
+    class KeySanitization {
+
+        @Test
+        @DisplayName("Dot in label key is replaced with underscore: app.kubernetes.io → app_kubernetes_io")
+        void dotReplacedWithUnderscore() {
+            Map<String, Object> labels = new LinkedHashMap<>();
+            labels.put("app.kubernetes.io", "heap-oom");
+
+            String result = bulkJobManager.buildLabelFilters(labels, false);
+
+            assertEquals("label_app_kubernetes_io=\"heap-oom\"", result);
+        }
+
+        @Test
+        @DisplayName("Slash in label key is replaced with underscore: app/name → app_name")
+        void slashReplacedWithUnderscore() {
+            Map<String, Object> labels = new LinkedHashMap<>();
+            labels.put("app/name", "heap-oom");
+
+            String result = bulkJobManager.buildLabelFilters(labels, false);
+
+            assertEquals("label_app_name=\"heap-oom\"", result);
+        }
+
+        @Test
+        @DisplayName("Mixed dots and slashes: k8s.io/component → k8s_io_component")
+        void mixedDotsAndSlashes() {
+            Map<String, Object> labels = new LinkedHashMap<>();
+            labels.put("k8s.io/component", "etcd");
+
+            String result = bulkJobManager.buildLabelFilters(labels, false);
+
+            assertEquals("label_k8s_io_component=\"etcd\"", result);
+        }
+
+        @Test
+        @DisplayName("Key without dots/slashes unchanged: app → label_app")
+        void plainKeyUnchanged() {
+            Map<String, Object> labels = new LinkedHashMap<>();
+            labels.put("app", "foo");
+
+            String result = bulkJobManager.buildLabelFilters(labels, false);
+
+            assertEquals("label_app=\"foo\"", result);
+        }
+
+        @Test
+        @DisplayName("Sanitization applies to exclude filters too")
+        void sanitizationInExcludeMode() {
+            Map<String, Object> labels = new LinkedHashMap<>();
+            labels.put("app.kubernetes.io/name", "heap-oom");
+
+            String result = bulkJobManager.buildLabelFilters(labels, true);
+
+            assertEquals("label_app_kubernetes_io_name!=\"heap-oom\"", result);
+        }
+    }
+
+    @Nested
     @DisplayName("escapePromQLLabelValue")
     class EscapeTests {
 
